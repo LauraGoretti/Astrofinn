@@ -13,28 +13,39 @@ declare global {
   }
 }
 
-// Constants for Simulation
-const SEMI_MAJOR_AXIS = 100; // a
-const SEMI_MINOR_AXIS = 85;  // b
-const FOCAL_OFFSET = Math.sqrt(Math.pow(SEMI_MAJOR_AXIS, 2) - Math.pow(SEMI_MINOR_AXIS, 2)); // c
+// Constants for Simulation - UPDATED FOR SCIENTIFIC PROPORTIONS
+// Reference: Earth R = 6371km, Moon R = 1737km (Ratio ~3.67)
+// Distance = 384,400km (approx 60 Earth Radii or 30 Earth Diameters)
 
-const SUN_RADIUS = 9;     
-const EARTH_RADIUS = 2.5; 
-const MOON_DISTANCE = 9;
-const MOON_RADIUS = 0.9;
+// Scaling Base: Earth Radius = 2 units
+const EARTH_RADIUS = 2; 
+// Adjusted for better visibility in the app (Visual Scale vs True Scale)
+const MOON_RADIUS = 1.0; // Increased from 0.54 for better visibility
+const MOON_DISTANCE = 25; // Decreased from 60 to keep it in frame
+
+// Sun Orbit (Heliocentric context)
+// Note: True scale sun distance is impossible in a browser (12,000 earth diameters).
+// We scale this up just enough to fit the large Moon orbit without collision.
+const SEMI_MAJOR_AXIS = 250; // a
+// Restore elliptical shape (was 248 for circular, now 215 for visible ellipse)
+const SEMI_MINOR_AXIS = 215; // b 
+
+// FOCAL_OFFSET defines how far the Sun (at 0,0) is from the center of the ellipse.
+// Scientifically, c = sqrt(a^2 - b^2) ~= 127. 
+// However, to satisfy the visual requirement of "Sun slightly displaced" while maintaining a visible "ellipse shape",
+// we reduce this offset artificially. This creates a stylised orbit that is easier to understand visually.
+const FOCAL_OFFSET = 80; 
+
+const SUN_RADIUS = 18;     
 
 // Simulation Speeds (radians per second)
 // 1. Earth Day is the base unit.
 const EARTH_ROTATION_SPEED = 0.8; 
 
 // 2. Moon Month is ~28 days.
-// "Rotation of the moon is equal moon's revolution around Earth" (Tidal Locking).
-// This speed applies to both the Moon's orbit around Earth AND its local rotation (handled via group hierarchy).
 const MOON_ORBIT_SPEED = EARTH_ROTATION_SPEED / 28; 
 
 // 3. Earth Year is ~12 months (simplified to 8 here for visual pacing).
-// CRITICAL: Year speed must be significantly SLOWER than Moon orbit speed for phases to work.
-// If Earth moves too fast around Sun, the Moon can't complete a cycle relative to the light source.
 const EARTH_YEAR_SPEED = MOON_ORBIT_SPEED / 8;
 
 // Types
@@ -248,23 +259,25 @@ const SunMesh = () => {
         />
       </sprite>
       <pointLight 
-        intensity={2.0} 
-        distance={500} 
+        intensity={2.5} 
+        distance={2000} 
         decay={0.0} 
         color="#fffaed" 
         castShadow 
-        shadow-mapSize-width={2048} 
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={4096} 
+        shadow-mapSize-height={4096}
         shadow-bias={-0.0001}
         shadow-radius={4}
-      />
+      >
+        <orthographicCamera attach="shadow-camera" args={[-150, 150, 150, -150, 0.1, 1000]} />
+      </pointLight>
     </group>
   );
 };
 
 const MoonMesh = () => {
   // Use a reliable remote texture from Three.js examples
-  const colorMap = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/moon_1024.jpg');
+  const colorMap = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/moon.jpg');
   const orbitGroupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
@@ -295,10 +308,10 @@ const MoonMesh = () => {
           <sphereGeometry args={[MOON_RADIUS, 64, 64]} />
           {/* Custom shader for realistic moon phase rendering */}
           <shaderMaterial 
-             ref={materialRef}
-             vertexShader={moonVertexShader}
-             fragmentShader={moonFragmentShader}
-             uniforms={uniforms}
+              ref={materialRef}
+              vertexShader={moonVertexShader}
+              fragmentShader={moonFragmentShader}
+              uniforms={uniforms}
           />
         </mesh>
       </group>
@@ -312,9 +325,9 @@ interface HeliocentricSystemProps {
 
 const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => {
   const [dayTexture, nightTexture, specularMap] = useLoader(THREE.TextureLoader, [
-    'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg',
-    'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_lights_2048.png',
-    'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_specular_2048.jpg'
+    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/earth_day.jpg',
+    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/earth_night.jpg',
+    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/earth_specular.jpg'
   ]);
 
   const earthContainerRef = useRef<THREE.Group>(null);
@@ -345,7 +358,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
       0, 2 * Math.PI,
       false, 0
     );
-    const points = curve.getPoints(200);
+    const points = curve.getPoints(250);
     return new THREE.BufferGeometry().setFromPoints(
       points.map(p => new THREE.Vector3(p.x, 0, p.y))
     );
@@ -363,7 +376,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
         if (viewMode === 'EARTH_FREE' && cameraRef.current && controlsRef.current && earthContainerRef.current) {
             const earthPos = earthContainerRef.current.position;
             // Snap camera to a nice offset
-            cameraRef.current.position.set(earthPos.x, earthPos.y + 10, earthPos.z + 25);
+            cameraRef.current.position.set(earthPos.x, earthPos.y + 10, earthPos.z + 40);
             controlsRef.current.target.copy(earthPos);
             controlsRef.current.update();
         }
@@ -405,9 +418,9 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
              
              // Check for Drift Error (if camera gets lost)
              const dist = state.camera.position.distanceTo(currentEarthPos);
-             if (dist > 150) {
+             if (dist > 300) {
                  // Emergency Reset
-                 state.camera.position.copy(currentEarthPos).add(new THREE.Vector3(0, 10, 30));
+                 state.camera.position.copy(currentEarthPos).add(new THREE.Vector3(0, 10, 40));
                  controlsRef.current.target.copy(currentEarthPos);
              }
         }
@@ -428,25 +441,25 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
     // 6. OTHER CAMERA MODES (Cinematic/Fixed)
     if (viewMode !== 'EARTH_FREE') {
         if (viewMode === 'SYSTEM_AUTO') {
-           const t = state.clock.getElapsedTime() * 0.15;
-           const radius = 220;
+           const t = state.clock.getElapsedTime() * 0.1;
+           const radius = 350;
            const centerX = -FOCAL_OFFSET;
            const camX = centerX + radius * Math.cos(t);
            const camZ = radius * Math.sin(2 * t);
-           const camY = 60 + 20 * Math.sin(t); 
+           const camY = 100 + 40 * Math.sin(t); 
            const targetPos = new THREE.Vector3(camX, camY, camZ);
            state.camera.position.lerp(targetPos, 0.05);
            state.camera.lookAt(centerX, 0, 0);
         }
         else if (viewMode === 'SYSTEM_TOP') {
-           const targetPos = new THREE.Vector3(-FOCAL_OFFSET, 400, 0);
+           const targetPos = new THREE.Vector3(-FOCAL_OFFSET, 600, 0);
            state.camera.position.lerp(targetPos, 0.05);
            state.camera.lookAt(-FOCAL_OFFSET, 0, 0);
            state.camera.up.set(0, 0, -1);
         }
         else if (viewMode === 'EARTH_DAY') {
            const sunDirection = new THREE.Vector3(0, 0, 0).sub(currentEarthPos).normalize();
-           const offsetDist = 20;
+           const offsetDist = 35;
            const camPos = currentEarthPos.clone().add(sunDirection.multiplyScalar(offsetDist));
            camPos.y += 5;
            state.camera.position.copy(camPos);
@@ -455,7 +468,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
         }
         else if (viewMode === 'EARTH_NIGHT') {
            const sunDirection = new THREE.Vector3(0, 0, 0).sub(currentEarthPos).normalize();
-           const offsetDist = 20;
+           const offsetDist = 35;
            const camPos = currentEarthPos.clone().sub(sunDirection.multiplyScalar(offsetDist));
            camPos.y += 5;
            state.camera.position.copy(camPos);
@@ -501,35 +514,28 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
               </mesh>
             </group>
 
-            {/* Axis & Pole */}
+            {/* Axis Line */}
             <mesh rotation={[0,0,0]}>
-              <cylinderGeometry args={[0.05, 0.05, 10, 8]} />
+              <cylinderGeometry args={[0.03, 0.03, 6, 8]} />
               <meshBasicMaterial color="#FF007F" transparent opacity={0.6} />
             </mesh>
             
-            <group position={[0, EARTH_RADIUS, 0]}>
-               <mesh position={[0, 1.5, 0]}>
-                  <cylinderGeometry args={[0.03, 0.03, 3, 8]} />
-                  <meshBasicMaterial color="#FF007F" transparent opacity={0.5} />
-               </mesh>
-               <Html
-                 position={[0, 3.2, 0]}
-                 center
-                 distanceFactor={15}
-                 occlude={[earthMeshRef]}
-                 style={{ 
-                   pointerEvents: 'none',
-                   transform: 'translate3d(0, 0, 0)', 
-                 }}
-               >
-                 <div className="flex flex-col items-center opacity-90 transition-opacity duration-200">
-                    <div className="bg-black/60 border border-neon-pink px-2 py-0.5 rounded text-[8px] font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
-                      North Pole
-                    </div>
-                    <div className="w-px h-2 bg-neon-pink"></div>
-                 </div>
-               </Html>
-            </group>
+            {/* North Pole Label - Positioned exactly at the top of the axis line (Y=3) */}
+             <Html
+               position={[0, 3, 0]}
+               distanceFactor={10}
+               occlude={[earthMeshRef]}
+               style={{ 
+                 pointerEvents: 'none',
+               }}
+             >
+               <div className="flex flex-col items-center transform -translate-x-1/2 -translate-y-full">
+                  <div className="bg-black/60 border border-neon-pink px-2 py-0.5 rounded text-[8px] font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
+                    North Pole
+                  </div>
+                  <div className="w-px h-2 bg-neon-pink"></div>
+               </div>
+             </Html>
           </group>
 
           <MoonMesh />
@@ -543,7 +549,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
               makeDefault 
               fov={50} 
               near={0.1}
-              far={10000}
+              far={2000} // Increased far plane for new distances
            />
            <OrbitControls 
               ref={controlsRef}
@@ -554,7 +560,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
               rotateSpeed={0.5}
               zoomSpeed={0.5}
               minDistance={5.0} 
-              maxDistance={80} 
+              maxDistance={250} // Increased max distance to see full system
            />
          </>
       ) : (
@@ -563,7 +569,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
             position={[0, 50, 100]} // Default start pos for other modes
             fov={45} 
             near={0.1} 
-            far={10000} 
+            far={2000} 
          />
       )}
     </group>
@@ -594,7 +600,7 @@ const Earth3D: React.FC = () => {
 
       <Canvas shadows>
         <ambientLight intensity={0.05} /> 
-        <Stars radius={300} depth={50} count={6000} factor={4} saturation={0} fade speed={1} />
+        <Stars radius={400} depth={50} count={6000} factor={4} saturation={0} fade speed={1} />
         
         <Suspense fallback={<Loader />}>
           <SunMesh />
