@@ -1,6 +1,6 @@
 import React, { useRef, Suspense, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame, useLoader, useThree, ThreeElements } from '@react-three/fiber';
-import { OrbitControls, Stars, Html, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, Html, PerspectiveCamera } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d } from 'lucide-react';
@@ -61,14 +61,23 @@ void main() {
 }
 `;
 
+// Improved High-Quality Atmosphere Shader
+// Revised for a larger, softer, more realistic bloom
 const atmosphereFragmentShader = `
 varying vec3 vNormal;
 void main() {
-  vec3 normal = normalize(vNormal);
-  float viewDot = dot(normal, vec3(0.0, 0.0, 1.0));
-  float rim = 1.0 - max(viewDot, 0.0);
-  float intensity = pow(rim, 4.0);
-  gl_FragColor = vec4(0.1, 0.4, 0.9, 1.0) * intensity * 0.15; 
+  // Dot product of normal and view vector (0,0,1 in view space)
+  float viewDot = dot(vNormal, vec3(0, 0, 1.0));
+  
+  // Calculate intensity with a softer falloff (power 4.0 instead of 8.0)
+  // This allows the gradient to spread further inwards, making the atmosphere look "thicker" and softer
+  float intensity = pow(clamp(1.0 + viewDot, 0.0, 1.0), 4.0);
+  
+  // Atmosphere Color: Brighter, more vibrant blue to interact better with Bloom
+  vec3 atmosphereColor = vec3(0.3, 0.6, 1.0);
+  
+  // Low alpha (0.15) to make it very subtle and not obstruct the planet view
+  gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * 0.15;
 }
 `;
 
@@ -164,18 +173,32 @@ void main() {
 }
 `;
 
-// --- EARTH SHADERS ---
+// --- EARTH SHADERS (UPDATED WITH REALISTIC SPECULAR) ---
 
 const earthVertexShader = `
 varying vec2 vUv;
 varying vec3 vNormal;
 varying vec3 vSunDir;
-uniform vec3 sunPosition;
+varying vec3 vViewDir;
+
 void main() {
   vUv = uv;
-  vNormal = normalize(normal); 
-  vSunDir = normalize(sunPosition - position);
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  
+  // Transform normal to View Space
+  vNormal = normalize(normalMatrix * normal); 
+  
+  // Calculate Position in View Space
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  
+  // View Direction (Camera is at 0,0,0 in View Space)
+  vViewDir = normalize(-mvPosition.xyz);
+  
+  // Calculate Sun Direction in View Space
+  // Sun is at World (0,0,0). Transform (0,0,0,1) with ViewMatrix.
+  vec4 sunViewPos = viewMatrix * vec4(0.0, 0.0, 0.0, 1.0);
+  vSunDir = normalize(sunViewPos.xyz - mvPosition.xyz);
+  
+  gl_Position = projectionMatrix * mvPosition;
 }
 `;
 
@@ -183,16 +206,20 @@ const earthFragmentShader = `
 uniform sampler2D dayTexture;
 uniform sampler2D nightTexture;
 uniform sampler2D specularMapTexture;
+
 varying vec2 vUv;
 varying vec3 vNormal;
 varying vec3 vSunDir;
+varying vec3 vViewDir;
+
 void main() {
   vec3 normal = normalize(vNormal);
   vec3 sunDir = normalize(vSunDir);
+  vec3 viewDir = normalize(vViewDir);
+
   float dotProd = dot(normal, sunDir);
   
   // Softer terminator (Twilight zone)
-  // Widen the transition range (-0.2 to 0.2) to simulate atmospheric scattering
   float dayFactor = smoothstep(-0.2, 0.2, dotProd);
 
   vec3 dayColor = texture2D(dayTexture, vUv).rgb;
@@ -200,9 +227,18 @@ void main() {
   float specularStrength = texture2D(specularMapTexture, vUv).r;
   
   float diffuse = max(dotProd, 0.0);
-  float spec = pow(diffuse, 32.0) * specularStrength * 0.5;
   
-  vec3 finalDay = dayColor * (diffuse + 0.05) + vec3(spec); 
+  // Blinn-Phong Specular Reflection
+  vec3 halfVector = normalize(sunDir + viewDir);
+  float NdotH = max(dot(normal, halfVector), 0.0);
+  
+  // HIGHER SHININESS (80.0) -> Much smaller, tighter reflection, simulating sun glint on water
+  float specular = pow(NdotH, 80.0) * specularStrength;
+  
+  // LOWER INTENSITY (0.8) -> Subtle, realistic shine, not overpowering
+  vec3 specularColor = vec3(1.0, 0.95, 0.8) * specular * 0.8;
+  
+  vec3 finalDay = dayColor * (diffuse + 0.1) + specularColor; 
   vec3 cleanNight = max(nightColorSample - 0.2, 0.0);
   vec3 finalNight = cleanNight * vec3(6.0, 4.5, 3.0); 
   
@@ -216,7 +252,127 @@ void main() {
 }
 `;
 
+// --- BACKGROUND ---
+
+const ParallaxStars = () => {
+  const count = 2500;
+  
+  // Generate random positions, sizes, and colors for stars
+  const [positions, sizes, colors] = useMemo(() => {
+    const positions = new Float32Array(count * 3);
+    const sizes = new Float32Array(count);
+    const colors = new Float32Array(count * 3);
+    const color = new THREE.Color();
+    
+    for(let i=0; i<count; i++) {
+        // Distribute stars in a spherical volume
+        // We put stars between 800 and 3800 units away. 
+        // Since camera moves 0-300 units, this provides subtle but realistic parallax.
+        const r = 800 + Math.random() * 3700; 
+        const theta = 2 * Math.PI * Math.random();
+        const phi = Math.acos(2 * Math.random() - 1);
+        
+        positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+        positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+        positions[i*3+2] = r * Math.cos(phi);
+        
+        // Size variation for visual interest
+        sizes[i] = 20.0 + Math.random() * 40.0; 
+        
+        // Color variation (Real stars aren't just white)
+        // 10% Reddish, 20% Blueish, 70% White
+        const type = Math.random();
+        if(type > 0.9) color.setHex(0xffaaaa); // Reddish giants
+        else if(type > 0.7) color.setHex(0xaaccff); // Blue giants
+        else color.setHex(0xffffff); // Main sequence white
+        
+        colors[i*3] = color.r;
+        colors[i*3+1] = color.g;
+        colors[i*3+2] = color.b;
+    }
+    return [positions, sizes, colors];
+  }, []);
+
+  const material = useMemo(() => new THREE.ShaderMaterial({
+    uniforms: {
+        pixelRatio: { value: typeof window !== 'undefined' ? window.devicePixelRatio : 2.0 }
+    },
+    vertexShader: `
+        attribute float size;
+        varying vec3 vColor;
+        uniform float pixelRatio;
+        
+        void main() {
+            vColor = color; // Used default attribute injected by Three.js when vertexColors: true
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            // Size attenuation: Scale size based on distance to camera
+            gl_PointSize = size * pixelRatio * (150.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    `,
+    fragmentShader: `
+        varying vec3 vColor;
+        void main() {
+            // Soft circular particle
+            vec2 coord = gl_PointCoord - vec2(0.5);
+            float dist = length(coord);
+            
+            if (dist > 0.5) discard;
+            
+            // Soft glow from center with exponential falloff
+            float strength = 1.0 - (dist * 2.0);
+            strength = pow(strength, 2.0);
+            
+            gl_FragColor = vec4(vColor, strength);
+        }
+    `,
+    transparent: true,
+    vertexColors: true,
+    depthWrite: false, // Don't write to depth buffer so they don't occlude each other weirdly
+    blending: THREE.AdditiveBlending
+  }), []);
+
+  return (
+    <points frustumCulled={false}>
+        <bufferGeometry>
+            <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+            <bufferAttribute attach="attributes-size" count={count} array={sizes} itemSize={1} />
+            <bufferAttribute attach="attributes-color" count={count} array={colors} itemSize={3} />
+        </bufferGeometry>
+        <primitive object={material} attach="material" />
+    </points>
+  )
+}
+
+const StarBackground = () => {
+  const texture = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/stars_milky_way.jpg');
+  
+  return (
+    <group>
+        {/* Deep Background: Milky Way Texture */}
+        {/* Pushed further back and dimmed to act as a canvas for the 3D stars */}
+        <mesh renderOrder={-1}>
+          <sphereGeometry args={[4800, 64, 64]} />
+          <meshBasicMaterial 
+            map={texture} 
+            side={THREE.BackSide} 
+            toneMapped={false}
+            // UPDATED: Brightened color and opacity to make the Milky Way visible
+            color="#cccccc" 
+            transparent
+            opacity={1.0}
+            depthWrite={false}
+          />
+        </mesh>
+        
+        {/* 3D Parallax Stars */}
+        <ParallaxStars />
+    </group>
+  );
+};
+
 const SunMesh = () => {
+  const sunTexture = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/sun.jpg');
   const meshRef = useRef<THREE.Mesh>(null);
   const haloMaterialRef = useRef<THREE.ShaderMaterial>(null);
 
@@ -233,8 +389,8 @@ const SunMesh = () => {
     <group position={[0, 0, 0]}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
-        {/* Use procedural color with high RGB values to trigger bloom without texture */}
-        <meshBasicMaterial color={[1.8, 1.4, 0.8]} toneMapped={false} />
+        {/* Use meshBasicMaterial with map and boosted color for bloom emission */}
+        <meshBasicMaterial map={sunTexture} color={[1.5, 1.5, 1.5]} toneMapped={false} />
       </mesh>
       <mesh scale={[1.15, 1.15, 1.15]}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
@@ -501,7 +657,8 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
                   uniforms={earthUniforms}
                 />
               </mesh>
-              <mesh scale={[1.02, 1.02, 1.02]}>
+              {/* High Quality Atmosphere Mesh: Increased scale (1.045) and adjusted shader for larger, softer glow */}
+              <mesh scale={[1.045, 1.045, 1.045]}>
                 <sphereGeometry args={[EARTH_RADIUS, 64, 64]} />
                 <shaderMaterial
                   vertexShader={atmosphereVertexShader}
@@ -549,7 +706,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
               makeDefault 
               fov={50} 
               near={0.1}
-              far={2000} // Increased far plane for new distances
+              far={10000} // Increased far plane for new distances
            />
            <OrbitControls 
               ref={controlsRef}
@@ -569,7 +726,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
             position={[0, 50, 100]} // Default start pos for other modes
             fov={45} 
             near={0.1} 
-            far={2000} 
+            far={10000} 
          />
       )}
     </group>
@@ -600,9 +757,9 @@ const Earth3D: React.FC = () => {
 
       <Canvas shadows>
         <ambientLight intensity={0.05} /> 
-        <Stars radius={400} depth={50} count={6000} factor={4} saturation={0} fade speed={1} />
-        
+        {/* Replaced procedural stars with realistic Milky Way background */}
         <Suspense fallback={<Loader />}>
+          <StarBackground />
           <SunMesh />
           <HeliocentricSystem viewMode={viewMode} />
         </Suspense>
