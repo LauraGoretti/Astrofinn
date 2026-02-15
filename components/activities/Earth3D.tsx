@@ -493,6 +493,7 @@ interface PlanetConfig {
   hasRings?: boolean;
   orbitColor: string;
   startAngle: number; // For deterministic positioning
+  tilt?: number; // Axial tilt in radians
 }
 
 // REAL LIFE PLANETARY RATIOS
@@ -519,7 +520,8 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: BASE_ROTATION_SPEED * (1 / -243), // Extremely slow & retrograde
     texture: 'venus_atmosphere.jpg', 
     orbitColor: '#E3BB76', 
-    startAngle: 2 
+    startAngle: 2,
+    tilt: 177 * (Math.PI / 180) // Upside down!
   },
   // Earth is handled by existing components at approx distance 215-250 (ellipse)
   { 
@@ -530,7 +532,8 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: BASE_ROTATION_SPEED * (1 / 1.03), // Similar to Earth
     texture: 'mars.jpg', 
     orbitColor: '#FF4500', 
-    startAngle: 4 
+    startAngle: 4,
+    tilt: 25 * (Math.PI / 180)
   },
   { 
     name: 'Jupiter', 
@@ -540,7 +543,8 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.41), // Fast spin
     texture: 'jupiter.jpg', 
     orbitColor: '#FFA500', 
-    startAngle: 1 
+    startAngle: 1,
+    tilt: 3 * (Math.PI / 180)
   },
   { 
     name: 'Saturn', 
@@ -551,7 +555,8 @@ const PLANETS: PlanetConfig[] = [
     texture: 'saturn.jpg', 
     hasRings: true, 
     orbitColor: '#F4C542', 
-    startAngle: 3 
+    startAngle: 3,
+    tilt: 27 * (Math.PI / 180)
   },
   { 
     name: 'Uranus', 
@@ -561,7 +566,8 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: BASE_ROTATION_SPEED * (1 / -0.72), // Fast retrograde spin
     texture: 'uranus.jpg', 
     orbitColor: '#00FFFF', 
-    startAngle: 5 
+    startAngle: 5,
+    tilt: 98 * (Math.PI / 180) // Rolling on side
   },
   { 
     name: 'Neptune', 
@@ -571,9 +577,28 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.67), // Fast spin
     texture: 'neptune.jpg', 
     orbitColor: '#4169E1', 
-    startAngle: 0.5 
+    startAngle: 0.5,
+    tilt: 28 * (Math.PI / 180)
   },
 ];
+
+const PlanetRing: React.FC<{ radius: number }> = ({ radius }) => {
+  const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}saturn_ring.png`);
+  
+  return (
+    // Rotate ring -90 deg on X to be flat on the planet's equatorial plane
+    <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[radius * 1.4, radius * 2.2, 64]} />
+        <meshStandardMaterial 
+            map={texture} 
+            side={THREE.DoubleSide} 
+            transparent 
+            opacity={0.8} 
+            color="#ffffff"
+        />
+    </mesh>
+  );
+};
 
 const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
   const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}${config.texture}`);
@@ -592,7 +617,12 @@ const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
     // Deterministic Orbit Calculation using global time
     // This matches the calculation in the main camera controller so they stay in sync
     const t = state.clock.getElapsedTime();
-    const currentAngle = config.startAngle + t * config.speed * 0.1;
+    // SPEED CORRECTION: Removed the 0.1 multiplier.
+    // Previously: t * config.speed * 0.1.
+    // config.speed is derived from Earth speed (0.04). Mercury speed is 0.166.
+    // With 0.1, Mercury was moving at 0.0166, which is slower than Earth's 0.04.
+    // Now Mercury will move at 0.166, which is faster than Earth's 0.04.
+    const currentAngle = config.startAngle + t * config.speed; 
     
     if (orbitRef.current) {
         orbitRef.current.position.x = Math.cos(currentAngle) * config.distance;
@@ -608,23 +638,21 @@ const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
     <group>
         {/* Dynamic Planet Object */}
         <group ref={orbitRef}>
-            <mesh ref={meshRef} castShadow receiveShadow>
-                <sphereGeometry args={[config.radius, 64, 64]} />
-                <meshStandardMaterial map={texture} roughness={0.7} />
-            </mesh>
+            {/* Axial Tilt Group - Rotates around Z axis to tilt the pole */}
+            <group rotation={[0, 0, config.tilt || 0]}>
+                <mesh ref={meshRef} castShadow receiveShadow>
+                    <sphereGeometry args={[config.radius, 64, 64]} />
+                    <meshStandardMaterial map={texture} roughness={0.7} />
+                </mesh>
+                
+                {/* Planet Ring - Inside the tilt group so it aligns with equator */}
+                {config.hasRings && <PlanetRing radius={config.radius} />}
+            </group>
             
             {/* Simple Label */}
             <Html distanceFactor={120} position={[0, config.radius + 2, 0]} style={{ pointerEvents: 'none' }}>
             <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{config.name}</div>
             </Html>
-
-            {/* Procedural Rings for Saturn */}
-            {config.hasRings && (
-                <mesh rotation={[Math.PI / 2.5, 0, 0]}>
-                    <ringGeometry args={[config.radius * 1.4, config.radius * 2.2, 64]} />
-                    <meshStandardMaterial color="#c2a384" side={THREE.DoubleSide} transparent opacity={0.8} />
-                </mesh>
-            )}
         </group>
 
         {/* Static Orbit Path */}
@@ -768,7 +796,8 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
              if (targetPlanet) {
                  // We calculate the exact position of the focused planet using the same math as PlanetMesh
                  const t = state.clock.getElapsedTime();
-                 const angle = targetPlanet.startAngle + t * targetPlanet.speed * 0.1;
+                 // SPEED CORRECTION: Removed * 0.1 to match PlanetMesh speed.
+                 const angle = targetPlanet.startAngle + t * targetPlanet.speed; 
                  const pX = Math.cos(angle) * targetPlanet.distance;
                  const pZ = Math.sin(angle) * targetPlanet.distance;
                  targetPos = new THREE.Vector3(pX, 0, pZ);
