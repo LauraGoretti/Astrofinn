@@ -19,9 +19,9 @@ const ShadowLab: React.FC<ShadowLabProps> = ({ mode }) => {
   if (sunHeight <= 5) shadowLength = 600; // Cap max length
 
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="grid md:grid-cols-2 gap-12">
-        <div className="glass-panel p-8 rounded-2xl flex flex-col justify-between min-h-[400px]">
+    <div className="w-full h-full flex flex-col gap-6">
+      <div className="grid lg:grid-cols-2 gap-8 h-full">
+        <div className="glass-panel p-8 rounded-2xl flex flex-col justify-between h-full min-h-[500px]">
           
           <div className="relative flex-grow bg-gradient-to-b from-blue-900/20 to-space-900 border-b-2 border-white/20 mb-8 overflow-hidden rounded-lg">
              {/* Sun visual */}
@@ -51,7 +51,7 @@ const ShadowLab: React.FC<ShadowLabProps> = ({ mode }) => {
              <div className="absolute bottom-2 left-2 text-xs font-mono text-gray-400">Ground Level</div>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 shrink-0">
             <div className="flex justify-between items-center">
               <span className="font-bold text-neon-green">Sun Altitude: {sunHeight}°</span>
               <span className="font-mono text-xs text-gray-500">
@@ -72,8 +72,8 @@ const ShadowLab: React.FC<ShadowLabProps> = ({ mode }) => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center space-y-6">
-          <div className="p-6 bg-space-800 rounded-xl border border-white/10">
+        <div className="flex flex-col gap-6 overflow-y-auto">
+          <div className="p-6 bg-space-800 rounded-xl border border-white/10 shrink-0">
             <h3 className="text-xl font-bold text-white mb-2">Shadow Physics</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
               Shadows change length based on the angle of the light source. 
@@ -81,7 +81,9 @@ const ShadowLab: React.FC<ShadowLabProps> = ({ mode }) => {
               At the equator, the sun can be directly overhead (90°), causing almost no shadow.
             </p>
           </div>
-          <QuizModule topic="Sun shadows and angle of incidence physics" />
+          <div className="flex-1 min-h-[400px]">
+             <QuizModule topic="Sun shadows and angle of incidence physics" />
+          </div>
         </div>
       </div>
     </div>

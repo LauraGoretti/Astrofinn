@@ -1,17 +1,9 @@
 import React, { useRef, Suspense, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useLoader, useThree, ThreeElements } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls, Html, PerspectiveCamera } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d } from 'lucide-react';
-
-// Explicitly extend JSX.IntrinsicElements with ThreeElements to resolve TypeScript errors
-// for R3F components like <mesh>, <group>, etc.
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
+import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d, Globe, Disc, Search } from 'lucide-react';
 
 // Constants for Simulation - UPDATED FOR SCIENTIFIC PROPORTIONS
 // Reference: Earth R = 6371km, Moon R = 1737km (Ratio ~3.67)
@@ -38,18 +30,29 @@ const FOCAL_OFFSET = 80;
 
 const SUN_RADIUS = 18;     
 
-// Simulation Speeds (radians per second)
-// 1. Earth Day is the base unit.
-const EARTH_ROTATION_SPEED = 0.8; 
+// --- REAL LIFE PROPORTIONAL SPEEDS (SLOWED DOWN) ---
+// To maintain visual stability while using real data, we define two base units:
+// 1. Visually pleasing Rotation Speed (for Earth)
+// 2. Visually pleasing Orbital Speed (for Earth)
+// All other bodies are calculated as ratios of these bases.
 
-// 2. Moon Month is ~28 days.
-const MOON_ORBIT_SPEED = EARTH_ROTATION_SPEED / 28; 
+// PREVIOUS VALUES: Rotation 0.5, Orbit 0.15
+// NEW VALUES: Scaled down by approx factor of 3-4 for better observation
+const BASE_ROTATION_SPEED = 0.15; // Visual speed for Earth's rotation
+const BASE_ORBIT_SPEED = 0.04;    // Visual speed for Earth's revolution (Year)
 
-// 3. Earth Year is ~12 months (simplified to 8 here for visual pacing).
-const EARTH_YEAR_SPEED = MOON_ORBIT_SPEED / 8;
+// 1. Earth Day is the base unit for rotation.
+const EARTH_ROTATION_SPEED = BASE_ROTATION_SPEED; 
+
+// 2. Earth Year is the base unit for orbit.
+const EARTH_YEAR_SPEED = BASE_ORBIT_SPEED;
+
+// 3. Moon Orbit: The Moon orbits Earth ~27.3 days. 
+// Earth orbits Sun ~365.25 days. Ratio: 365.25 / 27.3 ≈ 13.38 moon orbits per year.
+const MOON_ORBIT_SPEED = EARTH_YEAR_SPEED * 13.38;
 
 // Types
-type ViewMode = 'EARTH_FREE' | 'EARTH_DAY' | 'EARTH_NIGHT' | 'SYSTEM_TOP' | 'SYSTEM_AUTO';
+type ViewMode = 'EARTH_FREE' | 'EARTH_DAY' | 'EARTH_NIGHT' | 'SYSTEM_TOP' | 'SYSTEM_AUTO' | 'SOLAR_SYSTEM';
 
 // --- ATMOSPHERE SHADERS ---
 
@@ -475,11 +478,177 @@ const MoonMesh = () => {
   );
 };
 
-interface HeliocentricSystemProps {
-  viewMode: ViewMode;
+// --- SOLAR SYSTEM EXTRA PLANETS ---
+
+interface PlanetConfig {
+  name: string;
+  radius: number;
+  distance: number;
+  speed: number;
+  rotationSpeed: number;
+  texture: string;
+  hasRings?: boolean;
+  orbitColor: string;
+  startAngle: number; // For deterministic positioning
 }
 
-const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => {
+// REAL LIFE PLANETARY RATIOS
+// Orbital Period (Years): Mer(0.24), Ven(0.615), Earth(1.0), Mars(1.88), Jup(11.86), Sat(29.4), Ura(84), Nep(164.8)
+// Rotation Period (Days): Mer(58.6), Ven(-243), Earth(1.0), Mars(1.03), Jup(0.41), Sat(0.45), Ura(-0.72), Nep(0.67)
+// Speed = BASE / Period
+
+const PLANETS: PlanetConfig[] = [
+  { 
+    name: 'Mercury', 
+    radius: 0.8, 
+    distance: 70, 
+    speed: BASE_ORBIT_SPEED * (1 / 0.24),  // ~4.16x Earth speed
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / 58.6), // Very slow
+    texture: 'mercury.jpg', 
+    orbitColor: '#A5A5A5', 
+    startAngle: 0 
+  },
+  { 
+    name: 'Venus', 
+    radius: 1.9, 
+    distance: 110, 
+    speed: BASE_ORBIT_SPEED * (1 / 0.615), // ~1.62x Earth speed
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / -243), // Extremely slow & retrograde
+    texture: 'venus_atmosphere.jpg', 
+    orbitColor: '#E3BB76', 
+    startAngle: 2 
+  },
+  // Earth is handled by existing components at approx distance 215-250 (ellipse)
+  { 
+    name: 'Mars', 
+    radius: 1.1, 
+    distance: 320, 
+    speed: BASE_ORBIT_SPEED * (1 / 1.88), // ~0.53x Earth speed
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / 1.03), // Similar to Earth
+    texture: 'mars.jpg', 
+    orbitColor: '#FF4500', 
+    startAngle: 4 
+  },
+  { 
+    name: 'Jupiter', 
+    radius: 10, 
+    distance: 450, 
+    speed: BASE_ORBIT_SPEED * (1 / 11.86), // Slow orbit
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.41), // Fast spin
+    texture: 'jupiter.jpg', 
+    orbitColor: '#FFA500', 
+    startAngle: 1 
+  },
+  { 
+    name: 'Saturn', 
+    radius: 8.5, 
+    distance: 580, 
+    speed: BASE_ORBIT_SPEED * (1 / 29.4), // Very slow orbit
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.45), // Fast spin
+    texture: 'saturn.jpg', 
+    hasRings: true, 
+    orbitColor: '#F4C542', 
+    startAngle: 3 
+  },
+  { 
+    name: 'Uranus', 
+    radius: 3.5, 
+    distance: 700, 
+    speed: BASE_ORBIT_SPEED * (1 / 84), // Crawling orbit
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / -0.72), // Fast retrograde spin
+    texture: 'uranus.jpg', 
+    orbitColor: '#00FFFF', 
+    startAngle: 5 
+  },
+  { 
+    name: 'Neptune', 
+    radius: 3.4, 
+    distance: 800, 
+    speed: BASE_ORBIT_SPEED * (1 / 164.8), // Almost static orbit
+    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.67), // Fast spin
+    texture: 'neptune.jpg', 
+    orbitColor: '#4169E1', 
+    startAngle: 0.5 
+  },
+];
+
+const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
+  const texture = useLoader(THREE.TextureLoader, `https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/${config.texture}`);
+  const orbitRef = useRef<THREE.Group>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+  
+  // Create orbit geometry flat on XZ plane
+  const orbitGeometry = useMemo(() => {
+    const curve = new THREE.EllipseCurve(0, 0, config.distance, config.distance, 0, 2 * Math.PI, false, 0);
+    const points = curve.getPoints(128);
+    // EllipseCurve returns points in 2D (x, y). We map them to (x, 0, y) for XZ plane.
+    return new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(p.x, 0, p.y)));
+  }, [config.distance]);
+
+  useFrame((state, delta) => {
+    // Deterministic Orbit Calculation using global time
+    // This matches the calculation in the main camera controller so they stay in sync
+    const t = state.clock.getElapsedTime();
+    const currentAngle = config.startAngle + t * config.speed * 0.1;
+    
+    if (orbitRef.current) {
+        orbitRef.current.position.x = Math.cos(currentAngle) * config.distance;
+        orbitRef.current.position.z = Math.sin(currentAngle) * config.distance;
+    }
+    // Rotate Planet
+    if (meshRef.current) {
+        meshRef.current.rotation.y += config.rotationSpeed * delta; // Ensure frame-rate independence
+    }
+  });
+
+  return (
+    <group>
+        {/* Dynamic Planet Object */}
+        <group ref={orbitRef}>
+            <mesh ref={meshRef} castShadow receiveShadow>
+                <sphereGeometry args={[config.radius, 64, 64]} />
+                <meshStandardMaterial map={texture} roughness={0.7} />
+            </mesh>
+            
+            {/* Simple Label */}
+            <Html distanceFactor={120} position={[0, config.radius + 2, 0]} style={{ pointerEvents: 'none' }}>
+            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{config.name}</div>
+            </Html>
+
+            {/* Procedural Rings for Saturn */}
+            {config.hasRings && (
+                <mesh rotation={[Math.PI / 2.5, 0, 0]}>
+                    <ringGeometry args={[config.radius * 1.4, config.radius * 2.2, 64]} />
+                    <meshStandardMaterial color="#c2a384" side={THREE.DoubleSide} transparent opacity={0.8} />
+                </mesh>
+            )}
+        </group>
+
+        {/* Static Orbit Path */}
+        <lineLoop geometry={orbitGeometry} rotation={[0, 0, 0]}>
+             <lineBasicMaterial color={config.orbitColor} opacity={0.3} transparent />
+        </lineLoop>
+    </group>
+  );
+};
+
+// Container component to handle loading multiple textures without breaking rules of hooks
+const SolarSystem = () => {
+    return (
+        <group>
+            {PLANETS.map((planet) => (
+                <PlanetMesh key={planet.name} config={planet} />
+            ))}
+        </group>
+    )
+}
+
+interface HeliocentricSystemProps {
+  viewMode: ViewMode;
+  focusedPlanet: string | null;
+}
+
+const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet }) => {
   const [dayTexture, nightTexture, specularMap] = useLoader(THREE.TextureLoader, [
     'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/earth_day.jpg',
     'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/textures/earth_night.jpg',
@@ -528,18 +697,25 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
     const timer = setTimeout(() => {
         isTransitioning.current = false;
         
-        // If switching TO Free Mode, snap camera to Earth relative pos
-        if (viewMode === 'EARTH_FREE' && cameraRef.current && controlsRef.current && earthContainerRef.current) {
-            const earthPos = earthContainerRef.current.position;
-            // Snap camera to a nice offset
-            cameraRef.current.position.set(earthPos.x, earthPos.y + 10, earthPos.z + 40);
-            controlsRef.current.target.copy(earthPos);
+        if (cameraRef.current && controlsRef.current) {
+            if (viewMode === 'EARTH_FREE' && earthContainerRef.current) {
+                // Snap camera to Earth relative pos
+                const earthPos = earthContainerRef.current.position;
+                // CLOSER DEFAULT CAMERA
+                cameraRef.current.position.set(earthPos.x, earthPos.y + 6, earthPos.z + 18);
+                controlsRef.current.target.copy(earthPos);
+            } 
+            else if (viewMode === 'SOLAR_SYSTEM' && !focusedPlanet) {
+                // Initialize Solar System View - Wide shot but allow movement after
+                cameraRef.current.position.set(0, 400, 600);
+                controlsRef.current.target.set(0, 0, 0);
+            }
             controlsRef.current.update();
         }
     }, 100);
     
     return () => clearTimeout(timer);
-  }, [viewMode]);
+  }, [viewMode, focusedPlanet]);
 
   useFrame((state, delta) => {
     // 1. Calculate Earth Orbit Position
@@ -561,24 +737,60 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
     // This vector represents how much the Earth moved this frame
     const posDelta = currentEarthPos.clone().sub(prevEarthPos.current);
 
-    // 3. EARTH FREE MODE - Manual Camera Follow
-    // We manually shift the camera and controls target by the same amount the Earth moved.
-    // This creates a "perfect follow" without drift.
+    // 3. CAMERA TRACKING LOGIC
     if (viewMode === 'EARTH_FREE' && !isTransitioning.current) {
+        // Manual Camera Follow for Earth Free Mode
         if (state.camera && controlsRef.current) {
-             // Add Earth's movement to Camera
              state.camera.position.add(posDelta);
-             
-             // Add Earth's movement to OrbitControls Target
              controlsRef.current.target.add(posDelta);
              
-             // Check for Drift Error (if camera gets lost)
+             // Check for Drift Error
              const dist = state.camera.position.distanceTo(currentEarthPos);
              if (dist > 300) {
-                 // Emergency Reset
                  state.camera.position.copy(currentEarthPos).add(new THREE.Vector3(0, 10, 40));
                  controlsRef.current.target.copy(currentEarthPos);
              }
+        }
+    } 
+    else if (viewMode === 'SOLAR_SYSTEM' && focusedPlanet) {
+        // AUTOMATIC PLANET TRACKING
+        let targetPos: THREE.Vector3 | null = null;
+        let targetRadius = 5; // Default
+
+        if (focusedPlanet === 'Earth') {
+             targetPos = currentEarthPos;
+             targetRadius = EARTH_RADIUS;
+        } else {
+             const targetPlanet = PLANETS.find(p => p.name === focusedPlanet);
+             if (targetPlanet) {
+                 // We calculate the exact position of the focused planet using the same math as PlanetMesh
+                 const t = state.clock.getElapsedTime();
+                 const angle = targetPlanet.startAngle + t * targetPlanet.speed * 0.1;
+                 const pX = Math.cos(angle) * targetPlanet.distance;
+                 const pZ = Math.sin(angle) * targetPlanet.distance;
+                 targetPos = new THREE.Vector3(pX, 0, pZ);
+                 targetRadius = targetPlanet.radius;
+             }
+        }
+
+        if (targetPos && state.camera && controlsRef.current) {
+            // Lerp Controls Target to Planet
+            controlsRef.current.target.lerp(targetPos, 0.1);
+            
+            // Lerp Camera Position to a fixed offset relative to planet
+            // We keep the camera at a consistent offset (e.g., 20 units up, 40 back)
+            // Note: To allow user rotation around the planet, we might want to just update target and let OrbitControls handle pos,
+            // BUT OrbitControls is sticky. To follow a moving target, we must move the camera too.
+            
+            // Calculate desired camera position based on current relative offset
+            // This preserves user rotation while moving the camera base
+            const offset = state.camera.position.clone().sub(controlsRef.current.target);
+            // Clamp offset distance to stay close to planet
+            const idealDist = targetRadius * 6 + 10;
+            if (offset.length() > idealDist * 2) offset.setLength(idealDist);
+            
+            state.camera.position.lerp(targetPos.clone().add(offset), 0.1);
+            controlsRef.current.update();
         }
     }
 
@@ -595,7 +807,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
     }
     
     // 6. OTHER CAMERA MODES (Cinematic/Fixed)
-    if (viewMode !== 'EARTH_FREE') {
+    if (viewMode !== 'EARTH_FREE' && viewMode !== 'SOLAR_SYSTEM') {
         if (viewMode === 'SYSTEM_AUTO') {
            const t = state.clock.getElapsedTime() * 0.1;
            const radius = 350;
@@ -639,6 +851,9 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
 
   return (
     <group>
+      {/* Solar System Planets - Only in Specific Mode */}
+      {viewMode === 'SOLAR_SYSTEM' && <SolarSystem />}
+
       {/* Orbit Path */}
       <lineLoop geometry={orbitPathGeometry}>
         <lineBasicMaterial attach="material" color="#00F0FF" opacity={0.4} transparent />
@@ -695,11 +910,16 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
              </Html>
           </group>
 
+          {/* Earth Label - Placed outside the rotated group to stay upright */}
+          <Html distanceFactor={120} position={[0, EARTH_RADIUS + 2.5, 0]} style={{ pointerEvents: 'none' }}>
+            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">Earth</div>
+          </Html>
+
           <MoonMesh />
       </group>
 
       {/* CAMERA SETUP - ROOT LEVEL */}
-      {viewMode === 'EARTH_FREE' ? (
+      {(viewMode === 'EARTH_FREE' || viewMode === 'SOLAR_SYSTEM') ? (
          <>
            <PerspectiveCamera 
               ref={cameraRef}
@@ -711,13 +931,14 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
            <OrbitControls 
               ref={controlsRef}
               makeDefault
-              enablePan={false}
+              enablePan={true}
               enableZoom={true}
               enableDamping={false} /* CRITICAL: Disable damping to prevent drift lag */
               rotateSpeed={0.5}
               zoomSpeed={0.5}
-              minDistance={5.0} 
-              maxDistance={250} // Increased max distance to see full system
+              // Adjust limits based on mode
+              minDistance={viewMode === 'SOLAR_SYSTEM' ? (focusedPlanet ? 5 : 50) : 5.0} 
+              maxDistance={viewMode === 'SOLAR_SYSTEM' ? 4000 : 250} 
            />
          </>
       ) : (
@@ -733,6 +954,10 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode }) => 
   );
 };
 
+interface Earth3DProps {
+  className?: string;
+}
+
 const Loader = () => {
   return (
     <Html center>
@@ -744,11 +969,12 @@ const Loader = () => {
   );
 }
 
-const Earth3D: React.FC = () => {
+const Earth3D: React.FC<Earth3DProps> = ({ className }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('EARTH_FREE');
+  const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
 
   return (
-    <div className="w-full h-[600px] bg-black rounded-xl overflow-hidden border border-white/10 relative shadow-2xl shadow-black">
+    <div className={`w-full min-h-[400px] bg-black rounded-xl overflow-hidden border border-white/10 relative shadow-2xl shadow-black transition-all duration-300 ${className || "h-[60vh] md:h-[75vh]"}`}>
       <div className="absolute top-4 right-4 pointer-events-none z-10">
         <div className="bg-neon-blue/10 border border-neon-blue/30 px-3 py-1 rounded text-neon-blue text-xs font-bold tracking-widest uppercase animate-pulse">
           Heliocentric Model
@@ -761,7 +987,7 @@ const Earth3D: React.FC = () => {
         <Suspense fallback={<Loader />}>
           <StarBackground />
           <SunMesh />
-          <HeliocentricSystem viewMode={viewMode} />
+          <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} />
         </Suspense>
         
         <EffectComposer>
@@ -775,14 +1001,59 @@ const Earth3D: React.FC = () => {
       </Canvas>
       
       {/* Enhanced View Controls Overlay */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full max-w-2xl px-4">
-        <div className="bg-black/80 backdrop-blur-md p-2 rounded-xl border border-white/10 flex items-center justify-between">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full max-w-3xl px-4 flex flex-col items-center">
+        
+        {/* Planet Selector - Only visible in SOLAR_SYSTEM Mode */}
+        {viewMode === 'SOLAR_SYSTEM' && (
+          <div className="bg-black/90 backdrop-blur-md p-1.5 rounded-xl border border-white/20 mb-3 flex items-center space-x-1 overflow-x-auto max-w-full scrollbar-none">
+             <button
+                onClick={() => setFocusedPlanet(null)}
+                className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap ${
+                    !focusedPlanet ? 'bg-white text-black font-bold' : 'text-gray-400 hover:text-white'
+                }`}
+             >
+                System
+             </button>
+             <div className="w-px h-3 bg-gray-700 mx-0.5"></div>
+             {PLANETS.map((p, i) => (
+                 <React.Fragment key={p.name}>
+                    {/* Manually insert Earth button before Mars (index 2) */}
+                    {i === 2 && (
+                        <>
+                         <button
+                            onClick={() => setFocusedPlanet('Earth')}
+                            className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap flex items-center space-x-1 ${
+                                focusedPlanet === 'Earth' ? 'bg-neon-blue text-black font-bold' : 'text-gray-400 hover:text-white'
+                            }`}
+                         >
+                            <div className="w-1.5 h-1.5 rounded-full bg-neon-blue"></div>
+                            <span>Earth</span>
+                         </button>
+                         <div className="w-px h-3 bg-gray-700 mx-0.5"></div>
+                        </>
+                    )}
+                    <button
+                        onClick={() => setFocusedPlanet(p.name)}
+                        className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap flex items-center space-x-1 ${
+                            focusedPlanet === p.name ? 'bg-neon-blue text-black font-bold' : 'text-gray-400 hover:text-white'
+                        }`}
+                    >
+                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p.orbitColor }}></div>
+                        <span>{p.name}</span>
+                    </button>
+                 </React.Fragment>
+             ))}
+          </div>
+        )}
+
+        {/* Main Controls */}
+        <div className="bg-black/80 backdrop-blur-md p-2 rounded-xl border border-white/10 flex items-center justify-between w-auto">
           
           {/* Earth Controls Group */}
           <div className="flex items-center space-x-1 mr-4">
             <span className="text-[10px] text-gray-500 font-mono uppercase mr-2 hidden sm:block">Earth</span>
             <button
-              onClick={() => setViewMode('EARTH_FREE')}
+              onClick={() => { setViewMode('EARTH_FREE'); setFocusedPlanet(null); }}
               title="Free Orbit"
               className={`p-2 rounded-lg transition-all ${
                 viewMode === 'EARTH_FREE' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-white/10'
@@ -791,7 +1062,7 @@ const Earth3D: React.FC = () => {
               <Move3d size={18} />
             </button>
             <button
-              onClick={() => setViewMode('EARTH_DAY')}
+              onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
               title="Fix Day Side"
               className={`p-2 rounded-lg transition-all ${
                 viewMode === 'EARTH_DAY' ? 'bg-yellow-500 text-white' : 'text-gray-400 hover:bg-white/10'
@@ -800,7 +1071,7 @@ const Earth3D: React.FC = () => {
               <Sun size={18} />
             </button>
             <button
-              onClick={() => setViewMode('EARTH_NIGHT')}
+              onClick={() => { setViewMode('EARTH_NIGHT'); setFocusedPlanet(null); }}
               title="Fix Night Side"
               className={`p-2 rounded-lg transition-all ${
                 viewMode === 'EARTH_NIGHT' ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:bg-white/10'
@@ -816,7 +1087,7 @@ const Earth3D: React.FC = () => {
           <div className="flex items-center space-x-1 ml-4">
             <span className="text-[10px] text-gray-500 font-mono uppercase mr-2 hidden sm:block">System</span>
             <button
-              onClick={() => setViewMode('SYSTEM_TOP')}
+              onClick={() => { setViewMode('SYSTEM_TOP'); setFocusedPlanet(null); }}
               title="Top Down"
               className={`p-2 rounded-lg transition-all ${
                 viewMode === 'SYSTEM_TOP' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:bg-white/10'
@@ -825,13 +1096,22 @@ const Earth3D: React.FC = () => {
               <ArrowDownToLine size={18} />
             </button>
             <button
-              onClick={() => setViewMode('SYSTEM_AUTO')}
+              onClick={() => { setViewMode('SYSTEM_AUTO'); setFocusedPlanet(null); }}
               title="Cinematic"
               className={`p-2 rounded-lg transition-all ${
                 viewMode === 'SYSTEM_AUTO' ? 'bg-orange-500 text-white' : 'text-gray-400 hover:bg-white/10'
               }`}
             >
               <InfinityIcon size={18} />
+            </button>
+            <button
+              onClick={() => setViewMode('SOLAR_SYSTEM')}
+              title="Full Solar System"
+              className={`p-2 rounded-lg transition-all ${
+                viewMode === 'SOLAR_SYSTEM' ? 'bg-violet-600 text-white' : 'text-gray-400 hover:bg-white/10'
+              }`}
+            >
+              {viewMode === 'SOLAR_SYSTEM' ? <Disc size={18} className="animate-spin-slow" /> : <Globe size={18} />}
             </button>
           </div>
         </div>
@@ -843,6 +1123,8 @@ const Earth3D: React.FC = () => {
              {viewMode === 'EARTH_NIGHT' && "MODE: LOCKED TO NIGHT SIDE"}
              {viewMode === 'SYSTEM_TOP' && "MODE: TOP-DOWN SATELLITE VIEW"}
              {viewMode === 'SYSTEM_AUTO' && "MODE: CINEMATIC AUTOPILOT"}
+             {viewMode === 'SOLAR_SYSTEM' && !focusedPlanet && "MODE: FULL SOLAR SYSTEM // SELECT A PLANET TO ZOOM"}
+             {viewMode === 'SOLAR_SYSTEM' && focusedPlanet && `TRACKING: ${focusedPlanet.toUpperCase()}`}
           </p>
         </div>
       </div>

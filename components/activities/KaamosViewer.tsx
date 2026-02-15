@@ -41,12 +41,12 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
   const isMidnightSun = hours === 24;
 
   return (
-    <div className="space-y-12">
-      <div className="grid lg:grid-cols-2 gap-8">
+    <div className="w-full h-full flex flex-col gap-6">
+      <div className="grid lg:grid-cols-2 gap-8 h-full">
         
         {/* Interactive Viewer */}
-        <div className="glass-panel p-6 rounded-2xl border border-white/10">
-          <div className="flex items-center justify-between mb-6">
+        <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col h-full min-h-[500px]">
+          <div className="flex items-center justify-between mb-6 shrink-0">
             <h2 className="text-2xl font-bold text-white flex items-center">
               <MapPin className="mr-2 text-neon-blue" />
               Nordic Sun Tracker
@@ -64,7 +64,7 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
             </div>
           </div>
 
-          <div className="relative h-64 bg-space-800 rounded-xl overflow-hidden mb-6 flex items-end justify-center border-b border-white/20">
+          <div className="relative flex-1 bg-space-800 rounded-xl overflow-hidden mb-6 flex items-end justify-center border-b border-white/20">
              {/* Sky Gradient */}
              <div className={`absolute inset-0 transition-colors duration-1000 ${
                isKaamos ? 'bg-gradient-to-b from-black to-slate-900' :
@@ -93,7 +93,7 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
           </div>
 
           {/* Controls */}
-          <div className="space-y-4">
+          <div className="space-y-4 shrink-0">
              <div className="flex justify-between text-xs text-gray-500 font-mono uppercase">
                <span>Jan</span>
                <span>Dec</span>
@@ -123,7 +123,7 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
         </div>
 
         {/* Content & Quiz */}
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6 overflow-y-auto">
            <div className="bg-space-800/50 p-6 rounded-xl border-l-4 border-neon-blue">
              <h3 className="text-lg font-bold text-neon-blue mb-2">Did you know?</h3>
              <p className="text-gray-300 leading-relaxed">
@@ -132,7 +132,9 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
              </p>
            </div>
            
-           <QuizModule topic={`The phenomenon of ${isKaamos ? 'Kaamos and polar night' : 'Midnight Sun'} in Finland`} />
+           <div className="flex-1 min-h-[400px]">
+             <QuizModule topic={`The phenomenon of ${isKaamos ? 'Kaamos and polar night' : 'Midnight Sun'} in Finland`} />
+           </div>
         </div>
 
       </div>

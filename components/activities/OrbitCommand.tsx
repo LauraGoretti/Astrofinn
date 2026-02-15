@@ -31,30 +31,48 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
 
   if (mode === GameMode.SOLO) {
     return (
-      <div className="space-y-8 max-w-5xl mx-auto">
-        <div className="glass-panel p-6 rounded-xl border-l-4 border-neon-purple">
-          <h2 className="text-2xl font-bold mb-4 flex items-center">
-             <Info className="mr-3 text-neon-purple" />
-             Orbit & Revolution Simulation
-          </h2>
-          <p className="text-gray-300 mb-6">
-            Investigate the 3D model below. Notice the <strong>Axial Tilt</strong> (the pink line)? 
-            Because Earth is tilted 23.5 degrees as it orbits the sun, we experience seasons.
-            The rotation you see causes Day and Night.
-          </p>
-          
-          {/* 3D Earth Component */}
-          <Earth3D />
-          
+      <div className="flex flex-col lg:flex-row h-full w-full gap-6">
+        {/* Main 3D View - Takes majority of screen */}
+        <div className="flex-1 relative flex flex-col min-h-[50vh] lg:min-h-0">
+           <div className="glass-panel p-1 rounded-xl border-l-4 border-neon-purple h-full flex flex-col">
+             {/* Header inside the panel for context */}
+             <div className="p-4 flex items-center justify-between shrink-0">
+               <h2 className="text-xl font-bold flex items-center text-white">
+                  <Info className="mr-3 text-neon-purple" />
+                  Orbit & Revolution
+               </h2>
+               <div className="hidden md:block text-xs text-gray-400 font-mono">SIMULATION RUNNING</div>
+             </div>
+             
+             {/* 3D Component with full height override */}
+             <div className="flex-1 relative rounded-lg overflow-hidden bg-black/50">
+                <Earth3D className="w-full h-full absolute inset-0" />
+             </div>
+             
+             <div className="p-3 text-sm text-gray-400 text-center shrink-0">
+               Observe the <strong className="text-neon-pink">Axial Tilt</strong> causing seasons and the <strong className="text-neon-blue">Rotation</strong> causing day/night.
+             </div>
+           </div>
         </div>
-        <QuizModule topic="Earth's revolution around the sun and orbit" />
+
+        {/* Sidebar for Quiz - Scrollable independent of 3D view */}
+        <div className="w-full lg:w-[400px] shrink-0 flex flex-col gap-4 overflow-y-auto">
+           <div className="bg-space-800/80 p-4 rounded-xl border border-white/10">
+             <h3 className="text-lg font-bold text-neon-purple mb-2">Mission Briefing</h3>
+             <p className="text-sm text-gray-300 leading-relaxed">
+               Welcome to the command deck. Your task is to analyze the heliocentric model. 
+               Pay close attention to how the angle of sunlight changes as Earth revolves around the Sun.
+             </p>
+           </div>
+           <QuizModule topic="Earth's revolution around the sun and orbit" />
+        </div>
       </div>
     );
   }
 
   // GROUP MODE
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto w-full">
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center p-3 bg-neon-pink/10 rounded-full mb-4">
           <Users className="text-neon-pink w-8 h-8" />

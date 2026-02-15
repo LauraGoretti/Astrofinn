@@ -62,9 +62,9 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 h-64 glass-panel rounded-xl">
-        <Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-4" />
-        <p className="text-neon-blue font-mono text-sm tracking-wider">GENERATING CHALLENGES...</p>
+      <div className="flex flex-col items-center justify-center p-12 min-h-[40vh] md:min-h-[50vh] glass-panel rounded-2xl transition-all duration-300">
+        <Loader2 className="w-12 h-12 text-neon-blue animate-spin mb-4" />
+        <p className="text-neon-blue font-mono text-sm tracking-wider animate-pulse">GENERATING CHALLENGES...</p>
       </div>
     );
   }
@@ -74,13 +74,13 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete }) => {
   const currentQ = questions[currentIndex];
 
   return (
-    <div className="w-full max-w-2xl mx-auto glass-panel p-6 md:p-8 rounded-2xl relative overflow-hidden">
+    <div className="w-full max-w-2xl mx-auto glass-panel p-6 md:p-8 rounded-2xl relative overflow-hidden min-h-[40vh] md:min-h-[50vh] flex flex-col justify-center transition-all duration-300">
       {/* Background Decor */}
-      <div className="absolute top-0 right-0 p-4 opacity-10">
+      <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
         <Brain size={100} />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
           <h3 className="text-xl font-bold text-neon-purple tracking-widest uppercase">
             Challenge {currentIndex + 1}/{questions.length}
@@ -131,7 +131,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete }) => {
             <p className="text-gray-300 text-sm leading-relaxed">{currentQ.explanation}</p>
             <button 
               onClick={nextQuestion}
-              className="mt-4 flex items-center space-x-2 bg-neon-blue hover:bg-neon-blue/80 text-space-900 font-bold py-2 px-6 rounded-full transition-colors"
+              className="mt-4 flex items-center space-x-2 bg-neon-blue hover:bg-neon-blue/80 text-space-900 font-bold py-2 px-6 rounded-full transition-colors shadow-lg shadow-neon-blue/20"
             >
               <span>Next Challenge</span>
               <ArrowRight size={18} />

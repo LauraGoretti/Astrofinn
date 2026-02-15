@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     if (!gameMode) {
       return (
-        <div className="flex flex-col items-center justify-center h-[60vh] space-y-8 animate-fade-in">
+        <div className="flex flex-col items-center justify-center h-full min-h-[50vh] space-y-8 animate-fade-in">
           <h2 className="text-3xl font-bold text-white">Select Protocol</h2>
           <div className="grid md:grid-cols-2 gap-8 w-full max-w-2xl">
             <button
@@ -60,7 +60,7 @@ const App: React.FC = () => {
         return <ShadowLab mode={gameMode} />;
       case ActivityId.SEASONS:
         return (
-          <div className="space-y-8">
+          <div className="space-y-8 max-w-7xl mx-auto">
             <div className="glass-panel p-6 rounded-xl border-l-4 border-orange-500">
                <h2 className="text-2xl font-bold mb-2 flex items-center">Seasons & Axial Tilt</h2>
                <p className="text-gray-300">
@@ -78,7 +78,7 @@ const App: React.FC = () => {
         );
       case ActivityId.SUNLIGHT_INTENSITY:
         return (
-          <div className="space-y-8">
+          <div className="space-y-8 max-w-7xl mx-auto">
             <div className="glass-panel p-6 rounded-xl border-l-4 border-yellow-400">
                <h2 className="text-2xl font-bold mb-2">Sunlight Intensity</h2>
                <div className="flex justify-center my-6">
@@ -101,13 +101,12 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen pb-12 relative">
-      {/* Dynamic Space Background */}
-      <div className="fixed inset-0 bg-space-900 -z-20"></div>
-      <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 -z-10 animate-pulse-slow"></div>
+    <div className="h-[100dvh] w-screen bg-space-900 text-white overflow-hidden flex flex-col relative selection:bg-neon-pink selection:text-white">
+      {/* Fixed Background Layer */}
+      <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 pointer-events-none -z-10 animate-pulse-slow"></div>
       
-      {/* Header */}
-      <header className="p-4 md:p-6 flex items-center justify-between glass-panel sticky top-0 z-50 rounded-b-xl mx-2 md:mx-6 mb-8">
+      {/* Header - Fixed Height */}
+      <header className="flex-none p-4 md:p-6 flex items-center justify-between glass-panel z-50 rounded-b-xl mx-2 md:mx-6 mb-2 shrink-0">
         <div className="flex items-center">
           {currentView === AppView.ACTIVITY && (
             <button 
@@ -127,15 +126,17 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {/* Main View Switcher */}
-      <main className="container mx-auto px-4">
-        {currentView === AppView.DASHBOARD ? (
-          <Dashboard onSelectActivity={handleSelectActivity} />
-        ) : (
-          <div className="animate-fade-in-up">
-            {renderContent()}
-          </div>
-        )}
+      {/* Main Content Area - Scrollable */}
+      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:px-6 pb-6 w-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-space-700 hover:scrollbar-thumb-neon-blue">
+         <div className="w-full h-full">
+            {currentView === AppView.DASHBOARD ? (
+              <Dashboard onSelectActivity={handleSelectActivity} />
+            ) : (
+              <div className="animate-fade-in-up w-full h-full">
+                {renderContent()}
+              </div>
+            )}
+         </div>
       </main>
     </div>
   );
