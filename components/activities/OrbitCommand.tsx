@@ -55,16 +55,17 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
            </div>
         </div>
 
-        {/* Sidebar for Quiz - Scrollable independent of 3D view */}
-        <div className="w-full lg:w-[400px] shrink-0 flex flex-col gap-4 overflow-y-auto">
-           <div className="bg-space-800/80 p-4 rounded-xl border border-white/10">
+        {/* Sidebar for Quiz - Full height with flexible quiz box */}
+        <div className="w-full lg:w-[400px] shrink-0 flex flex-col gap-4 h-full">
+           <div className="bg-space-800/80 p-4 rounded-xl border border-white/10 shrink-0">
              <h3 className="text-lg font-bold text-neon-purple mb-2">Mission Briefing</h3>
              <p className="text-sm text-gray-300 leading-relaxed">
                Welcome to the command deck. Your task is to analyze the heliocentric model. 
                Pay close attention to how the angle of sunlight changes as Earth revolves around the Sun.
              </p>
            </div>
-           <QuizModule topic="Earth's revolution around the sun and orbit" />
+           {/* QuizModule takes remaining space */}
+           <QuizModule topic="Earth's revolution around the sun and orbit" className="flex-1 min-h-0" />
         </div>
       </div>
     );
