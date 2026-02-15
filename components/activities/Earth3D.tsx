@@ -5,6 +5,9 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d, Globe, Disc, Search } from 'lucide-react';
 
+// Centralized Texture Repository URL
+const TEXTURE_BASE_URL = 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/';
+
 // Constants for Simulation - UPDATED FOR SCIENTIFIC PROPORTIONS
 // Reference: Earth R = 6371km, Moon R = 1737km (Ratio ~3.67)
 // Distance = 384,400km (approx 60 Earth Radii or 30 Earth Diameters)
@@ -348,7 +351,7 @@ const ParallaxStars = () => {
 }
 
 const StarBackground = () => {
-  const texture = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/stars_milky_way.jpg');
+  const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}stars_milky_way.jpg`);
   
   return (
     <group>
@@ -375,7 +378,7 @@ const StarBackground = () => {
 };
 
 const SunMesh = () => {
-  const sunTexture = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/sun.jpg');
+  const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
   const meshRef = useRef<THREE.Mesh>(null);
   const haloMaterialRef = useRef<THREE.ShaderMaterial>(null);
 
@@ -436,7 +439,7 @@ const SunMesh = () => {
 
 const MoonMesh = () => {
   // Use a reliable remote texture from Three.js examples
-  const colorMap = useLoader(THREE.TextureLoader, 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/moon.jpg');
+  const colorMap = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}moon.jpg`);
   const orbitGroupRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
@@ -573,7 +576,7 @@ const PLANETS: PlanetConfig[] = [
 ];
 
 const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
-  const texture = useLoader(THREE.TextureLoader, `https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/${config.texture}`);
+  const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}${config.texture}`);
   const orbitRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
   
@@ -650,9 +653,9 @@ interface HeliocentricSystemProps {
 
 const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet }) => {
   const [dayTexture, nightTexture, specularMap] = useLoader(THREE.TextureLoader, [
-    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/earth_day.jpg',
-    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/earth_night.jpg',
-    'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/earth_specular.jpg'
+    `${TEXTURE_BASE_URL}earth_day.jpg`,
+    `${TEXTURE_BASE_URL}earth_night.jpg`,
+    `${TEXTURE_BASE_URL}earth_specular.jpg`
   ]);
 
   const earthContainerRef = useRef<THREE.Group>(null);
