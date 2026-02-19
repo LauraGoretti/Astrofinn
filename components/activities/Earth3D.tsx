@@ -51,8 +51,8 @@ const EARTH_ROTATION_SPEED = BASE_ROTATION_SPEED;
 const EARTH_YEAR_SPEED = BASE_ORBIT_SPEED;
 
 // 3. Moon Orbit: The Moon orbits Earth ~27.3 days. 
-// Earth orbits Sun ~365.25 days. Ratio: 365.25 / 27.3 ≈ 13.38 moon orbits per year.
-const MOON_ORBIT_SPEED = EARTH_YEAR_SPEED * 13.38;
+// Earth orbits Sun ~365.25 days. Ratio: 13.03571428571429 (Specific Request)
+const MOON_ORBIT_SPEED = EARTH_YEAR_SPEED * 13.03571428571429;
 
 // Types
 type ViewMode = 'EARTH_FREE' | 'EARTH_DAY' | 'EARTH_NIGHT' | 'SYSTEM_TOP' | 'SYSTEM_AUTO' | 'SOLAR_SYSTEM';
@@ -450,8 +450,11 @@ const MoonMesh = () => {
   }), [colorMap]);
 
   useFrame((state, delta) => {
+    // Sync logic: Use same safeDelta as Earth for perfect synchronization
+    const safeDelta = Math.min(delta, 0.05);
+
     // Rotate the group to orbit the moon around earth
-    if (orbitGroupRef.current) orbitGroupRef.current.rotation.y += delta * MOON_ORBIT_SPEED;
+    if (orbitGroupRef.current) orbitGroupRef.current.rotation.y += safeDelta * MOON_ORBIT_SPEED;
     
     // Moon is tidally locked: It always faces the Earth.
     // Update shader sun position
@@ -680,16 +683,18 @@ interface HeliocentricSystemProps {
 }
 
 const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet }) => {
-  const [dayTexture, nightTexture, specularMap] = useLoader(THREE.TextureLoader, [
+  const [dayTexture, nightTexture, specularMap, cloudsTexture] = useLoader(THREE.TextureLoader, [
     `${TEXTURE_BASE_URL}earth_day.jpg`,
     `${TEXTURE_BASE_URL}earth_night.jpg`,
-    `${TEXTURE_BASE_URL}earth_specular.jpg`
+    `${TEXTURE_BASE_URL}earth_specular.jpg`,
+    `${TEXTURE_BASE_URL}earth_clouds.jpg`
   ]);
 
   const earthContainerRef = useRef<THREE.Group>(null);
   const earthMeshRef = useRef<THREE.Mesh>(null);
   const earthGroupRef = useRef<THREE.Group>(null);
   const earthMaterialRef = useRef<THREE.ShaderMaterial>(null);
+  const cloudsRef = useRef<THREE.Mesh>(null);
   
   // Camera & Controls Refs
   const controlsRef = useRef<any>(null);
@@ -831,14 +836,22 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
       earthGroupRef.current.rotation.y += safeDelta * EARTH_ROTATION_SPEED;
     }
 
-    // 5. Update Shader Sun Position
+    // 5. Cloud Rotation (Independent)
+    if (cloudsRef.current) {
+        // Scientific Ratio: Earth Surface Speed ~1600 km/h. Cloud Wind Speed ~100 km/h.
+        // Ratio = 100 / 1600 = 0.0625.
+        // Clouds move slightly faster than the Earth's rotation (Prevailing Westerlies).
+        cloudsRef.current.rotation.y += safeDelta * (EARTH_ROTATION_SPEED * 1.0625);
+    }
+
+    // 6. Update Shader Sun Position
     if (earthMeshRef.current && earthMaterialRef.current) {
       const sunWorldPos = new THREE.Vector3(0, 0, 0);
       earthMeshRef.current.worldToLocal(sunWorldPos);
       earthMaterialRef.current.uniforms.sunPosition.value.copy(sunWorldPos);
     }
     
-    // 6. OTHER CAMERA MODES (Cinematic/Fixed)
+    // 7. OTHER CAMERA MODES (Cinematic/Fixed)
     if (viewMode !== 'EARTH_FREE' && viewMode !== 'SOLAR_SYSTEM') {
         if (viewMode === 'SYSTEM_AUTO') {
            const t = state.clock.getElapsedTime() * 0.1;
@@ -904,6 +917,20 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
                   uniforms={earthUniforms}
                 />
               </mesh>
+              
+              {/* Cloud Layer - Slightly larger scale than Earth */}
+              <mesh ref={cloudsRef} scale={[1.02, 1.02, 1.02]}>
+                <sphereGeometry args={[EARTH_RADIUS, 64, 64]} />
+                <meshLambertMaterial 
+                  map={cloudsTexture} 
+                  transparent={true} 
+                  opacity={0.4} 
+                  blending={THREE.AdditiveBlending} 
+                  side={THREE.DoubleSide}
+                  depthWrite={false}
+                />
+              </mesh>
+
               {/* High Quality Atmosphere Mesh: Increased scale (1.045) and adjusted shader for larger, softer glow */}
               <mesh scale={[1.045, 1.045, 1.045]}>
                 <sphereGeometry args={[EARTH_RADIUS, 64, 64]} />
@@ -986,180 +1013,88 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
   );
 };
 
-interface Earth3DProps {
-  className?: string;
-}
-
-const Loader = () => {
-  return (
-    <Html center>
-      <div className="flex flex-col items-center text-neon-blue">
-        <Loader2 className="animate-spin w-8 h-8 mb-2" />
-        <span className="text-xs font-mono">LOADING SIMULATION...</span>
-      </div>
-    </Html>
-  );
-}
-
-const Earth3D: React.FC<Earth3DProps> = ({ className }) => {
+const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('EARTH_FREE');
   const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
 
   return (
-    <div className={`w-full min-h-[400px] bg-black rounded-xl overflow-hidden border border-white/10 relative shadow-2xl shadow-black transition-all duration-300 ${className || "h-[60vh] md:h-[75vh]"}`}>
-      <div className="absolute top-4 right-4 pointer-events-none z-10">
-        <div className="bg-neon-blue/10 border border-neon-blue/30 px-3 py-1 rounded text-neon-blue text-xs font-bold tracking-widest uppercase animate-pulse">
-          Heliocentric Model
-        </div>
+    <div className={className}>
+      <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }} camera={{ position: [0, 20, 40], fov: 45 }}>
+        <color attach="background" args={['#000005']} />
+        
+        <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
+           <StarBackground />
+           <ambientLight intensity={0.1} />
+           
+           <SunMesh />
+           <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} />
+
+           <EffectComposer>
+             <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={2.0} />
+           </EffectComposer>
+        </Suspense>
+      </Canvas>
+
+      {/* Control Overlay */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/50 p-1.5 rounded-full backdrop-blur-md border border-white/10 z-10">
+        <button 
+           onClick={() => { setViewMode('EARTH_FREE'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_FREE' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Free Earth View"
+        >
+          <Globe size={18} />
+        </button>
+        <button 
+           onClick={() => { setViewMode('SOLAR_SYSTEM'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'SOLAR_SYSTEM' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Solar System"
+        >
+          <Disc size={18} />
+        </button>
+         <button 
+           onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_DAY' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Day View"
+        >
+          <Sun size={18} />
+        </button>
+         <button 
+           onClick={() => { setViewMode('EARTH_NIGHT'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_NIGHT' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Night View"
+        >
+          <Moon size={18} />
+        </button>
       </div>
 
-      <Canvas shadows>
-        <ambientLight intensity={0.05} /> 
-        {/* Replaced procedural stars with realistic Milky Way background */}
-        <Suspense fallback={<Loader />}>
-          <StarBackground />
-          <SunMesh />
-          <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} />
-        </Suspense>
-        
-        <EffectComposer>
-          <Bloom 
-            luminanceThreshold={0.9} 
-            luminanceSmoothing={0.9} 
-            height={300} 
-            intensity={0.4} 
-          />
-        </EffectComposer>
-      </Canvas>
-      
-      {/* Enhanced View Controls Overlay */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full max-w-3xl px-4 flex flex-col items-center">
-        
-        {/* Planet Selector - Only visible in SOLAR_SYSTEM Mode */}
-        {viewMode === 'SOLAR_SYSTEM' && (
-          <div className="bg-black/90 backdrop-blur-md p-1.5 rounded-xl border border-white/20 mb-3 flex items-center space-x-1 overflow-x-auto max-w-full scrollbar-none">
+       {/* Planet Selector (Only in Solar System Mode) */}
+       {viewMode === 'SOLAR_SYSTEM' && (
+         <div className="absolute top-4 right-4 flex flex-col gap-1 bg-black/80 p-3 rounded-xl backdrop-blur-md border border-white/10 max-h-[80%] overflow-y-auto z-10 w-32">
+            <h3 className="text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider border-b border-gray-700 pb-1">Planetary Focus</h3>
+            {['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
+              <button
+                key={p}
+                onClick={() => setFocusedPlanet(p)}
+                className={`text-xs text-left px-2 py-1.5 rounded transition-colors ${focusedPlanet === p ? 'bg-neon-blue text-black font-bold' : 'text-gray-300 hover:bg-white/10'}`}
+              >
+                {p}
+              </button>
+            ))}
              <button
                 onClick={() => setFocusedPlanet(null)}
-                className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap ${
-                    !focusedPlanet ? 'bg-white text-black font-bold' : 'text-gray-400 hover:text-white'
-                }`}
-             >
-                System
-             </button>
-             <div className="w-px h-3 bg-gray-700 mx-0.5"></div>
-             {PLANETS.map((p, i) => (
-                 <React.Fragment key={p.name}>
-                    {/* Manually insert Earth button before Mars (index 2) */}
-                    {i === 2 && (
-                        <>
-                         <button
-                            onClick={() => setFocusedPlanet('Earth')}
-                            className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap flex items-center space-x-1 ${
-                                focusedPlanet === 'Earth' ? 'bg-neon-blue text-black font-bold' : 'text-gray-400 hover:text-white'
-                            }`}
-                         >
-                            <div className="w-1.5 h-1.5 rounded-full bg-neon-blue"></div>
-                            <span>Earth</span>
-                         </button>
-                         <div className="w-px h-3 bg-gray-700 mx-0.5"></div>
-                        </>
-                    )}
-                    <button
-                        onClick={() => setFocusedPlanet(p.name)}
-                        className={`px-2 py-1 text-[10px] rounded transition-colors whitespace-nowrap flex items-center space-x-1 ${
-                            focusedPlanet === p.name ? 'bg-neon-blue text-black font-bold' : 'text-gray-400 hover:text-white'
-                        }`}
-                    >
-                        <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: p.orbitColor }}></div>
-                        <span>{p.name}</span>
-                    </button>
-                 </React.Fragment>
-             ))}
+                className={`text-[10px] text-center px-2 py-1.5 rounded transition-colors border border-dashed border-gray-600 text-gray-400 hover:text-white mt-2`}
+              >
+                Overview
+              </button>
+         </div>
+       )}
+       
+       <div className="absolute top-4 left-4 z-0 pointer-events-none">
+          <div className="text-[10px] text-gray-500 font-mono">
+             <div>MODE: {viewMode}</div>
+             {focusedPlanet && <div>FOCUS: {focusedPlanet.toUpperCase()}</div>}
           </div>
-        )}
-
-        {/* Main Controls */}
-        <div className="bg-black/80 backdrop-blur-md p-2 rounded-xl border border-white/10 flex items-center justify-between w-auto">
-          
-          {/* Earth Controls Group */}
-          <div className="flex items-center space-x-1 mr-4">
-            <span className="text-[10px] text-gray-500 font-mono uppercase mr-2 hidden sm:block">Earth</span>
-            <button
-              onClick={() => { setViewMode('EARTH_FREE'); setFocusedPlanet(null); }}
-              title="Free Orbit"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'EARTH_FREE' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              <Move3d size={18} />
-            </button>
-            <button
-              onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
-              title="Fix Day Side"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'EARTH_DAY' ? 'bg-yellow-500 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              <Sun size={18} />
-            </button>
-            <button
-              onClick={() => { setViewMode('EARTH_NIGHT'); setFocusedPlanet(null); }}
-              title="Fix Night Side"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'EARTH_NIGHT' ? 'bg-indigo-600 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              <Moon size={18} />
-            </button>
-          </div>
-
-          <div className="w-px h-8 bg-white/10"></div>
-
-          {/* System Controls Group */}
-          <div className="flex items-center space-x-1 ml-4">
-            <span className="text-[10px] text-gray-500 font-mono uppercase mr-2 hidden sm:block">System</span>
-            <button
-              onClick={() => { setViewMode('SYSTEM_TOP'); setFocusedPlanet(null); }}
-              title="Top Down"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'SYSTEM_TOP' ? 'bg-emerald-600 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              <ArrowDownToLine size={18} />
-            </button>
-            <button
-              onClick={() => { setViewMode('SYSTEM_AUTO'); setFocusedPlanet(null); }}
-              title="Cinematic"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'SYSTEM_AUTO' ? 'bg-orange-500 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              <InfinityIcon size={18} />
-            </button>
-            <button
-              onClick={() => setViewMode('SOLAR_SYSTEM')}
-              title="Full Solar System"
-              className={`p-2 rounded-lg transition-all ${
-                viewMode === 'SOLAR_SYSTEM' ? 'bg-violet-600 text-white' : 'text-gray-400 hover:bg-white/10'
-              }`}
-            >
-              {viewMode === 'SOLAR_SYSTEM' ? <Disc size={18} className="animate-spin-slow" /> : <Globe size={18} />}
-            </button>
-          </div>
-        </div>
-        
-        <div className="text-center mt-2 h-4">
-          <p className="text-[10px] text-neon-blue font-mono tracking-wider animate-fade-in">
-             {viewMode === 'EARTH_FREE' && "MODE: FREE ORBIT // DRAG TO ROTATE"}
-             {viewMode === 'EARTH_DAY' && "MODE: LOCKED TO DAY SIDE"}
-             {viewMode === 'EARTH_NIGHT' && "MODE: LOCKED TO NIGHT SIDE"}
-             {viewMode === 'SYSTEM_TOP' && "MODE: TOP-DOWN SATELLITE VIEW"}
-             {viewMode === 'SYSTEM_AUTO' && "MODE: CINEMATIC AUTOPILOT"}
-             {viewMode === 'SOLAR_SYSTEM' && !focusedPlanet && "MODE: FULL SOLAR SYSTEM // SELECT A PLANET TO ZOOM"}
-             {viewMode === 'SOLAR_SYSTEM' && focusedPlanet && `TRACKING: ${focusedPlanet.toUpperCase()}`}
-          </p>
-        </div>
-      </div>
+       </div>
     </div>
   );
 };
