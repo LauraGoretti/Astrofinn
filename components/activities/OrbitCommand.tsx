@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { generateAstroCommands } from '../../services/geminiService';
 import { AstroCommand, GameMode } from '../../types';
-import { Play, Users, RefreshCw, Loader2, Info } from 'lucide-react';
+import { Play, Users, RefreshCw, Loader2 } from 'lucide-react';
 import QuizModule from '../QuizModule';
 import Earth3D from './Earth3D';
 
@@ -38,7 +38,12 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
              {/* Header inside the panel for context */}
              <div className="p-4 flex items-center justify-between shrink-0">
                <h2 className="text-xl font-bold flex items-center text-white">
-                  <Info className="mr-3 text-neon-purple" />
+                  <img 
+                    src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+                    alt="Astronaut" 
+                    className="w-6 h-6 mr-3"
+                    referrerPolicy="no-referrer"
+                  />
                   Orbit & Revolution
                </h2>
                <div className="hidden md:block text-xs text-gray-400 font-mono">SIMULATION RUNNING</div>

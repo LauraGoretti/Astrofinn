@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityConfig, ActivityId } from '../types';
-import { Globe, Sun, Moon, CloudSun, ThermometerSun } from 'lucide-react';
+import { Globe, Sun, Moon, ThermometerSun, Snowflake } from 'lucide-react';
 
 interface DashboardProps {
   onSelectActivity: (id: ActivityId) => void;
@@ -8,32 +8,25 @@ interface DashboardProps {
 
 const activities: ActivityConfig[] = [
   {
-    id: ActivityId.ORBIT_REVOLUTION,
-    title: "Orbit & Revolution",
-    description: "Simulate Earth's journey around the Sun.",
-    iconName: "Globe",
-    color: "from-blue-500 to-cyan-400"
-  },
-  {
-    id: ActivityId.SEASONS,
-    title: "Seasons & Tilt",
-    description: "Why is it winter in Finland when it's summer in Chile?",
+    id: ActivityId.LIGHT_INCIDENCE,
+    title: "Light & Heat",
+    description: "How Sunlight Warms the Earth",
     iconName: "ThermometerSun",
-    color: "from-orange-500 to-red-500"
-  },
-  {
-    id: ActivityId.KAAMOS_MIDNIGHT,
-    title: "Kaamos & Midnight Sun",
-    description: "Explore the magic of the Arctic Circle light.",
-    iconName: "Moon",
     color: "from-purple-500 to-pink-500"
   },
   {
-    id: ActivityId.SHADOWS,
-    title: "Shadow Lab",
-    description: "Investigate how sun height affects shadows.",
-    iconName: "CloudSun",
-    color: "from-green-400 to-emerald-600"
+    id: ActivityId.SEASONS,
+    title: "Tilt and Orbit Consequences",
+    description: "Why is it winter in Finland when it's summer in Chile?",
+    iconName: "Snowflake",
+    color: "from-orange-500 to-red-500"
+  },
+  {
+    id: ActivityId.ORBIT_REVOLUTION,
+    title: "Solar System View",
+    description: "Simulate Earth's journey around the Sun.",
+    iconName: "Globe",
+    color: "from-blue-500 to-cyan-400"
   },
   {
     id: ActivityId.SUNLIGHT_INTENSITY,
@@ -45,14 +38,14 @@ const activities: ActivityConfig[] = [
 ];
 
 const IconMap: Record<string, React.FC<any>> = {
-  Globe, Sun, Moon, CloudSun, ThermometerSun
+  Globe, Sun, Moon, ThermometerSun, Snowflake
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
   return (
     <div className="max-w-6xl mx-auto py-12 px-4">
-      <div className="text-center mb-16 space-y-4">
-        <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-400 animate-float">
+      <div className="text-center mb-16 space-y-4 flex flex-col items-center">
+        <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-400">
           ASTROFINN
         </h1>
         <p className="text-gray-400 text-lg md:text-xl font-light tracking-wide">

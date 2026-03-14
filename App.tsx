@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { AppView, ActivityId, GameMode } from './types';
 import Dashboard from './components/Dashboard';
 import OrbitCommand from './components/activities/OrbitCommand';
-import KaamosViewer from './components/activities/KaamosViewer';
-import ShadowLab from './components/activities/ShadowLab';
+import LightIncidence from './components/activities/LightIncidence';
 import QuizModule from './components/QuizModule';
 import { ArrowLeft, Users, User, Info } from 'lucide-react';
 
@@ -28,23 +27,23 @@ const App: React.FC = () => {
     if (!gameMode) {
       return (
         <div className="flex flex-col items-center justify-center h-full min-h-[50vh] space-y-8 animate-fade-in">
-          <h2 className="text-3xl font-bold text-white">Select Protocol</h2>
+          <h2 className="text-3xl font-bold text-white">Select Path</h2>
           <div className="grid md:grid-cols-2 gap-8 w-full max-w-2xl">
-            <button
-              onClick={() => setGameMode(GameMode.SOLO)}
-              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-blue/30 hover:border-neon-blue"
-            >
-              <User size={64} className="text-neon-blue mb-4" />
-              <h3 className="text-xl font-bold text-white">Solo Explorer</h3>
-              <p className="text-center text-gray-400 mt-2">Interactive simulations and personal quizzes.</p>
-            </button>
             <button
               onClick={() => setGameMode(GameMode.GROUP)}
               className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-pink/30 hover:border-neon-pink"
             >
               <Users size={64} className="text-neon-pink mb-4" />
-              <h3 className="text-xl font-bold text-white">Group Mission</h3>
-              <p className="text-center text-gray-400 mt-2">Roleplay activities and command center challenges.</p>
+              <h3 className="text-xl font-bold text-white">Path 1 - Hands-on Activity</h3>
+              <p className="text-center text-gray-400 mt-2">In class, before the simulation.</p>
+            </button>
+            <button
+              onClick={() => setGameMode(GameMode.SOLO)}
+              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-blue/30 hover:border-neon-blue"
+            >
+              <User size={64} className="text-neon-blue mb-4" />
+              <h3 className="text-xl font-bold text-white">Path 2 - Solo Mission</h3>
+              <p className="text-center text-gray-400 mt-2">Interactive digital simulations.</p>
             </button>
           </div>
         </div>
@@ -54,10 +53,8 @@ const App: React.FC = () => {
     switch (activeActivityId) {
       case ActivityId.ORBIT_REVOLUTION:
         return <OrbitCommand mode={gameMode} />;
-      case ActivityId.KAAMOS_MIDNIGHT:
-        return <KaamosViewer mode={gameMode} />;
-      case ActivityId.SHADOWS:
-        return <ShadowLab mode={gameMode} />;
+      case ActivityId.LIGHT_INCIDENCE:
+        return <LightIncidence mode={gameMode} />;
       case ActivityId.SEASONS:
         return (
           <div className="space-y-8 max-w-7xl mx-auto">
