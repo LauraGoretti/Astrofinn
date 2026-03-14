@@ -23,5 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 *.md
-texture/*
-icons/*
+texture/
+icons/
