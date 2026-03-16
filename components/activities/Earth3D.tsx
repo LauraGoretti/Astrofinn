@@ -3,7 +3,9 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls, Html, PerspectiveCamera } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d, Globe, Disc, Search } from 'lucide-react';
+import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d, Globe, Disc, Search, Minimize2, Maximize2 } from 'lucide-react';
+import { GameMode } from '../../types';
+import { SolarSystemActivities } from './SolarSystemActivities';
 
 // Centralized Texture Repository URL
 const TEXTURE_BASE_URL = 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/';
@@ -603,11 +605,22 @@ const PlanetRing: React.FC<{ radius: number }> = ({ radius }) => {
   );
 };
 
-const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
+const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: Date }> = ({ config, simSpeed, simDate }) => {
   const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}${config.texture}`);
   const orbitRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+  const currentAngleRef = useRef(config.startAngle);
   
+  // Initialize position based on date
+  useEffect(() => {
+    if (simDate) {
+        const dayOfYear = Math.floor((simDate.getTime() - new Date(simDate.getFullYear(), 0, 0).getTime()) / 86400000);
+        // We use the startAngle as a base and add the orbital progress for that day
+        // This is a simplified model but keeps planets in sync
+        currentAngleRef.current = config.startAngle + (dayOfYear / 365) * 2 * Math.PI * (config.speed / BASE_ORBIT_SPEED);
+    }
+  }, [simDate, config.startAngle, config.speed]);
+
   // Create orbit geometry flat on XZ plane
   const orbitGeometry = useMemo(() => {
     const curve = new THREE.EllipseCurve(0, 0, config.distance, config.distance, 0, 2 * Math.PI, false, 0);
@@ -617,23 +630,16 @@ const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
   }, [config.distance]);
 
   useFrame((state, delta) => {
-    // Deterministic Orbit Calculation using global time
-    // This matches the calculation in the main camera controller so they stay in sync
-    const t = state.clock.getElapsedTime();
-    // SPEED CORRECTION: Removed the 0.1 multiplier.
-    // Previously: t * config.speed * 0.1.
-    // config.speed is derived from Earth speed (0.04). Mercury speed is 0.166.
-    // With 0.1, Mercury was moving at 0.0166, which is slower than Earth's 0.04.
-    // Now Mercury will move at 0.166, which is faster than Earth's 0.04.
-    const currentAngle = config.startAngle + t * config.speed; 
+    const safeDelta = Math.min(delta, 0.05) * simSpeed;
+    currentAngleRef.current += safeDelta * config.speed; 
     
     if (orbitRef.current) {
-        orbitRef.current.position.x = Math.cos(currentAngle) * config.distance;
-        orbitRef.current.position.z = Math.sin(currentAngle) * config.distance;
+        orbitRef.current.position.x = Math.cos(currentAngleRef.current) * config.distance;
+        orbitRef.current.position.z = Math.sin(currentAngleRef.current) * config.distance;
     }
     // Rotate Planet
     if (meshRef.current) {
-        meshRef.current.rotation.y += config.rotationSpeed * delta; // Ensure frame-rate independence
+        meshRef.current.rotation.y += config.rotationSpeed * safeDelta; 
     }
   });
 
@@ -660,18 +666,18 @@ const PlanetMesh: React.FC<{ config: PlanetConfig }> = ({ config }) => {
 
         {/* Static Orbit Path */}
         <lineLoop geometry={orbitGeometry} rotation={[0, 0, 0]}>
-             <lineBasicMaterial color={config.orbitColor} opacity={0.3} transparent />
+             <lineBasicMaterial color={config.orbitColor} opacity={0.6} transparent />
         </lineLoop>
     </group>
   );
 };
 
 // Container component to handle loading multiple textures without breaking rules of hooks
-const SolarSystem = () => {
+const SolarSystem: React.FC<{ simSpeed: number; simDate?: Date }> = ({ simSpeed, simDate }) => {
     return (
         <group>
             {PLANETS.map((planet) => (
-                <PlanetMesh key={planet.name} config={planet} />
+                <PlanetMesh key={planet.name} config={planet} simSpeed={simSpeed} simDate={simDate} />
             ))}
         </group>
     )
@@ -680,9 +686,21 @@ const SolarSystem = () => {
 interface HeliocentricSystemProps {
   viewMode: ViewMode;
   focusedPlanet: string | null;
+  simSpeed?: number;
+  simDate?: Date;
+  setStage?: (stage: string) => void;
 }
 
-const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet }) => {
+const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet, simSpeed = 1, simDate, setStage }) => {
+  useEffect(() => {
+    if (setStage) {
+      if (viewMode === 'SOLAR_SYSTEM') {
+        setStage('Solar System View');
+      } else {
+        setStage('Earth View');
+      }
+    }
+  }, [viewMode, setStage]);
   const [dayTexture, nightTexture, specularMap, cloudsTexture] = useLoader(THREE.TextureLoader, [
     `${TEXTURE_BASE_URL}earth_day.jpg`,
     `${TEXTURE_BASE_URL}earth_night.jpg`,
@@ -702,6 +720,21 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
   
   // State Refs
   const orbitAngle = useRef(0);
+  const planetAngles = useRef<Record<string, number>>({});
+
+  // Initialize orbit angle based on date if provided
+  useEffect(() => {
+    if (simDate) {
+      const dayOfYear = Math.floor((simDate.getTime() - new Date(simDate.getFullYear(), 0, 0).getTime()) / 86400000);
+      // 80 is roughly the spring equinox where angle should be 0 in this model
+      orbitAngle.current = ((dayOfYear - 80) / 365) * 2 * Math.PI;
+
+      // Initialize other planets
+      PLANETS.forEach(p => {
+        planetAngles.current[p.name] = p.startAngle + (dayOfYear / 365) * 2 * Math.PI * (p.speed / BASE_ORBIT_SPEED);
+      });
+    }
+  }, [simDate]);
   const prevEarthPos = useRef(new THREE.Vector3(SEMI_MAJOR_AXIS - FOCAL_OFFSET, 0, 0));
   const isTransitioning = useRef(false);
 
@@ -755,11 +788,20 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
 
   useFrame((state, delta) => {
     // 1. Calculate Earth Orbit Position
-    const safeDelta = Math.min(delta, 0.05); // Cap delta to prevent jumps
+    const safeDelta = Math.min(delta, 0.05) * simSpeed; // Apply simulation speed
     
     // Use the correctly scaled Year Speed
     orbitAngle.current += safeDelta * EARTH_YEAR_SPEED; 
     
+    // Update other planets angles in sync
+    PLANETS.forEach(p => {
+      if (!planetAngles.current[p.name]) {
+         // Fallback initialization if not done by useEffect
+         planetAngles.current[p.name] = p.startAngle;
+      }
+      planetAngles.current[p.name] += safeDelta * p.speed;
+    });
+
     const x = -FOCAL_OFFSET + SEMI_MAJOR_AXIS * Math.cos(orbitAngle.current);
     const z = SEMI_MINOR_AXIS * Math.sin(orbitAngle.current);
     const currentEarthPos = new THREE.Vector3(x, 0, z);
@@ -793,16 +835,17 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
         let targetPos: THREE.Vector3 | null = null;
         let targetRadius = 5; // Default
 
-        if (focusedPlanet === 'Earth') {
+        if (focusedPlanet === 'Sun') {
+             targetPos = new THREE.Vector3(0, 0, 0);
+             targetRadius = SUN_RADIUS;
+        } else if (focusedPlanet === 'Earth') {
              targetPos = currentEarthPos;
              targetRadius = EARTH_RADIUS;
         } else {
              const targetPlanet = PLANETS.find(p => p.name === focusedPlanet);
              if (targetPlanet) {
-                 // We calculate the exact position of the focused planet using the same math as PlanetMesh
-                 const t = state.clock.getElapsedTime();
-                 // SPEED CORRECTION: Removed * 0.1 to match PlanetMesh speed.
-                 const angle = targetPlanet.startAngle + t * targetPlanet.speed; 
+                 // Use the synchronized angle
+                 const angle = planetAngles.current[targetPlanet.name] || targetPlanet.startAngle;
                  const pX = Math.cos(angle) * targetPlanet.distance;
                  const pZ = Math.sin(angle) * targetPlanet.distance;
                  targetPos = new THREE.Vector3(pX, 0, pZ);
@@ -814,17 +857,15 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
             // Lerp Controls Target to Planet
             controlsRef.current.target.lerp(targetPos, 0.1);
             
-            // Lerp Camera Position to a fixed offset relative to planet
-            // We keep the camera at a consistent offset (e.g., 20 units up, 40 back)
-            // Note: To allow user rotation around the planet, we might want to just update target and let OrbitControls handle pos,
-            // BUT OrbitControls is sticky. To follow a moving target, we must move the camera too.
-            
             // Calculate desired camera position based on current relative offset
-            // This preserves user rotation while moving the camera base
             const offset = state.camera.position.clone().sub(controlsRef.current.target);
-            // Clamp offset distance to stay close to planet
-            const idealDist = targetRadius * 6 + 10;
-            if (offset.length() > idealDist * 2) offset.setLength(idealDist);
+            
+            // Clamp offset distance to stay close to planet but allow closer inspection
+            // idealDist is the "snap-to" distance when switching focus
+            const idealDist = targetRadius * 3 + 10;
+            if (offset.length() > idealDist * 3) {
+                offset.setLength(idealDist);
+            }
             
             state.camera.position.lerp(targetPos.clone().add(offset), 0.1);
             controlsRef.current.update();
@@ -894,10 +935,23 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
     prevEarthPos.current.copy(currentEarthPos);
   });
 
+  const focusedPlanetConfig = useMemo(() => {
+    if (!focusedPlanet) return null;
+    if (focusedPlanet === 'Sun') return { radius: SUN_RADIUS };
+    if (focusedPlanet === 'Earth') return { radius: EARTH_RADIUS };
+    return PLANETS.find(p => p.name === focusedPlanet);
+  }, [focusedPlanet]);
+
+  const minZoomDist = useMemo(() => {
+    if (viewMode !== 'SOLAR_SYSTEM') return 5;
+    if (!focusedPlanetConfig) return 50;
+    return focusedPlanetConfig.radius + 2;
+  }, [viewMode, focusedPlanetConfig]);
+
   return (
     <group>
       {/* Solar System Planets - Only in Specific Mode */}
-      {viewMode === 'SOLAR_SYSTEM' && <SolarSystem />}
+      {viewMode === 'SOLAR_SYSTEM' && <SolarSystem simSpeed={simSpeed} simDate={simDate} />}
 
       {/* Orbit Path */}
       <lineLoop geometry={orbitPathGeometry}>
@@ -996,7 +1050,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
               rotateSpeed={0.5}
               zoomSpeed={0.5}
               // Adjust limits based on mode
-              minDistance={viewMode === 'SOLAR_SYSTEM' ? (focusedPlanet ? 5 : 50) : 5.0} 
+              minDistance={minZoomDist} 
               maxDistance={viewMode === 'SOLAR_SYSTEM' ? 4000 : 250} 
            />
          </>
@@ -1013,12 +1067,20 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
   );
 };
 
-const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
+const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void; mode?: GameMode }> = ({ className, setStage, mode }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('EARTH_FREE');
   const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
+  const [simSpeed, setSimSpeed] = useState(1);
+  const [simDate, setSimDate] = useState(new Date());
+  const [activitiesCompleted, setActivitiesCompleted] = useState(mode !== GameMode.GROUP);
+  const [isReflectExpanded, setIsReflectExpanded] = useState(true);
+
+  if (!activitiesCompleted) {
+    return <SolarSystemActivities onComplete={() => setActivitiesCompleted(true)} />;
+  }
 
   return (
-    <div className={className}>
+    <div className={`${className} relative group h-full`}>
       <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }} camera={{ position: [0, 20, 40], fov: 45 }}>
         <color attach="background" args={['#000005']} />
         
@@ -1027,7 +1089,7 @@ const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
            <ambientLight intensity={0.1} />
            
            <SunMesh />
-           <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} />
+           <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} simSpeed={simSpeed} simDate={simDate} setStage={setStage} />
 
            <EffectComposer>
              <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={2.0} />
@@ -1047,9 +1109,23 @@ const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
         <button 
            onClick={() => { setViewMode('SOLAR_SYSTEM'); setFocusedPlanet(null); }}
            className={`p-2 rounded-full transition-all ${viewMode === 'SOLAR_SYSTEM' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Solar System"
+           title="Solar System Overview"
         >
           <Disc size={18} />
+        </button>
+        <button 
+           onClick={() => { setViewMode('SYSTEM_TOP'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'SYSTEM_TOP' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Top-Down View"
+        >
+          <ArrowDownToLine size={18} />
+        </button>
+        <button 
+           onClick={() => { setViewMode('SYSTEM_AUTO'); setFocusedPlanet(null); }}
+           className={`p-2 rounded-full transition-all ${viewMode === 'SYSTEM_AUTO' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           title="Cinematic View"
+        >
+          <Move3d size={18} />
         </button>
          <button 
            onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
@@ -1065,13 +1141,39 @@ const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
         >
           <Moon size={18} />
         </button>
+        
+        <div className="flex items-center gap-2 px-3">
+          <span className="text-[10px] font-mono text-gray-400">DATE</span>
+          <input 
+            type="date" 
+            value={simDate.toISOString().split('T')[0]} 
+            onChange={(e) => setSimDate(new Date(e.target.value))}
+            className="bg-black/40 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white outline-none focus:border-neon-blue"
+          />
+        </div>
+
+        <div className="w-px h-6 bg-white/10 mx-1"></div>
+        
+        <div className="flex items-center gap-2 px-3">
+          <span className="text-[10px] font-mono text-gray-400">SPEED</span>
+          <input 
+            type="range" 
+            min="0" 
+            max="10" 
+            step="0.1" 
+            value={simSpeed} 
+            onChange={(e) => setSimSpeed(parseFloat(e.target.value))}
+            className="w-20 accent-neon-blue"
+          />
+          <span className="text-[10px] font-mono text-neon-blue w-6">{simSpeed.toFixed(1)}x</span>
+        </div>
       </div>
 
        {/* Planet Selector (Only in Solar System Mode) */}
        {viewMode === 'SOLAR_SYSTEM' && (
-         <div className="absolute top-4 right-4 flex flex-col gap-1 bg-black/80 p-3 rounded-xl backdrop-blur-md border border-white/10 max-h-[80%] overflow-y-auto z-10 w-32">
+         <div className="absolute top-4 left-4 flex flex-col gap-1 bg-black/80 p-3 rounded-xl backdrop-blur-md border border-white/10 max-h-[80%] overflow-y-auto z-10 w-32">
             <h3 className="text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider border-b border-gray-700 pb-1">Planetary Focus</h3>
-            {['Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
+            {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
               <button
                 key={p}
                 onClick={() => setFocusedPlanet(p)}
@@ -1089,7 +1191,47 @@ const Earth3D: React.FC<{ className?: string }> = ({ className }) => {
          </div>
        )}
        
-       <div className="absolute top-4 left-4 z-0 pointer-events-none">
+       {/* Reflect with me box */}
+       <div className="absolute top-4 right-4 z-10 max-w-sm">
+         <div className="bg-space-800/90 p-4 rounded-2xl border border-neon-blue/30 backdrop-blur-md shadow-lg">
+           <div className="flex items-start justify-between mb-3">
+             <div className="flex items-start space-x-3">
+               <img 
+                 src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+                 alt="Astronaut" 
+                 className="w-10 h-10 shrink-0 drop-shadow-[0_0_5px_rgba(0,255,255,0.5)]"
+                 referrerPolicy="no-referrer"
+               />
+               <div>
+                 <h3 className="text-neon-blue font-bold text-sm">Reflect with me</h3>
+                 {isReflectExpanded && (
+                   <p className="text-xs text-gray-300 italic mt-1">
+                     In class with your teacher or by yourself, think about the reflective questions below. Remeber, you can search online to confirm your guesses or ask your teacher.
+                   </p>
+                 )}
+               </div>
+             </div>
+             <button 
+               onClick={() => setIsReflectExpanded(!isReflectExpanded)}
+               className="text-gray-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors"
+               title={isReflectExpanded ? "Minimize" : "Restore"}
+             >
+               {isReflectExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+             </button>
+           </div>
+           
+           {isReflectExpanded && (
+             <ul className="text-xs text-gray-300 space-y-2 list-disc pl-4">
+               <li>Are all planets rotating or revolving at the same speed? which one is the fastest in revolution?</li>
+               <li>Can you find the slowest in rotation?</li>
+               <li>Based on the orbits of all planets, would you be worried that some planets could colide at some point? Why or why not?</li>
+               <li>Do you think the sizes and distances of planets are accurate? Why or why not?</li>
+             </ul>
+           )}
+         </div>
+       </div>
+
+       <div className="absolute top-4 left-40 z-0 pointer-events-none opacity-0">
           <div className="text-[10px] text-gray-500 font-mono">
              <div>MODE: {viewMode}</div>
              {focusedPlanet && <div>FOCUS: {focusedPlanet.toUpperCase()}</div>}

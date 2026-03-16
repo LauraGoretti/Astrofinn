@@ -4,9 +4,18 @@ import { Sun, ArrowRight, ArrowLeft, Rocket } from 'lucide-react';
 
 interface LightIncidenceProps {
   mode: GameMode;
+  setStage: (stage: string) => void;
 }
 
-const LightIncidence: React.FC<LightIncidenceProps> = ({ mode }) => {
+const LightIncidence: React.FC<LightIncidenceProps> = ({ mode, setStage }) => {
+  React.useEffect(() => {
+    if (mode === GameMode.GROUP) {
+      setStage('Path 1: Warm-up');
+    } else {
+      setStage('Path 2: Exploration');
+    }
+  }, [mode, setStage]);
+
   if (mode === GameMode.GROUP) {
     return <Path1HandsOn />;
   }
@@ -20,7 +29,7 @@ const Path1HandsOn: React.FC = () => {
         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
           Light Incidence and Heating
         </h1>
-        <p className="text-xl text-gray-400 mt-2">Path 1 - Hands-on Activity</p>
+        <p className="text-xl text-gray-400 mt-2">Path 1: Warm-up with reflective and creative thinking</p>
       </div>
 
       {/* Task 1 */}
@@ -184,7 +193,7 @@ const Path1HandsOn: React.FC = () => {
               />
             </div>
             <p className="text-green-200 italic">
-              “You’ve just discovered something very important about light: same flashlight, different heating power. You are ready for your Solo Mission! Click on the ‘Path 2 - Solo Mission’ window.”
+              “You’ve just discovered something very important about light: same flashlight, different heating power. You are ready for your Solo Mission! Click on the ‘Path 2: Exploration Mission’ window.”
             </p>
           </div>
         </div>
@@ -212,7 +221,7 @@ const Path2SoloMission: React.FC = () => {
         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
           Light Incidence and Heating
         </h1>
-        <p className="text-xl text-gray-400 mt-2">Path 2 - Solo Mission</p>
+        <p className="text-xl text-gray-400 mt-2">Path 2: Exploration Mission</p>
       </div>
 
       <div className="flex justify-center mb-6">
