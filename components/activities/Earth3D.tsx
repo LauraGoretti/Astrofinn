@@ -235,8 +235,8 @@ void main() {
   // LOWER INTENSITY (0.8) -> Subtle, realistic shine, not overpowering
   vec3 specularColor = vec3(1.0, 0.95, 0.8) * specular * 0.8;
   
-  // BRIGHTNESS TWEAKS: Increased base light and overall multiplier
-  vec3 finalDay = (dayColor * (diffuse + 0.25) + specularColor) * 1.3; 
+  // BRIGHTNESS TWEAKS: Reduced multiplier for more realistic lighting
+  vec3 finalDay = (dayColor * (diffuse + 0.25) + specularColor); 
   
   // Brighter city lights
   vec3 cleanNight = max(nightColorSample - 0.1, 0.0);
@@ -389,8 +389,8 @@ const SunMesh = () => {
     <group position={[0, 0, 0]}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
-        {/* Use meshBasicMaterial with map and boosted color for bloom emission */}
-        <meshBasicMaterial map={sunTexture} color={[1.5, 1.5, 1.5]} toneMapped={false} />
+        {/* Use meshBasicMaterial with map and subtle color boost for bloom emission */}
+        <meshBasicMaterial map={sunTexture} color={[1.2, 1.2, 1.2]} toneMapped={false} />
       </mesh>
       <mesh scale={[1.15, 1.15, 1.15]}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
@@ -415,7 +415,7 @@ const SunMesh = () => {
         />
       </sprite>
       <pointLight 
-        intensity={4.0} 
+        intensity={1.8} 
         distance={2000} 
         decay={0.0} 
         color="#ffffff" 
@@ -1110,13 +1110,13 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
         
         <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
            <StarBackground />
-           <ambientLight intensity={0.6} />
+           <ambientLight intensity={0.2} />
            
            <SunMesh />
            <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} simSpeed={simSpeed} simDate={simDate} setStage={setStage} />
 
            <EffectComposer>
-             <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={2.0} />
+             <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={1.0} />
            </EffectComposer>
         </Suspense>
       </Canvas>
