@@ -1,0 +1,751 @@
+components/QuizModule.tsx:        <Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-3" />
+components/QuizModule.tsx:        <p className="text-neon-blue font-mono text-xs tracking-wider animate-pulse">GENERATING CHALLENGES...</p>
+components/QuizModule.tsx:      <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+components/QuizModule.tsx:      <div className="relative z-10 w-full max-h-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+components/QuizModule.tsx:        <div className="flex justify-between items-center mb-6 border-b border-white/10 pb-3">
+components/QuizModule.tsx:          <h3 className="text-xs font-bold text-neon-purple tracking-widest uppercase">
+components/QuizModule.tsx:          <span className="font-mono text-xs text-gray-400">Score: {score}</span>
+components/QuizModule.tsx:        <h2 className="text-lg font-bold text-white mb-6 leading-relaxed">
+components/QuizModule.tsx:        <div className="space-y-3">
+components/QuizModule.tsx:            let btnClass = "w-full text-left p-4 rounded-xl border transition-all duration-200 transform group ";
+components/QuizModule.tsx:                btnClass += "bg-green-500/20 border-green-500/50 shadow-[0_0_15px_rgba(34,197,94,0.2)]";
+components/QuizModule.tsx:                btnClass += "bg-red-500/20 border-red-500/50";
+components/QuizModule.tsx:                btnClass += "border-white/5 text-gray-600 opacity-50";
+components/QuizModule.tsx:              btnClass += "bg-space-800/80 border-white/10 hover:border-neon-blue hover:bg-space-700 hover:scale-[1.01] hover:shadow-lg";
+components/QuizModule.tsx:                <div className="flex items-center justify-between">
+components/QuizModule.tsx:                  {isAnswered && idx === currentQ.correctAnswerIndex && <CheckCircle className="text-green-400 shrink-0 ml-3" size={18} />}
+components/QuizModule.tsx:                  {isAnswered && idx === selectedOption && idx !== currentQ.correctAnswerIndex && <XCircle className="text-red-400 shrink-0 ml-3" size={18} />}
+components/QuizModule.tsx:          <div className="mt-6 p-4 rounded-xl bg-space-800/50 border border-neon-blue/20 animate-fade-in-up backdrop-blur-sm">
+components/QuizModule.tsx:            <p className="text-xs text-neon-blue font-bold mb-2 tracking-wider uppercase">Scientific Explanation</p>
+components/QuizModule.tsx:            <p className="text-gray-300 text-sm leading-relaxed">{currentQ.explanation}</p>
+components/QuizModule.tsx:              className="mt-4 flex items-center space-x-2 bg-neon-blue hover:bg-cyan-400 text-space-900 font-bold py-2 px-6 rounded-full transition-all shadow-lg shadow-neon-blue/20 hover:shadow-neon-blue/40 w-full md:w-auto justify-center text-sm"
+components/activities/Earth3D.tsx:// However, to satisfy the visual requirement of "Sun slightly displaced" while maintaining a visible "ellipse shape",
+components/activities/Earth3D.tsx:  // This allows the gradient to spread further inwards, making the atmosphere look "thicker" and softer
+components/activities/Earth3D.tsx:            <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+components/activities/Earth3D.tsx:            <bufferAttribute attach="attributes-size" count={count} array={sizes} itemSize={1} />
+components/activities/Earth3D.tsx:            <bufferAttribute attach="attributes-color" count={count} array={colors} itemSize={3} />
+components/activities/Earth3D.tsx:        <primitive object={material} attach="material" />
+components/activities/Earth3D.tsx:            color="#cccccc" 
+components/activities/Earth3D.tsx:        color="#fffaed" 
+components/activities/Earth3D.tsx:        <orthographicCamera attach="shadow-camera" args={[-150, 150, 150, -150, 0.1, 1000]} />
+components/activities/Earth3D.tsx:            color="#ffffff"
+components/activities/Earth3D.tsx:            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{config.name}</div>
+components/activities/Earth3D.tsx:            // idealDist is the "snap-to" distance when switching focus
+components/activities/Earth3D.tsx:        <lineBasicMaterial attach="material" color="#00F0FF" opacity={0.4} transparent />
+components/activities/Earth3D.tsx:              <meshBasicMaterial color="#FF007F" transparent opacity={0.6} />
+components/activities/Earth3D.tsx:               <div className="flex flex-col items-center transform -translate-x-1/2 -translate-y-full">
+components/activities/Earth3D.tsx:                  <div className="bg-black/60 border border-neon-pink px-2 py-0.5 rounded text-[8px] font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
+components/activities/Earth3D.tsx:                  <div className="w-px h-2 bg-neon-pink"></div>
+components/activities/Earth3D.tsx:            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">Earth</div>
+components/activities/Earth3D.tsx:        <color attach="background" args={['#000005']} />
+components/activities/Earth3D.tsx:        <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
+components/activities/Earth3D.tsx:      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/50 p-1.5 rounded-full backdrop-blur-md border border-white/10 z-10">
+components/activities/Earth3D.tsx:           title="Free Earth View"
+components/activities/Earth3D.tsx:           title="Solar System Overview"
+components/activities/Earth3D.tsx:           title="Top-Down View"
+components/activities/Earth3D.tsx:           title="Cinematic View"
+components/activities/Earth3D.tsx:           title="Day View"
+components/activities/Earth3D.tsx:           title="Night View"
+components/activities/Earth3D.tsx:        <div className="flex items-center gap-2 px-3">
+components/activities/Earth3D.tsx:          <span className="text-[10px] font-mono text-gray-400">SPEED</span>
+components/activities/Earth3D.tsx:            type="range" 
+components/activities/Earth3D.tsx:            min="0" 
+components/activities/Earth3D.tsx:            max="10" 
+components/activities/Earth3D.tsx:            step="1" 
+components/activities/Earth3D.tsx:            className="w-20 accent-neon-blue"
+components/activities/Earth3D.tsx:          <span className="text-[10px] font-mono text-neon-blue w-6">{simSpeed.toFixed(1)}x</span>
+components/activities/Earth3D.tsx:         <div className="absolute top-4 left-4 flex flex-col gap-1 bg-black/80 p-3 rounded-xl backdrop-blur-md border border-white/10 max-h-[80%] overflow-y-auto z-10 w-32">
+components/activities/Earth3D.tsx:            <h3 className="text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider border-b border-gray-700 pb-1">Planetary Focus</h3>
+components/activities/Earth3D.tsx:       <div className="absolute top-4 left-40 z-0 pointer-events-none opacity-0">
+components/activities/Earth3D.tsx:          <div className="text-[10px] text-gray-500 font-mono">
+components/activities/TiltOrbitVisuals.tsx:          <meshBasicMaterial color="#00ff00" />
+components/activities/TiltOrbitVisuals.tsx:      <meshBasicMaterial color="#ffcc00" />
+components/activities/TiltOrbitVisuals.tsx:    <div className="w-full h-full bg-black rounded-xl overflow-hidden shadow-2xl border border-white/10">
+components/activities/TiltOrbitVisuals.tsx:        <div className="absolute inset-0 flex items-center justify-center bg-space-900/80 backdrop-blur-sm">
+components/activities/TiltOrbitVisuals.tsx:          <div className="flex flex-col items-center">
+components/activities/TiltOrbitVisuals.tsx:            <div className="w-12 h-12 border-4 border-neon-blue border-t-transparent rounded-full animate-spin mb-4"></div>
+components/activities/TiltOrbitVisuals.tsx:            <p className="text-neon-blue font-mono animate-pulse">LOADING SPACE DATA...</p>
+components/activities/OrbitCommand.tsx:            message: "Yes! Rotation creates day and night. Click the Rotation button again to activate Earth’s daily routine!", 
+components/activities/OrbitCommand.tsx:            message: "Interesting idea! But in space, the Sun doesn’t move like a flashlight in your hand. Try another option.", 
+components/activities/OrbitCommand.tsx:            message: "If nothing moves, nothing changes! We would not get day and night. Try another option.", 
+components/activities/OrbitCommand.tsx:            message: "Click on the Tilt button and restore our beloved summer again!", 
+components/activities/OrbitCommand.tsx:            message: "Good thought! But Earth’s distance to the Sun changes only a little during the year. That is not the main reason for long summer days in Finland. Try another option.", 
+components/activities/OrbitCommand.tsx:            message: "If we turn off the Sun, everything is dark and cold… forever. That doesn’t sound like Finnish summer! Try another option.", 
+components/activities/OrbitCommand.tsx:            message: "Exactly! The Earth orbits (revolves) around the Sun. Click the Revolution button to start the orbit simulator!", 
+components/activities/OrbitCommand.tsx:            message: "Spinning faster gives us shorter days and nights, but it doesn’t change which hemisphere points toward the Sun. Try another option.", 
+components/activities/OrbitCommand.tsx:            message: "Changing the Sun’s temperature would affect the whole solar system. Seasons on Earth come from Earth’s movements, not from the Sun cooling down or heating up. Try another option.", 
+components/activities/OrbitCommand.tsx:    <div className="max-w-2xl mx-auto space-y-8 py-12">
+components/activities/OrbitCommand.tsx:      <div className="text-center space-y-4">
+components/activities/OrbitCommand.tsx:        <h2 className="text-3xl font-bold text-white">Step 1 – Talk about seasons, light, and darkness</h2>
+components/activities/OrbitCommand.tsx:        <p className="text-gray-400">Turn to your classmates and share your thoughts.</p>
+components/activities/OrbitCommand.tsx:      <div className="grid gap-6">
+components/activities/OrbitCommand.tsx:        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-pink">
+components/activities/OrbitCommand.tsx:          <h3 className="font-bold text-lg mb-2 flex items-center">
+components/activities/OrbitCommand.tsx:            <Users className="mr-2 text-neon-pink" size={20} />
+components/activities/OrbitCommand.tsx:          <p className="text-gray-300">What’s your favorite season? How does it look like? (snow, rain, green trees, flowers, etc.)</p>
+components/activities/OrbitCommand.tsx:        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-blue">
+components/activities/OrbitCommand.tsx:          <h3 className="font-bold text-lg mb-2 flex items-center">
+components/activities/OrbitCommand.tsx:            <Calendar className="mr-2 text-neon-blue" size={20} />
+components/activities/OrbitCommand.tsx:          <p className="text-gray-300">How long is the daylight during your birthday every year? What about the temperature?</p>
+components/activities/OrbitCommand.tsx:        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-purple">
+components/activities/OrbitCommand.tsx:          <h3 className="font-bold text-lg mb-2 flex items-center">
+components/activities/OrbitCommand.tsx:            <Info className="mr-2 text-neon-purple" size={20} />
+components/activities/OrbitCommand.tsx:          <p className="text-gray-300">Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?</p>
+components/activities/OrbitCommand.tsx:      <div className="bg-space-800/50 p-6 rounded-2xl border border-white/5 text-center">
+components/activities/OrbitCommand.tsx:        <p className="text-gray-300 italic mb-6">
+components/activities/OrbitCommand.tsx:        <div className="flex items-center justify-center gap-4 mb-8">
+components/activities/OrbitCommand.tsx:            src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/OrbitCommand.tsx:            alt="Astronaut" 
+components/activities/OrbitCommand.tsx:            className="w-12 h-12"
+components/activities/OrbitCommand.tsx:            referrerPolicy="no-referrer"
+components/activities/OrbitCommand.tsx:          <div className="bg-white text-space-900 p-3 rounded-2xl rounded-bl-none text-sm font-medium relative">
+components/activities/OrbitCommand.tsx:          className="btn-primary px-8 py-4 text-lg group"
+components/activities/OrbitCommand.tsx:          <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+components/activities/OrbitCommand.tsx:          title: "From Flashlight & Ball to Sun & Earth",
+components/activities/OrbitCommand.tsx:          text: "Remember the magic flashlight and the ball from the last mission? Now we replace the flashlight with the Sun and the ball with the Earth.",
+components/activities/OrbitCommand.tsx:            "Remember how the flashlight influenced the ball? Now let’s think about the Earth!",
+components/activities/OrbitCommand.tsx:            "What areas do you think will be hotter, just like the magic flashlight made the ball warm up?",
+components/activities/OrbitCommand.tsx:            "Where do you think it would be colder?"
+components/activities/OrbitCommand.tsx:          prompt: "Well, but now let’s think about our reality. Is it always bright all the time on Earth?",
+components/activities/OrbitCommand.tsx:          question: "Which movement creates day and night on Earth?",
+components/activities/OrbitCommand.tsx:          title: "Rotation Without Tilt",
+components/activities/OrbitCommand.tsx:          text: "Now we have day and night! The Earth is spinning around its axis.",
+components/activities/OrbitCommand.tsx:            "Now we have day and night! But there’s something weird…",
+components/activities/OrbitCommand.tsx:            "In this model, the North Pole and South Pole are completely aligned straight up and down.",
+components/activities/OrbitCommand.tsx:            "Look at Finland. In this spinning Earth, can you see how Finland is dark for half of the day and bright for the other half?",
+components/activities/OrbitCommand.tsx:            "Is it like reality? Think about your summers here. How long are your days in summer?"
+components/activities/OrbitCommand.tsx:          prompt: "Something is wrong with this ‘perfect’ spinning Earth. How can we fix it?",
+components/activities/OrbitCommand.tsx:          question: "What should we do to make the model more like real Earth, where summer days in Finland are much longer?",
+components/activities/OrbitCommand.tsx:          title: "Tilt + Rotation",
+components/activities/OrbitCommand.tsx:          text: "Nice! Now we have summer in the northern hemisphere. The North Pole is tilted towards the Sun.",
+components/activities/OrbitCommand.tsx:            "Nice! Now we have summer! But… hmmm, what’s wrong now?",
+components/activities/OrbitCommand.tsx:            "Is it always warm summer in Finland? What about skiing season? And kaamos?",
+components/activities/OrbitCommand.tsx:            "Look at the South Pole. What’s going on there? It looks like it’s always night there…"
+components/activities/OrbitCommand.tsx:          prompt: "Does Finland have summer forever in real life? Does Antarctica stay in night forever?",
+components/activities/OrbitCommand.tsx:          question: "What movement is missing in our model so that places on Earth don’t stay in eternal summer or eternal winter?",
+components/activities/OrbitCommand.tsx:      <div className="max-w-2xl mx-auto py-12 text-center space-y-8">
+components/activities/OrbitCommand.tsx:        <div className="inline-flex p-4 bg-green-500/20 rounded-full">
+components/activities/OrbitCommand.tsx:          <CheckCircle2 className="text-green-500 w-16 h-16" />
+components/activities/OrbitCommand.tsx:        <h2 className="text-4xl font-bold text-white">Mission Accomplished!</h2>
+components/activities/OrbitCommand.tsx:        <div className="glass-panel p-8 rounded-2xl space-y-4 text-left">
+components/activities/OrbitCommand.tsx:          <p className="text-gray-300 text-lg">You have now:</p>
+components/activities/OrbitCommand.tsx:          <ul className="space-y-3">
+components/activities/OrbitCommand.tsx:            <li className="flex items-center text-white">
+components/activities/OrbitCommand.tsx:              <CheckCircle2 className="text-green-500 mr-3" size={20} />
+components/activities/OrbitCommand.tsx:            <li className="flex items-center text-white">
+components/activities/OrbitCommand.tsx:              <CheckCircle2 className="text-green-500 mr-3" size={20} />
+components/activities/OrbitCommand.tsx:            <li className="flex items-center text-white">
+components/activities/OrbitCommand.tsx:              <CheckCircle2 className="text-green-500 mr-3" size={20} />
+components/activities/OrbitCommand.tsx:        <div className="flex items-center justify-center gap-4">
+components/activities/OrbitCommand.tsx:            src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/OrbitCommand.tsx:            alt="Astronaut" 
+components/activities/OrbitCommand.tsx:            className="w-16 h-16"
+components/activities/OrbitCommand.tsx:            referrerPolicy="no-referrer"
+components/activities/OrbitCommand.tsx:          <div className="bg-white text-space-900 p-4 rounded-2xl rounded-bl-none font-bold shadow-xl">
+components/activities/OrbitCommand.tsx:          className="btn-primary px-12 py-4 text-xl"
+components/activities/OrbitCommand.tsx:    <div className="flex flex-col lg:flex-row h-full w-full gap-6">
+components/activities/OrbitCommand.tsx:      <div className="flex-1 relative flex flex-col min-h-[400px]">
+components/activities/OrbitCommand.tsx:        <div className="absolute top-4 left-4 p-4 glass-panel rounded-xl border-l-4 border-neon-blue max-w-md pointer-events-none">
+components/activities/OrbitCommand.tsx:          <h3 className="text-lg font-bold text-white mb-2">{phaseContent?.title || "Orbit Simulator"}</h3>
+components/activities/OrbitCommand.tsx:          <p className="text-sm text-gray-300 leading-relaxed">{phaseContent?.text || "Perfect! Welcome to the orbit simulator according to the dates."}</p>
+components/activities/OrbitCommand.tsx:              <p className="font-medium">{feedback.message}</p>
+components/activities/OrbitCommand.tsx:      <div className="w-full lg:w-[450px] shrink-0 flex flex-col gap-4 overflow-y-auto max-h-full pb-6">
+components/activities/OrbitCommand.tsx:          <div className="space-y-4">
+components/activities/OrbitCommand.tsx:            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 space-y-4">
+components/activities/OrbitCommand.tsx:              <h4 className="font-bold text-neon-purple uppercase tracking-widest text-xs">Scaffolding Questions</h4>
+components/activities/OrbitCommand.tsx:              <div className="space-y-3">
+components/activities/OrbitCommand.tsx:                  <div key={i} className="flex gap-3 text-sm text-gray-300 bg-black/30 p-3 rounded-lg border-l-2 border-neon-purple">
+components/activities/OrbitCommand.tsx:                    <Info size={16} className="shrink-0 mt-0.5 text-neon-purple" />
+components/activities/OrbitCommand.tsx:            <div className="glass-panel p-6 rounded-xl border border-neon-blue space-y-6">
+components/activities/OrbitCommand.tsx:              <div className="space-y-2">
+components/activities/OrbitCommand.tsx:                <p className="text-neon-blue font-bold text-sm uppercase tracking-wider">Current Challenge</p>
+components/activities/OrbitCommand.tsx:                <p className="text-white text-lg font-medium">{phaseContent?.prompt}</p>
+components/activities/OrbitCommand.tsx:              <div className="space-y-3">
+components/activities/OrbitCommand.tsx:                <p className="text-gray-400 text-sm font-mono">{phaseContent?.question}</p>
+components/activities/OrbitCommand.tsx:                <div className="grid gap-2">
+components/activities/OrbitCommand.tsx:                      className="w-full p-4 text-left rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-neon-blue transition-all group flex items-center justify-between"
+components/activities/OrbitCommand.tsx:                      <span className="text-gray-200 group-hover:text-white">{opt.label}</span>
+components/activities/OrbitCommand.tsx:                      <ChevronRight size={18} className="text-gray-500 group-hover:text-neon-blue group-hover:translate-x-1 transition-all" />
+components/activities/OrbitCommand.tsx:          <div className="space-y-4">
+components/activities/OrbitCommand.tsx:            <div className="glass-panel p-6 rounded-xl border border-neon-blue space-y-6">
+components/activities/OrbitCommand.tsx:              <div className="flex items-center gap-3">
+components/activities/OrbitCommand.tsx:                <Calendar className="text-neon-blue" />
+components/activities/OrbitCommand.tsx:                <h3 className="text-xl font-bold">Orbit Simulator</h3>
+components/activities/OrbitCommand.tsx:              <div className="space-y-4">
+components/activities/OrbitCommand.tsx:                  <label className="block text-xs text-gray-500 uppercase mb-2">Select Date</label>
+components/activities/OrbitCommand.tsx:                  <div className="flex gap-2 mb-3 overflow-x-auto pb-2">
+components/activities/OrbitCommand.tsx:                        className="px-3 py-1 rounded-full bg-white/5 border border-white/10 hover:bg-neon-blue/20 hover:border-neon-blue text-xs transition-all whitespace-nowrap"
+components/activities/OrbitCommand.tsx:                    type="date" 
+components/activities/OrbitCommand.tsx:                    className="w-full bg-space-900 border border-white/10 rounded-lg p-3 text-white focus:border-neon-blue outline-none"
+components/activities/OrbitCommand.tsx:                <div className="grid grid-cols-2 gap-4">
+components/activities/OrbitCommand.tsx:                  <div className="bg-black/40 p-4 rounded-xl border border-white/5 text-center">
+components/activities/OrbitCommand.tsx:                    <p className="text-xs text-gray-500 uppercase mb-1">Daylight (Oulu)</p>
+components/activities/OrbitCommand.tsx:                    <p className="text-2xl font-bold text-yellow-400">{dayLength.toFixed(1)}h</p>
+components/activities/OrbitCommand.tsx:                  <div className="bg-black/40 p-4 rounded-xl border border-white/5 text-center">
+components/activities/OrbitCommand.tsx:                    <p className="text-xs text-gray-500 uppercase mb-1">Night (Oulu)</p>
+components/activities/OrbitCommand.tsx:                    <p className="text-2xl font-bold text-blue-400">{(24 - dayLength).toFixed(1)}h</p>
+components/activities/OrbitCommand.tsx:            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 space-y-6">
+components/activities/OrbitCommand.tsx:              <h4 className="font-bold text-white flex items-center gap-2">
+components/activities/OrbitCommand.tsx:                <Play size={18} className="text-neon-green" />
+components/activities/OrbitCommand.tsx:              <div className="space-y-4">
+components/activities/OrbitCommand.tsx:                  <div className="flex items-center justify-between mb-2">
+components/activities/OrbitCommand.tsx:                    <span className="font-bold text-sm">Task 1: Find Spring</span>
+components/activities/OrbitCommand.tsx:                    {completedTasks.includes('spring') && <CheckCircle2 className="text-green-500" size={18} />}
+components/activities/OrbitCommand.tsx:                  <p className="text-xs text-gray-400 mb-3">Can you find spring in Finland? Choose a date in spring (March/April).</p>
+components/activities/OrbitCommand.tsx:                    <div className="space-y-2 text-xs text-gray-300">
+components/activities/OrbitCommand.tsx:                      <button onClick={() => setPhase4Task('winter')} className="text-neon-blue hover:underline">Next Task →</button>
+components/activities/OrbitCommand.tsx:                    <button onClick={() => setPhase4Task('spring')} className="text-xs text-neon-blue hover:underline">Active Task</button>
+components/activities/OrbitCommand.tsx:                  <div className="flex items-center justify-between mb-2">
+components/activities/OrbitCommand.tsx:                    <span className="font-bold text-sm">Task 2: Find Winter</span>
+components/activities/OrbitCommand.tsx:                    {completedTasks.includes('winter') && <CheckCircle2 className="text-green-500" size={18} />}
+components/activities/OrbitCommand.tsx:                  <p className="text-xs text-gray-400 mb-3">Now, find winter in Finland. Choose a date in winter (Dec/Jan).</p>
+components/activities/OrbitCommand.tsx:                    <div className="space-y-2 text-xs text-gray-300">
+components/activities/OrbitCommand.tsx:                      <button onClick={() => setPhase4Task('summer')} className="text-neon-blue hover:underline">Next Task →</button>
+components/activities/OrbitCommand.tsx:                    <button onClick={() => setPhase4Task('winter')} className="text-xs text-neon-blue hover:underline">Switch to Task</button>
+components/activities/OrbitCommand.tsx:                  <div className="flex items-center justify-between mb-2">
+components/activities/OrbitCommand.tsx:                    <span className="font-bold text-sm">Task 3: Find Summer</span>
+components/activities/OrbitCommand.tsx:                    {completedTasks.includes('summer') && <CheckCircle2 className="text-green-500" size={18} />}
+components/activities/OrbitCommand.tsx:                  <p className="text-xs text-gray-400 mb-3">Now find summer in Finland. Choose a date in summer (June/July).</p>
+components/activities/OrbitCommand.tsx:                    <div className="space-y-2 text-xs text-gray-300">
+components/activities/OrbitCommand.tsx:                        className="w-full mt-2 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg font-bold transition-colors"
+components/activities/OrbitCommand.tsx:                    <button onClick={() => setPhase4Task('summer')} className="text-xs text-neon-blue hover:underline">Switch to Task</button>
+components/activities/OrbitCommand.tsx:              <div className="bg-white p-4 rounded-xl flex gap-3 shadow-xl">
+components/activities/OrbitCommand.tsx:                  src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/OrbitCommand.tsx:                  alt="Astronaut" 
+components/activities/OrbitCommand.tsx:                  className="w-10 h-10"
+components/activities/OrbitCommand.tsx:                  referrerPolicy="no-referrer"
+components/activities/OrbitCommand.tsx:                <p className="text-space-900 text-xs font-medium">
+components/activities/KaamosEarth.tsx:            color="#cccccc" 
+components/activities/KaamosEarth.tsx:            <meshBasicMaterial color="#FFFFFF" opacity={0.3} transparent />
+components/activities/SolarSystemActivities.tsx:    <div className="flex items-start space-x-4 bg-space-800/90 p-6 rounded-2xl border border-neon-blue/30 animate-fade-in max-w-2xl mx-auto">
+components/activities/SolarSystemActivities.tsx:        src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/SolarSystemActivities.tsx:        alt="Astronaut" 
+components/activities/SolarSystemActivities.tsx:        className="w-16 h-16 shrink-0 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]"
+components/activities/SolarSystemActivities.tsx:        referrerPolicy="no-referrer"
+components/activities/SolarSystemActivities.tsx:      <p className="text-gray-200 text-lg leading-relaxed font-medium whitespace-pre-wrap">{text}</p>
+components/activities/SolarSystemActivities.tsx:    <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-space-900 relative overflow-y-auto scrollbar-hide">
+components/activities/SolarSystemActivities.tsx:      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 pointer-events-none"></div>
+components/activities/SolarSystemActivities.tsx:      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-neon-blue/10 rounded-full blur-3xl pointer-events-none"></div>
+components/activities/SolarSystemActivities.tsx:      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-pink/10 rounded-full blur-3xl pointer-events-none"></div>
+components/activities/SolarSystemActivities.tsx:      <div className="z-10 w-full max-w-4xl">
+components/activities/SolarSystemActivities.tsx:            className="space-y-8 flex flex-col items-center"
+components/activities/SolarSystemActivities.tsx:            {renderAstronautBubble("Hello explorer!\n\nYou made it far! Let's just review what you've learned regarding Earth, Moon, and Sun movements (in this app and in your classroom).\n\nFor this you will play a fun game in groups of 4 people.")}
+components/activities/SolarSystemActivities.tsx:              className="mt-8 px-8 py-4 bg-neon-blue/20 hover:bg-neon-blue/30 border border-neon-blue text-white rounded-full font-bold text-xl flex items-center transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]"
+components/activities/SolarSystemActivities.tsx:              <Play className="mr-3" /> Start Activity 1: The Astros Dance
+components/activities/SolarSystemActivities.tsx:            className="glass-panel p-6 rounded-2xl border border-neon-blue/30 w-full"
+components/activities/SolarSystemActivities.tsx:            <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
+components/activities/SolarSystemActivities.tsx:              <Users className="mr-3 text-neon-blue" /> The Astros Dance
+components/activities/SolarSystemActivities.tsx:                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/SolarSystemActivities.tsx:                alt="Astronaut" 
+components/activities/SolarSystemActivities.tsx:                className="w-8 h-8 ml-3 drop-shadow-[0_0_8px_rgba(0,255,255,0.4)]"
+components/activities/SolarSystemActivities.tsx:                referrerPolicy="no-referrer"
+components/activities/SolarSystemActivities.tsx:            <p className="text-gray-300 mb-6 text-center">Work in groups of 4. Complete each step and check it off!</p>
+components/activities/SolarSystemActivities.tsx:            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+components/activities/SolarSystemActivities.tsx:                "1 - Open any AI of your choice and ask it to randomly assign the roles of Commander, Sun, Earth, and Moon to each one of your group members (do not enter your full name, just first name to protect your privacy).",
+components/activities/SolarSystemActivities.tsx:                "2 - Commander, prompt AI to suggest random combinations of location and its season, and moon phase (e.g. Summer in Finland with full moon, Spring in Brazil with new moon...). Don't show the others the result yet.",
+components/activities/SolarSystemActivities.tsx:                "3 - Now the Commander must tell the combination that was generated and the other players must dance into the right places!",
+components/activities/SolarSystemActivities.tsx:                "4- Repeat the process again to switch roles as many times as you wish!"
+components/activities/SolarSystemActivities.tsx:                  <div className="mr-4 mt-1 shrink-0">
+components/activities/SolarSystemActivities.tsx:                      <CheckCircle2 className="text-green-400" size={24} />
+components/activities/SolarSystemActivities.tsx:                      <Circle className="text-gray-500" size={24} />
+components/activities/SolarSystemActivities.tsx:                  <p className="text-base leading-tight">{step}</p>
+components/activities/SolarSystemActivities.tsx:            <div className="flex justify-center">
+components/activities/SolarSystemActivities.tsx:                Go to Activity 2 <ArrowRight className="ml-2" />
+components/activities/SolarSystemActivities.tsx:            className="space-y-8 flex flex-col items-center"
+components/activities/SolarSystemActivities.tsx:            {renderAstronautBubble("You guys rocked astro-dancing!\n\nNow let's keep the art alive and create something a bit crazy that will warm you up for this Exploration Mission of the Solar System View.")}
+components/activities/SolarSystemActivities.tsx:              className="mt-8 px-8 py-4 bg-neon-pink/20 hover:bg-neon-pink/30 border border-neon-pink text-white rounded-full font-bold text-xl flex items-center transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,20,147,0.4)]"
+components/activities/SolarSystemActivities.tsx:              <PenTool className="mr-3" /> Start Activity 2
+components/activities/SolarSystemActivities.tsx:            className="glass-panel p-6 rounded-2xl border border-neon-pink/30 w-full"
+components/activities/SolarSystemActivities.tsx:            <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
+components/activities/SolarSystemActivities.tsx:              <PenTool className="mr-3 text-neon-pink" /> Activity 2
+components/activities/SolarSystemActivities.tsx:            <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
+components/activities/SolarSystemActivities.tsx:              <p className="text-base text-gray-200 text-center whitespace-pre-wrap">
+components/activities/SolarSystemActivities.tsx:                {"In pairs, groups, or working alone at home, choose a writing style (song, rap, poem, little story, etc) to express the correct order of all the planets of the Solar System!\n\nFollow your teacher's instructions on how and when to present your masterpiece.\n\nThen once you are ready, dive into the Solar System to see all planets and its features in the Exploration Mission."}
+components/activities/SolarSystemActivities.tsx:            <div className="flex justify-center">
+components/activities/SolarSystemActivities.tsx:                className="px-8 py-4 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-xl flex items-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+components/activities/SolarSystemActivities.tsx:                <Rocket className="mr-3" /> Start Exploration Mission
+components/activities/KaamosViewer.tsx:  // Helper to format Day of Year to "Month Day"
+components/activities/KaamosViewer.tsx:    <div className="w-full h-full flex flex-col gap-6">
+components/activities/KaamosViewer.tsx:      <div className="grid lg:grid-cols-2 gap-8 h-full">
+components/activities/KaamosViewer.tsx:        <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col h-full min-h-[600px]">
+components/activities/KaamosViewer.tsx:          <div className="flex items-center justify-between mb-4 shrink-0">
+components/activities/KaamosViewer.tsx:            <h2 className="text-2xl font-bold text-white flex items-center">
+components/activities/KaamosViewer.tsx:              <MapPin className="mr-2 text-neon-blue" />
+components/activities/KaamosViewer.tsx:            <div className="flex space-x-2">
+components/activities/KaamosViewer.tsx:          <div className="relative flex-1 bg-black rounded-xl overflow-hidden mb-6 border border-white/20 shadow-inner shadow-black/50">
+components/activities/KaamosViewer.tsx:                  <color attach="background" args={['#050505']} />
+components/activities/KaamosViewer.tsx:             <div className="absolute top-4 left-4 pointer-events-none">
+components/activities/KaamosViewer.tsx:                <div className="bg-black/60 backdrop-blur-md p-3 rounded-lg border border-white/10">
+components/activities/KaamosViewer.tsx:                  <div className="text-xs text-gray-400 uppercase mb-1">Status</div>
+components/activities/KaamosViewer.tsx:                    <span className="text-blue-300 font-bold animate-pulse flex items-center gap-2">
+components/activities/KaamosViewer.tsx:                    <span className="text-yellow-300 font-bold animate-pulse flex items-center gap-2">
+components/activities/KaamosViewer.tsx:                    <span className="text-white font-bold flex items-center gap-2">
+components/activities/KaamosViewer.tsx:                      <Sun size={16} className="text-orange-400" /> Normal Day/Night
+components/activities/KaamosViewer.tsx:          <div className="space-y-6 shrink-0 bg-space-800/50 p-4 rounded-xl border border-white/5">
+components/activities/KaamosViewer.tsx:             <div className="space-y-2">
+components/activities/KaamosViewer.tsx:               <div className="flex justify-between items-center">
+components/activities/KaamosViewer.tsx:                 <label className="text-sm text-gray-400 flex items-center gap-2">
+components/activities/KaamosViewer.tsx:                 <span className="text-neon-blue font-mono font-bold">{getFormattedDate(dayOfYear)}</span>
+components/activities/KaamosViewer.tsx:                 type="range" 
+components/activities/KaamosViewer.tsx:                 min="1" 
+components/activities/KaamosViewer.tsx:                 max="365" 
+components/activities/KaamosViewer.tsx:                 step="1"
+components/activities/KaamosViewer.tsx:                 className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-neon-blue"
+components/activities/KaamosViewer.tsx:               <div className="flex justify-between text-[10px] text-gray-600 font-mono uppercase px-1">
+components/activities/KaamosViewer.tsx:             <div className="space-y-2">
+components/activities/KaamosViewer.tsx:               <div className="flex justify-between items-center">
+components/activities/KaamosViewer.tsx:                 <label className="text-sm text-gray-400 flex items-center gap-2">
+components/activities/KaamosViewer.tsx:                 <span className="text-neon-pink font-mono font-bold">{selectedHour}:00</span>
+components/activities/KaamosViewer.tsx:                 type="range" 
+components/activities/KaamosViewer.tsx:                 min="0" 
+components/activities/KaamosViewer.tsx:                 max="23" 
+components/activities/KaamosViewer.tsx:                 step="1"
+components/activities/KaamosViewer.tsx:                 className="w-full h-2 bg-space-700 rounded-lg appearance-none cursor-pointer accent-neon-pink"
+components/activities/KaamosViewer.tsx:               <div className="flex justify-between text-[10px] text-gray-600 font-mono uppercase px-1">
+components/activities/KaamosViewer.tsx:             <div className="grid grid-cols-2 gap-4 mt-4 pt-4 border-t border-white/10">
+components/activities/KaamosViewer.tsx:                  <p className="text-gray-500 text-xs uppercase tracking-wider">Day Length</p>
+components/activities/KaamosViewer.tsx:                <div className="text-right">
+components/activities/KaamosViewer.tsx:                  <p className="text-gray-500 text-xs uppercase tracking-wider">Sun Elevation (Noon)</p>
+components/activities/KaamosViewer.tsx:                  <p className="text-xl font-bold text-white font-mono">
+components/activities/KaamosViewer.tsx:        <div className="flex flex-col gap-6 overflow-y-auto custom-scrollbar pr-2">
+components/activities/KaamosViewer.tsx:           <div className="bg-space-800/80 backdrop-blur p-6 rounded-xl border-l-4 border-neon-blue shadow-lg">
+components/activities/KaamosViewer.tsx:             <h3 className="text-lg font-bold text-neon-blue mb-3 flex items-center gap-2">
+components/activities/KaamosViewer.tsx:             <p className="text-gray-300 leading-relaxed mb-4">
+components/activities/KaamosViewer.tsx:                   Located at <span className="text-white font-mono">{selectedLoc.lat}°N</span>, this location is 
+components/activities/KaamosViewer.tsx:                   <span className="text-neon-pink font-bold"> above the Arctic Circle</span>. 
+components/activities/KaamosViewer.tsx:                   Located at <span className="text-white font-mono">{selectedLoc.lat}°N</span>, this location is 
+components/activities/KaamosViewer.tsx:                   <span className="text-blue-300 font-bold"> below the Arctic Circle</span>. 
+components/activities/KaamosViewer.tsx:             <div className="bg-black/30 p-4 rounded-lg text-sm text-gray-400">
+components/activities/KaamosViewer.tsx:               <strong className="text-white block mb-1">Why does this happen?</strong>
+components/activities/KaamosViewer.tsx:           <div className="flex-1 min-h-[400px]">
+components/activities/LightIncidence.tsx:    <div className="max-w-4xl mx-auto space-y-8 pb-12">
+components/activities/LightIncidence.tsx:      <div className="text-center mb-8">
+components/activities/LightIncidence.tsx:        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+components/activities/LightIncidence.tsx:        <p className="text-xl text-gray-400 mt-2">Path 1: Warm-up with reflective and creative thinking</p>
+components/activities/LightIncidence.tsx:      <div className="glass-panel p-8 rounded-2xl border border-white/10">
+components/activities/LightIncidence.tsx:        <h2 className="text-2xl font-bold text-white mb-4">Step 1 – Let’s talk about seasons and places</h2>
+components/activities/LightIncidence.tsx:        <p className="text-gray-300 mb-6 italic">
+components/activities/LightIncidence.tsx:        <div className="space-y-6">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-orange-400 mb-2">Talk about your favorite season</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
+components/activities/LightIncidence.tsx:                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-orange-400 mb-2">Share stories about other places</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
+components/activities/LightIncidence.tsx:                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-orange-400 mb-2">Choose a place you’d like to visit</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
+components/activities/LightIncidence.tsx:                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
+components/activities/LightIncidence.tsx:          <div className="flex items-start gap-4 bg-blue-900/30 p-4 rounded-xl border border-blue-500/30">
+components/activities/LightIncidence.tsx:            <div className="p-2 bg-blue-500/20 rounded-full shrink-0">
+components/activities/LightIncidence.tsx:                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/LightIncidence.tsx:                alt="Astronaut" 
+components/activities/LightIncidence.tsx:                className="w-6 h-6"
+components/activities/LightIncidence.tsx:                referrerPolicy="no-referrer"
+components/activities/LightIncidence.tsx:            <p className="text-blue-200 italic">
+components/activities/LightIncidence.tsx:          <div className="mt-6 bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-orange-400 mb-2">Reflection</h3>
+components/activities/LightIncidence.tsx:            <p className="text-gray-300">
+components/activities/LightIncidence.tsx:      <div className="glass-panel p-8 rounded-2xl border border-white/10">
+components/activities/LightIncidence.tsx:        <h2 className="text-2xl font-bold text-white mb-4">Step 2 – Flashlight & Shadows Experiment</h2>
+components/activities/LightIncidence.tsx:        <p className="text-gray-300 mb-6 italic">
+components/activities/LightIncidence.tsx:        <div className="mb-6">
+components/activities/LightIncidence.tsx:          <h3 className="text-lg font-bold text-gray-200 mb-2">Suggested materials:</h3>
+components/activities/LightIncidence.tsx:          <ul className="list-disc list-inside text-gray-400 ml-4">
+components/activities/LightIncidence.tsx:        <div className="space-y-6">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-yellow-400 mb-2">Make a basic shadow</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-yellow-400 mb-2">Light almost on top of the object</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
+components/activities/LightIncidence.tsx:            <div className="bg-black/30 p-4 rounded-lg border-l-2 border-yellow-500 text-gray-300">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-yellow-400 mb-2">Make a long shadow</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
+components/activities/LightIncidence.tsx:            <div className="bg-black/30 p-4 rounded-lg border-l-2 border-yellow-500 text-gray-300">
+components/activities/LightIncidence.tsx:          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-yellow-400 mb-2">Light concentration vs. spreading</h3>
+components/activities/LightIncidence.tsx:            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
+components/activities/LightIncidence.tsx:                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
+components/activities/LightIncidence.tsx:            <div className="space-y-3 mt-4">
+components/activities/LightIncidence.tsx:              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:          <div className="mt-6 bg-space-800/50 p-6 rounded-xl border border-white/5">
+components/activities/LightIncidence.tsx:            <h3 className="text-lg font-bold text-yellow-400 mb-2">Reflection</h3>
+components/activities/LightIncidence.tsx:            <p className="text-gray-300">
+components/activities/LightIncidence.tsx:          <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30 mt-8">
+components/activities/LightIncidence.tsx:            <div className="p-2 bg-green-500/20 rounded-full shrink-0">
+components/activities/LightIncidence.tsx:                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/LightIncidence.tsx:                alt="Astronaut" 
+components/activities/LightIncidence.tsx:                className="w-6 h-6"
+components/activities/LightIncidence.tsx:                referrerPolicy="no-referrer"
+components/activities/LightIncidence.tsx:            <p className="text-green-200 italic">
+components/activities/LightIncidence.tsx:    <div className="max-w-5xl mx-auto space-y-8 pb-12">
+components/activities/LightIncidence.tsx:      <div className="text-center mb-8">
+components/activities/LightIncidence.tsx:        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+components/activities/LightIncidence.tsx:        <p className="text-xl text-gray-400 mt-2">Path 2: Exploration Mission</p>
+components/activities/LightIncidence.tsx:      <div className="flex justify-center mb-6">
+components/activities/LightIncidence.tsx:        <div className="bg-space-800 p-1 rounded-lg inline-flex">
+components/activities/LightIncidence.tsx:        <div className="grid lg:grid-cols-2 gap-8">
+components/activities/LightIncidence.tsx:          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col">
+components/activities/LightIncidence.tsx:            <h2 className="text-2xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
+components/activities/LightIncidence.tsx:            <p className="text-gray-400 text-sm mb-6 italic">
+components/activities/LightIncidence.tsx:            <div className="relative flex-1 min-h-[350px] bg-gradient-to-b from-space-900 to-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center mb-6 shadow-2xl">
+components/activities/LightIncidence.tsx:              <div className="absolute bottom-0 w-full h-1/3 bg-gradient-to-t from-gray-800 to-gray-600 border-t border-gray-500 shadow-[inset_0_10px_30px_rgba(0,0,0,0.5)]">
+components/activities/LightIncidence.tsx:                <div className="absolute inset-0 opacity-20" style={{
+components/activities/LightIncidence.tsx:                      className="absolute bottom-[16.66%] pointer-events-none z-10 rounded-[50%]"
+components/activities/LightIncidence.tsx:                      className="absolute bottom-[16.66%] pointer-events-none mix-blend-screen z-10 rounded-[50%]"
+components/activities/LightIncidence.tsx:                      className="absolute bottom-[16.66%] left-1/2 -translate-x-1/2 pointer-events-none z-20"
+components/activities/LightIncidence.tsx:                          className="absolute bottom-0 bg-gradient-to-t from-orange-400/60 to-transparent blur-[2px]"
+components/activities/LightIncidence.tsx:                        className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-orange-500/20 blur-3xl"
+components/activities/LightIncidence.tsx:                      className="absolute bottom-[16.66%] left-1/2 -translate-x-1/2 transition-opacity duration-500 pointer-events-none z-20"
+components/activities/LightIncidence.tsx:                          className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-gray-200/40 rounded-full blur-xl"
+components/activities/LightIncidence.tsx:                className="absolute transition-all duration-300 origin-bottom z-10"
+components/activities/LightIncidence.tsx:                <div className="w-12 h-24 bg-gradient-to-t from-gray-300 to-gray-500 rounded-t-lg shadow-lg relative flex flex-col items-center justify-end z-10">
+components/activities/LightIncidence.tsx:                  <div className="absolute top-6 w-3 h-6 bg-orange-500 rounded-full shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)]"></div>
+components/activities/LightIncidence.tsx:                  <div className="w-14 h-6 bg-gray-700 rounded-b-xl -mb-2 border-t-2 border-gray-900 shadow-inner z-10"></div>
+components/activities/LightIncidence.tsx:                  <div className="absolute bottom-0 w-10 h-4 bg-yellow-100 rounded-full blur-[2px] shadow-[0_0_20px_rgba(253,224,71,1)] z-20"></div>
+components/activities/LightIncidence.tsx:                  className="absolute top-full left-1/2 -translate-x-1/2 origin-top transition-all duration-300 pointer-events-none"
+components/activities/LightIncidence.tsx:            <div className="space-y-4">
+components/activities/LightIncidence.tsx:                <div className="flex justify-between text-sm text-gray-300 mb-2">
+components/activities/LightIncidence.tsx:                  <span className="font-mono text-orange-400">{angle}°</span>
+components/activities/LightIncidence.tsx:                  type="range"
+components/activities/LightIncidence.tsx:                  min="0"
+components/activities/LightIncidence.tsx:                  max="90"
+components/activities/LightIncidence.tsx:                  className="w-full accent-orange-500"
+components/activities/LightIncidence.tsx:                <div className="flex justify-between text-xs text-gray-500 mt-1">
+components/activities/LightIncidence.tsx:              <div className="grid grid-cols-2 gap-4 mt-4">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800 p-3 rounded-lg border border-white/5">
+components/activities/LightIncidence.tsx:                  <div className="text-xs text-gray-500 uppercase">Light Spread</div>
+components/activities/LightIncidence.tsx:                  <div className="text-lg font-bold text-white capitalize">{spread}</div>
+components/activities/LightIncidence.tsx:                <div className="bg-space-800 p-3 rounded-lg border border-white/5">
+components/activities/LightIncidence.tsx:                  <div className="text-xs text-gray-500 uppercase">Heating</div>
+components/activities/LightIncidence.tsx:          <div className="space-y-6">
+components/activities/LightIncidence.tsx:            <div className="glass-panel p-6 rounded-2xl border border-white/10">
+components/activities/LightIncidence.tsx:              <h3 className="text-xl font-bold text-white mb-4">Reflection Guides</h3>
+components/activities/LightIncidence.tsx:              <div className="space-y-4">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:            <div className="flex items-start gap-4 bg-orange-900/30 p-4 rounded-xl border border-orange-500/30">
+components/activities/LightIncidence.tsx:              <div className="p-2 bg-orange-500/20 rounded-full shrink-0">
+components/activities/LightIncidence.tsx:                  src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/LightIncidence.tsx:                  alt="Astronaut" 
+components/activities/LightIncidence.tsx:                  className="w-6 h-6"
+components/activities/LightIncidence.tsx:                  referrerPolicy="no-referrer"
+components/activities/LightIncidence.tsx:              <p className="text-orange-200 italic">
+components/activities/LightIncidence.tsx:        <div className="grid lg:grid-cols-2 gap-8 animate-fade-in">
+components/activities/LightIncidence.tsx:          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col">
+components/activities/LightIncidence.tsx:            <h2 className="text-2xl font-bold text-white mb-2">Moving the Ball</h2>
+components/activities/LightIncidence.tsx:            <p className="text-gray-400 text-sm mb-6 italic">
+components/activities/LightIncidence.tsx:            <div className="relative flex-1 min-h-[350px] bg-gradient-to-b from-space-900 to-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center mb-6 shadow-2xl">
+components/activities/LightIncidence.tsx:              <div className="absolute inset-0 opacity-30" style={{
+components/activities/LightIncidence.tsx:              <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 flex items-center">
+components/activities/LightIncidence.tsx:                <div className="w-24 h-12 bg-gradient-to-r from-gray-500 to-gray-300 rounded-r-lg shadow-lg relative flex items-center justify-end">
+components/activities/LightIncidence.tsx:                  <div className="w-6 h-14 bg-gray-700 rounded-r-xl -mr-2 border-r-2 border-gray-900 shadow-inner flex items-center justify-center">
+components/activities/LightIncidence.tsx:                    <div className="w-4 h-10 bg-yellow-100 rounded-full blur-[2px] shadow-[0_0_20px_rgba(253,224,71,1)]"></div>
+components/activities/LightIncidence.tsx:                  <div className="absolute left-4 w-4 h-8 bg-orange-500 rounded-full shadow-[inset_2px_0_4px_rgba(0,0,0,0.4)]"></div>
+components/activities/LightIncidence.tsx:                  className="absolute left-[100%] top-1/2 -translate-y-1/2 origin-left pointer-events-none"
+components/activities/LightIncidence.tsx:                className="relative w-56 h-56 ml-32 z-20 transition-transform duration-300 ease-out"
+components/activities/LightIncidence.tsx:                  className="w-full h-full rounded-full bg-blue-900 relative overflow-hidden shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.7),0_0_20px_rgba(59,130,246,0.2)]"
+components/activities/LightIncidence.tsx:                  <div className="absolute inset-0 opacity-40 mix-blend-overlay" style={{
+components/activities/LightIncidence.tsx:                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/20 via-transparent to-black/90 pointer-events-none" />
+components/activities/LightIncidence.tsx:                  <div className="absolute inset-0 rounded-full shadow-[inset_10px_0_20px_rgba(253,224,71,0.2)] pointer-events-none"></div>
+components/activities/LightIncidence.tsx:                      className="absolute left-0 pointer-events-none z-30"
+components/activities/LightIncidence.tsx:                        className="absolute inset-0 rounded-[50%]"
+components/activities/LightIncidence.tsx:                        className="absolute inset-0 rounded-[50%] mix-blend-screen"
+components/activities/LightIncidence.tsx:                        className="absolute inset-0 bg-orange-600/40 rounded-full blur-md mix-blend-screen"
+components/activities/LightIncidence.tsx:            <div className="space-y-4">
+components/activities/LightIncidence.tsx:                <div className="flex justify-between text-sm text-gray-300 mb-2">
+components/activities/LightIncidence.tsx:                  <span className="font-mono text-blue-400">{ballY > 0 ? 'South' : ballY < 0 ? 'North' : 'Equator'}</span>
+components/activities/LightIncidence.tsx:                  type="range"
+components/activities/LightIncidence.tsx:                  min="-100"
+components/activities/LightIncidence.tsx:                  max="100"
+components/activities/LightIncidence.tsx:                  className="w-full accent-blue-500"
+components/activities/LightIncidence.tsx:                <div className="flex justify-between text-xs text-gray-500 mt-1">
+components/activities/LightIncidence.tsx:              <div className="bg-space-800 p-3 rounded-lg border border-white/5 mt-4 text-center">
+components/activities/LightIncidence.tsx:                <div className="text-xs text-gray-500 uppercase">Heating Intensity</div>
+components/activities/LightIncidence.tsx:          <div className="space-y-6">
+components/activities/LightIncidence.tsx:            <div className="glass-panel p-6 rounded-2xl border border-white/10">
+components/activities/LightIncidence.tsx:              <h3 className="text-xl font-bold text-white mb-4">Reflection Guides</h3>
+components/activities/LightIncidence.tsx:              <div className="space-y-4">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
+components/activities/LightIncidence.tsx:            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 shadow-lg">
+components/activities/LightIncidence.tsx:              <h4 className="font-bold text-white mb-2">Conclusion</h4>
+components/activities/LightIncidence.tsx:              <p className="text-gray-300 text-sm leading-relaxed">
+components/activities/LightIncidence.tsx:            <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30">
+components/activities/LightIncidence.tsx:              <div className="p-2 bg-green-500/20 rounded-full shrink-0">
+components/activities/LightIncidence.tsx:                  src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/LightIncidence.tsx:                  alt="Astronaut" 
+components/activities/LightIncidence.tsx:                  className="w-6 h-6"
+components/activities/LightIncidence.tsx:                  referrerPolicy="no-referrer"
+components/activities/LightIncidence.tsx:              <p className="text-green-200 italic">
+components/activities/TiltOrbitExplorer.tsx:      <pointLight intensity={2} distance={100} decay={1} color="#fffaed" />
+components/activities/TiltOrbitExplorer.tsx:                  <meshBasicMaterial color="#39FF14" />
+components/activities/TiltOrbitExplorer.tsx:            <meshBasicMaterial color="#ffffff" opacity={0.2} transparent />
+components/activities/TiltOrbitExplorer.tsx:        daylight: "19h - 24h",
+components/activities/TiltOrbitExplorer.tsx:        temp: "15°C to 25°C",
+components/activities/TiltOrbitExplorer.tsx:        nature: "Green trees, flowers, bright days",
+components/activities/TiltOrbitExplorer.tsx:        dist: "152 million km (Aphelion)"
+components/activities/TiltOrbitExplorer.tsx:        daylight: "0h - 6h",
+components/activities/TiltOrbitExplorer.tsx:        temp: "-5°C to -20°C",
+components/activities/TiltOrbitExplorer.tsx:        nature: "Snowy, dark, Kaamos (Polar Night)",
+components/activities/TiltOrbitExplorer.tsx:        dist: "147 million km (Perihelion)"
+components/activities/TiltOrbitExplorer.tsx:        daylight: "12h - 18h",
+components/activities/TiltOrbitExplorer.tsx:        temp: "0°C to 10°C",
+components/activities/TiltOrbitExplorer.tsx:        nature: "Snow melting, flowers coming soon",
+components/activities/TiltOrbitExplorer.tsx:        dist: "149 million km"
+components/activities/TiltOrbitExplorer.tsx:        daylight: "12h - 8h",
+components/activities/TiltOrbitExplorer.tsx:        temp: "5°C to 12°C",
+components/activities/TiltOrbitExplorer.tsx:        nature: "Leaves falling, colorful nature",
+components/activities/TiltOrbitExplorer.tsx:        dist: "150 million km"
+components/activities/TiltOrbitExplorer.tsx:        setDateError("Ops, make sure you type in a date during winter time in Finland");
+components/activities/TiltOrbitExplorer.tsx:        setDateError("Ops, make sure the dates are matching the actual Equinox you want to find");
+components/activities/TiltOrbitExplorer.tsx:    <div className="flex items-start space-x-4 bg-space-800/90 p-4 rounded-2xl border border-neon-blue/30 animate-fade-in">
+components/activities/TiltOrbitExplorer.tsx:        src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/activities/TiltOrbitExplorer.tsx:        alt="Astronaut" 
+components/activities/TiltOrbitExplorer.tsx:        className="w-12 h-12 shrink-0"
+components/activities/TiltOrbitExplorer.tsx:        referrerPolicy="no-referrer"
+components/activities/TiltOrbitExplorer.tsx:      <p className="text-gray-200 italic leading-relaxed">{text}</p>
+components/activities/TiltOrbitExplorer.tsx:          <div className="space-y-8 max-w-2xl mx-auto">
+components/activities/TiltOrbitExplorer.tsx:            <div className="text-center space-y-4">
+components/activities/TiltOrbitExplorer.tsx:              <h2 className="text-3xl font-bold text-white">Step 1 – Talk about seasons, light, and darkness</h2>
+components/activities/TiltOrbitExplorer.tsx:              <div className="glass-panel p-6 rounded-xl space-y-6 text-left">
+components/activities/TiltOrbitExplorer.tsx:                  <h3 className="text-neon-pink font-bold flex items-center mb-2">
+components/activities/TiltOrbitExplorer.tsx:                    <Users className="mr-2" size={20} /> What’s your favorite season?
+components/activities/TiltOrbitExplorer.tsx:                  <p className="text-gray-300 ml-7 italic">Turn to your classmates and share: What’s your favorite season? How does it look like? (snow, rain, green trees, flowers, etc.)</p>
+components/activities/TiltOrbitExplorer.tsx:                  <h3 className="text-neon-blue font-bold flex items-center mb-2">
+components/activities/TiltOrbitExplorer.tsx:                    <Calendar className="mr-2" size={20} /> Daylight and your birthday
+components/activities/TiltOrbitExplorer.tsx:                  <p className="text-gray-300 ml-7 italic">Think about your birthday each year: How long is the daylight during your birthday every year? What about the temperature?</p>
+components/activities/TiltOrbitExplorer.tsx:                  <h3 className="text-neon-green font-bold flex items-center mb-2">
+components/activities/TiltOrbitExplorer.tsx:                    <Info className="mr-2" size={20} /> Explaining dark winters and bright summers
+components/activities/TiltOrbitExplorer.tsx:                  <p className="text-gray-300 ml-7 italic">In your group, discuss: Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?</p>
+components/activities/TiltOrbitExplorer.tsx:            {renderGuruBubble("Winter and summer feel so different… but the Sun is the same star. Let’s uncover what the Earth is doing!")}
+components/activities/TiltOrbitExplorer.tsx:              className="w-full py-4 bg-neon-blue text-white font-bold rounded-xl hover:bg-neon-blue/80 transition-all flex items-center justify-center group"
+components/activities/TiltOrbitExplorer.tsx:              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+components/activities/TiltOrbitExplorer.tsx:          <div className="grid lg:grid-cols-2 gap-8 h-full">
+components/activities/TiltOrbitExplorer.tsx:            <div className="flex flex-col space-y-6">
+components/activities/TiltOrbitExplorer.tsx:              <div className="glass-panel p-6 rounded-xl border-l-4 border-neon-blue">
+components/activities/TiltOrbitExplorer.tsx:                <h3 className="font-bold text-neon-blue text-sm mb-2 uppercase tracking-wider">Mission Task</h3>
+components/activities/TiltOrbitExplorer.tsx:                <p className="text-white">
+components/activities/TiltOrbitExplorer.tsx:              <div className="space-y-4">
+components/activities/TiltOrbitExplorer.tsx:                <div className="grid gap-3">
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(true, "Good job! Rotation is the key for us to have nights and days everywhere!", "", Phase.PHASE2)}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:            <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
+components/activities/TiltOrbitExplorer.tsx:                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+components/activities/TiltOrbitExplorer.tsx:                <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+components/activities/TiltOrbitExplorer.tsx:                    type="range" 
+components/activities/TiltOrbitExplorer.tsx:                    className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+components/activities/TiltOrbitExplorer.tsx:          <div className="grid lg:grid-cols-2 gap-8 h-full">
+components/activities/TiltOrbitExplorer.tsx:            <div className="flex flex-col space-y-6">
+components/activities/TiltOrbitExplorer.tsx:              <div className="glass-panel p-6 rounded-xl border-l-4 border-neon-blue">
+components/activities/TiltOrbitExplorer.tsx:                <h3 className="font-bold text-neon-blue text-sm mb-2 uppercase tracking-wider">Mission Task</h3>
+components/activities/TiltOrbitExplorer.tsx:                <p className="text-white">
+components/activities/TiltOrbitExplorer.tsx:              <div className="space-y-4">
+components/activities/TiltOrbitExplorer.tsx:                <div className="grid gap-3">
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(true, "Yes! Tilting teh Earth is the key for us to have more light in Finland!", "", Phase.PHASE3)}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:            <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
+components/activities/TiltOrbitExplorer.tsx:                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+components/activities/TiltOrbitExplorer.tsx:                <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+components/activities/TiltOrbitExplorer.tsx:                    type="range" 
+components/activities/TiltOrbitExplorer.tsx:                    className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+components/activities/TiltOrbitExplorer.tsx:          <div className="grid lg:grid-cols-2 gap-8 h-full">
+components/activities/TiltOrbitExplorer.tsx:            <div className="flex flex-col space-y-6">
+components/activities/TiltOrbitExplorer.tsx:              <div className="glass-panel p-6 rounded-xl border-l-4 border-neon-blue">
+components/activities/TiltOrbitExplorer.tsx:                <h3 className="font-bold text-neon-blue text-sm mb-2 uppercase tracking-wider">Mission Task</h3>
+components/activities/TiltOrbitExplorer.tsx:                <p className="text-white">
+components/activities/TiltOrbitExplorer.tsx:              <div className="space-y-4">
+components/activities/TiltOrbitExplorer.tsx:                <div className="grid gap-3">
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to be able to move the Sun in real life... try again and choose the option that will evenly share Summer for both poles")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(false, "", "I wish it was that simple, but Earth has a fixed tilt... try again and choose the option that will evenly share Summer for both poles")}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:                    onClick={() => handleChoice(true, "Great choice! Revolution is the key for both poles to have the chance for a nice Summer!", "", Phase.PHASE4)}
+components/activities/TiltOrbitExplorer.tsx:                    className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all"
+components/activities/TiltOrbitExplorer.tsx:            <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
+components/activities/TiltOrbitExplorer.tsx:              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
+components/activities/TiltOrbitExplorer.tsx:                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+components/activities/TiltOrbitExplorer.tsx:                <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+components/activities/TiltOrbitExplorer.tsx:                    type="range" 
+components/activities/TiltOrbitExplorer.tsx:                    className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
+components/activities/TiltOrbitExplorer.tsx:                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+components/activities/TiltOrbitExplorer.tsx:          <div className="flex flex-col h-full space-y-4">
+components/activities/TiltOrbitExplorer.tsx:            <div className="grid lg:grid-cols-3 gap-4 flex-1">
+components/activities/TiltOrbitExplorer.tsx:              <div className="lg:col-span-2 flex flex-col gap-4">
+components/activities/TiltOrbitExplorer.tsx:                <div className="relative bg-black/40 rounded-2xl overflow-hidden border border-white/5 h-1/2 min-h-[250px]">
+components/activities/TiltOrbitExplorer.tsx:                  <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+components/activities/TiltOrbitExplorer.tsx:                    <div className="bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-neon-blue border border-neon-blue/30 flex items-center w-fit">
+components/activities/TiltOrbitExplorer.tsx:                      <Globe className="mr-2" size={12} /> Heliocentric Top View
+components/activities/TiltOrbitExplorer.tsx:                    <div className="bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-[#39FF14] border border-[#39FF14]/30 flex items-center w-fit">
+components/activities/TiltOrbitExplorer.tsx:                            <lineBasicMaterial color="#ffffff" opacity={0.1} transparent />
+components/activities/TiltOrbitExplorer.tsx:                <div className="relative bg-black/40 rounded-2xl overflow-hidden border border-white/5 h-1/2 min-h-[250px]">
+components/activities/TiltOrbitExplorer.tsx:                  <div className="absolute top-4 left-4 z-10">
+components/activities/TiltOrbitExplorer.tsx:                    <div className="bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-neon-pink border border-neon-pink/30 flex items-center w-fit">
+components/activities/TiltOrbitExplorer.tsx:                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
+components/activities/TiltOrbitExplorer.tsx:                    <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+components/activities/TiltOrbitExplorer.tsx:                    <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between scale-75 origin-bottom">
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+components/activities/TiltOrbitExplorer.tsx:                        type="range" 
+components/activities/TiltOrbitExplorer.tsx:                        className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+components/activities/TiltOrbitExplorer.tsx:              <div className="space-y-4 overflow-y-auto pr-2">
+components/activities/TiltOrbitExplorer.tsx:                <div className="glass-panel p-4 rounded-xl border-l-4 border-neon-blue">
+components/activities/TiltOrbitExplorer.tsx:                  <h3 className="font-bold text-neon-blue text-sm mb-2 uppercase tracking-wider">Mission Task</h3>
+components/activities/TiltOrbitExplorer.tsx:                  <div className="text-sm text-gray-200">
+components/activities/TiltOrbitExplorer.tsx:                  <div className="glass-panel p-4 rounded-xl border-l-4 border-neon-purple">
+components/activities/TiltOrbitExplorer.tsx:                    <h3 className="font-bold text-neon-purple text-sm mb-3 uppercase tracking-wider">Select Date</h3>
+components/activities/TiltOrbitExplorer.tsx:                      type="date" 
+components/activities/TiltOrbitExplorer.tsx:                      className="w-full bg-space-900 border border-white/10 rounded-lg p-2 text-sm text-white focus:border-neon-blue outline-none"
+components/activities/TiltOrbitExplorer.tsx:                      <div className="mt-2 text-xs text-red-400 flex items-center gap-1">
+components/activities/TiltOrbitExplorer.tsx:                <div className="glass-panel p-4 rounded-xl border-l-4 border-neon-pink">
+components/activities/TiltOrbitExplorer.tsx:                  <h3 className="font-bold text-neon-pink text-sm mb-3 uppercase tracking-wider">Finland Data</h3>
+components/activities/TiltOrbitExplorer.tsx:                  <div className="grid grid-cols-1 gap-2 text-xs">
+components/activities/TiltOrbitExplorer.tsx:                    <div className="flex justify-between border-b border-white/5 pb-1">
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-gray-400">Daylight:</span>
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-white font-mono">{finlandData.daylight}</span>
+components/activities/TiltOrbitExplorer.tsx:                    <div className="flex justify-between border-b border-white/5 pb-1">
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-gray-400">Avg Temp:</span>
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-white font-mono">{finlandData.temp}</span>
+components/activities/TiltOrbitExplorer.tsx:                    <div className="flex justify-between border-b border-white/5 pb-1">
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-gray-400">Nature:</span>
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-white text-right">{finlandData.nature}</span>
+components/activities/TiltOrbitExplorer.tsx:                    <div className="flex justify-between">
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-gray-400">Dist. to Sun:</span>
+components/activities/TiltOrbitExplorer.tsx:                      <span className="text-white font-mono">{finlandData.dist}</span>
+components/activities/TiltOrbitExplorer.tsx:                <div className="pt-2">
+components/activities/TiltOrbitExplorer.tsx:                      className="w-full py-3 bg-neon-blue text-white font-bold rounded-xl hover:bg-neon-blue/80 transition-all flex items-center justify-center group"
+components/activities/TiltOrbitExplorer.tsx:                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+components/activities/TiltOrbitExplorer.tsx:                    <div className="space-y-3">
+components/activities/TiltOrbitExplorer.tsx:                        className="w-full py-3 bg-neon-green text-black font-bold rounded-xl hover:bg-neon-green/80 transition-all"
+components/activities/TiltOrbitExplorer.tsx:                          className="w-full py-3 bg-neon-blue/20 text-neon-blue border border-neon-blue/50 font-bold rounded-xl hover:bg-neon-blue/30 transition-all flex items-center justify-center"
+components/activities/TiltOrbitExplorer.tsx:                          <Globe className="mr-2" size={18} /> Go to Solar System View
+components/activities/TiltOrbitExplorer.tsx:          <div className="max-w-2xl mx-auto text-center space-y-8 py-12">
+components/activities/TiltOrbitExplorer.tsx:            <div className="inline-flex p-4 bg-neon-green/10 rounded-full mb-4">
+components/activities/TiltOrbitExplorer.tsx:              <CheckCircle2 size={64} className="text-neon-green" />
+components/activities/TiltOrbitExplorer.tsx:            <h2 className="text-4xl font-bold text-white">Mission Accomplished!</h2>
+components/activities/TiltOrbitExplorer.tsx:            <div className="glass-panel p-8 rounded-2xl space-y-4 text-left">
+components/activities/TiltOrbitExplorer.tsx:              <p className="text-xl text-gray-300">You have now:</p>
+components/activities/TiltOrbitExplorer.tsx:              <ul className="space-y-3">
+components/activities/TiltOrbitExplorer.tsx:                <li className="flex items-center text-neon-blue">
+components/activities/TiltOrbitExplorer.tsx:                  <RotateCw className="mr-3" size={20} /> Used rotation to create day and night.
+components/activities/TiltOrbitExplorer.tsx:                <li className="flex items-center text-neon-pink">
+components/activities/TiltOrbitExplorer.tsx:                  <Move className="mr-3" size={20} /> Used tilt to create longer and shorter days in different places.
+components/activities/TiltOrbitExplorer.tsx:                <li className="flex items-center text-neon-green">
+components/activities/TiltOrbitExplorer.tsx:                  <Globe className="mr-3" size={20} /> Used revolution to see how seasons change around the year.
+components/activities/TiltOrbitExplorer.tsx:              <p className="text-lg text-white mt-6 font-bold">Now you’re ready to see all of this happening in real space, with more planets!</p>
+components/activities/TiltOrbitExplorer.tsx:            {renderGuruBubble("Great job, space explorer! Now let’s see all this happening in the whole solar system, with all the planets. Are you ready to become a cool astronaut like me?")}
+components/activities/TiltOrbitExplorer.tsx:            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+components/activities/TiltOrbitExplorer.tsx:                className="px-8 py-4 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-all"
+components/activities/TiltOrbitExplorer.tsx:                  className="px-8 py-4 bg-neon-blue text-white font-bold rounded-xl hover:bg-neon-blue/80 transition-all shadow-[0_0_20px_rgba(0,255,255,0.3)] flex items-center"
+components/activities/TiltOrbitExplorer.tsx:                  <Globe className="mr-2" size={20} /> Go to Solar System View
+components/activities/TiltOrbitExplorer.tsx:    <div className="h-full w-full flex flex-col p-4 md:p-8 overflow-y-auto">
+components/Dashboard.tsx:    title: "Light Incidence and Heat",
+components/Dashboard.tsx:    description: "Exploring Light, Shadows, and warmth",
+components/Dashboard.tsx:    iconName: "ThermometerSun",
+components/Dashboard.tsx:    color: "from-purple-500 to-pink-500",
+components/Dashboard.tsx:    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(236,72,153,0.8)]" // pink
+components/Dashboard.tsx:    title: "Tilt and Orbit Consequences",
+components/Dashboard.tsx:    description: "Exploring the reason behind seasons on Earth",
+components/Dashboard.tsx:    iconName: "Orbit",
+components/Dashboard.tsx:    color: "from-orange-500 to-red-500",
+components/Dashboard.tsx:    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.8)]" // orange
+components/Dashboard.tsx:    title: "Solar System View",
+components/Dashboard.tsx:    description: "Exploring all planets and their movements",
+components/Dashboard.tsx:    iconName: "Globe",
+components/Dashboard.tsx:    color: "from-blue-500 to-cyan-400",
+components/Dashboard.tsx:    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(6,182,212,0.8)]" // cyan
+components/Dashboard.tsx:    title: "Real Sizes and Distances",
+components/Dashboard.tsx:    description: "Discovering how vast space truly is",
+components/Dashboard.tsx:    iconName: "Ruler",
+components/Dashboard.tsx:    color: "from-yellow-400 to-orange-300",
+components/Dashboard.tsx:    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(250,204,21,0.8)]" // yellow
+components/Dashboard.tsx:    <div className="max-w-6xl mx-auto py-12 px-4">
+components/Dashboard.tsx:      <div className="text-center mb-16 space-y-4 flex flex-col items-center">
+components/Dashboard.tsx:        <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-400 flex items-center justify-center font-orbitron">
+components/Dashboard.tsx:            src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+components/Dashboard.tsx:            alt="Astronaut" 
+components/Dashboard.tsx:            className="w-16 h-16 md:w-20 md:h-20 ml-4 drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]"
+components/Dashboard.tsx:            referrerPolicy="no-referrer"
+components/Dashboard.tsx:      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+components/Dashboard.tsx:              className="group relative h-64 rounded-2xl overflow-hidden glass-panel hover:border-white/40 transition-all duration-500 text-center p-6 flex flex-col items-center justify-center hover:scale-[1.02]"
+components/Dashboard.tsx:              <div className="mb-4 transform group-hover:scale-110 transition-transform duration-500 z-10">
+components/Dashboard.tsx:              <div className="z-10">
+components/Dashboard.tsx:                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">{act.title}</h3>
+components/Dashboard.tsx:                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-200">{act.description}</p>
+components/Dashboard.tsx:              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-4 group-hover:translate-x-0 text-cyan-400 z-10">
+App.tsx:      { id: ActivityId.LIGHT_INCIDENCE, title: "Light & Heat" },
+App.tsx:      { id: ActivityId.SEASONS, title: "Tilt and Orbit Consequences" },
+App.tsx:      { id: ActivityId.ORBIT_REVOLUTION, title: "Solar System View" },
+App.tsx:      { id: ActivityId.SUNLIGHT_INTENSITY, title: "Sunlight Intensity" }
+App.tsx:        <div className="flex flex-col items-center justify-center h-full min-h-[50vh] space-y-8 animate-fade-in relative">
+App.tsx:          <div className="relative">
+App.tsx:            <h2 className="text-3xl font-bold text-white">Select Path</h2>
+App.tsx:            <div className="absolute -top-16 -right-16 animate-bounce-slow">
+App.tsx:                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+App.tsx:                alt="Astronaut" 
+App.tsx:                className="w-16 h-16 drop-shadow-[0_0_15px_rgba(0,255,255,0.5)]"
+App.tsx:                referrerPolicy="no-referrer"
+App.tsx:          <div className="grid md:grid-cols-2 gap-8 w-full max-w-2xl">
+App.tsx:              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-pink/30 hover:border-neon-pink group"
+App.tsx:              <Users size={64} className="text-neon-pink mb-4 group-hover:scale-110 transition-transform" />
+App.tsx:              <h3 className="text-xl font-bold text-white text-center">Path 1: Warm-up with reflective and creative thinking</h3>
+App.tsx:              <p className="text-center text-gray-400 mt-2 text-sm">In class, before the simulation.</p>
+App.tsx:              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-blue/30 hover:border-neon-blue group"
+App.tsx:              <User size={64} className="text-neon-blue mb-4 group-hover:scale-110 transition-transform" />
+App.tsx:              <h3 className="text-xl font-bold text-white text-center">Path 2: Exploration Mission</h3>
+App.tsx:              <p className="text-center text-gray-400 mt-2 text-sm">Interactive digital simulations.</p>
+App.tsx:          className="w-full h-full min-h-[600px] rounded-2xl overflow-hidden" 
+App.tsx:          <div className="space-y-8 max-w-7xl mx-auto">
+App.tsx:            <div className="glass-panel p-6 rounded-xl border-l-4 border-yellow-400">
+App.tsx:               <h2 className="text-2xl font-bold mb-2">Sunlight Intensity</h2>
+App.tsx:               <div className="flex justify-center my-6">
+App.tsx:                 <div className="relative w-64 h-32">
+App.tsx:                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-yellow-500/20 to-transparent transform -skew-x-12 border border-white/10 rounded"></div>
+App.tsx:                   <p className="absolute bottom-2 left-2 text-xs text-gray-400">Angle spreads energy</p>
+App.tsx:               <p className="text-gray-300">
+App.tsx:            <QuizModule topic="Sunlight intensity and angle of incidence" />
+App.tsx:        return <div className="text-center text-gray-500">Module Under Construction</div>;
+App.tsx:    <div className="h-[100dvh] w-screen bg-space-900 text-white overflow-hidden flex flex-col relative selection:bg-neon-pink selection:text-white">
+App.tsx:      <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 pointer-events-none -z-10 animate-pulse-slow"></div>
+App.tsx:      <header className="flex-none p-4 md:p-6 flex items-center justify-between glass-panel z-50 rounded-b-xl mx-2 md:mx-6 mb-2 shrink-0">
+App.tsx:        <div className="flex items-center">
+App.tsx:              className="mr-4 p-2 rounded-full hover:bg-white/10 transition-colors text-neon-blue"
+App.tsx:              title="Back"
+App.tsx:          <div className="flex flex-col">
+App.tsx:            <span className="font-bold text-xl tracking-widest text-white leading-none">ASTROFINN</span>
+App.tsx:              <div className="flex items-center text-[10px] text-gray-400 mt-1 uppercase tracking-tighter">
+App.tsx:                <span className="text-neon-blue font-bold mr-1">{getActiveActivityTitle()}</span>
+App.tsx:                <span className="mx-1 opacity-50">|</span>
+App.tsx:                <span className="text-white/70">{currentStage}</span>
+App.tsx:        <div className="flex items-center space-x-4">
+App.tsx:          <div className="hidden md:flex items-center text-xs font-mono text-gray-400">
+App.tsx:            <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+App.tsx:      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:px-6 pb-6 w-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-space-700 hover:scrollbar-thumb-neon-blue">
+App.tsx:         <div className="w-full h-full">
+App.tsx:              <div className="animate-fade-in-up w-full h-full">

@@ -5,207 +5,35 @@ import { Sun, ArrowRight, ArrowLeft, Rocket } from 'lucide-react';
 interface LightIncidenceProps {
   mode: GameMode;
   setStage: (stage: string) => void;
+  onHome?: () => void;
+  setBackIntercept?: (intercept: { handler: () => boolean } | null) => void;
 }
 
-const LightIncidence: React.FC<LightIncidenceProps> = ({ mode, setStage }) => {
-  React.useEffect(() => {
-    if (mode === GameMode.GROUP) {
-      setStage('Path 1: Warm-up');
-    } else {
-      setStage('Path 2: Exploration');
-    }
-  }, [mode, setStage]);
-
-  if (mode === GameMode.GROUP) {
-    return <Path1HandsOn />;
-  }
-  return <Path2SoloMission />;
-};
-
-const Path1HandsOn: React.FC = () => {
-  return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-12">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-          Light Incidence and Heating
-        </h1>
-        <p className="text-xl text-gray-400 mt-2">Path 1: Warm-up with reflective and creative thinking</p>
-      </div>
-
-      {/* Task 1 */}
-      <div className="glass-panel p-8 rounded-2xl border border-white/10">
-        <h2 className="text-2xl font-bold text-white mb-4">Step 1 – Let’s talk about seasons and places</h2>
-        <p className="text-gray-300 mb-6 italic">
-          “Before we play with light, let’s think about the weather in different places. Use your own experiences to warm up your brain!”
-        </p>
-
-        <div className="space-y-6">
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-orange-400 mb-2">Talk about your favorite season</h3>
-            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
-              <li>Turn to a partner or small group.</li>
-              <li>Each person answers:
-                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
-                  <li>“What is your favorite season?”</li>
-                  <li>“What do you like to do in that season?”</li>
-                  <li>“Is it usually warm, cold, rainy, dark, or bright in that season?”</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-orange-400 mb-2">Share stories about other places</h3>
-            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
-              <li>Do you know someone who lives in another country or city?</li>
-              <li>Share:
-                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
-                  <li>“Where do they live?”</li>
-                  <li>“What is the climate like there?” (warmer/colder, more/less snow, more/less daylight)</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-orange-400 mb-2">Choose a place you’d like to visit</h3>
-            <ul className="list-disc list-inside text-gray-300 space-y-2 ml-4">
-              <li>Pick any place in the world you would love to visit.</li>
-              <li>Use Google or an AI tool (with your teacher’s permission) to check:
-                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
-                  <li>What is the climate like there now?</li>
-                  <li>Is it very different from where you live? How?</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex items-start gap-4 bg-blue-900/30 p-4 rounded-xl border border-blue-500/30">
-            <div className="p-2 bg-blue-500/20 rounded-full shrink-0">
-              <img 
-                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                alt="Astronaut" 
-                className="w-6 h-6"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <p className="text-blue-200 italic">
-              “Different places on Earth get different amounts of light and heat. But the Sun is the same. So… what is changing?”
-            </p>
-          </div>
-
-          <div className="mt-6 bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-orange-400 mb-2">Reflection</h3>
-            <p className="text-gray-300">
-              Discuss with your group: What is one difference you discovered between your place and the place you chose?
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Task 2 */}
-      <div className="glass-panel p-8 rounded-2xl border border-white/10">
-        <h2 className="text-2xl font-bold text-white mb-4">Step 2 – Flashlight & Shadows Experiment</h2>
-        <p className="text-gray-300 mb-6 italic">
-          “Now you will use a flashlight and objects to see how light and shadows behave. This is your ‘mini Sun’ experiment.”
-        </p>
-
-        <div className="mb-6">
-          <h3 className="text-lg font-bold text-gray-200 mb-2">Suggested materials:</h3>
-          <ul className="list-disc list-inside text-gray-400 ml-4">
-            <li>1 flashlight</li>
-            <li>1 small object (eraser, block, or small toy)</li>
-            <li>A flat surface or wall</li>
-          </ul>
-        </div>
-
-        <div className="space-y-6">
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Make a basic shadow</h3>
-            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4">
-              <li>Place your object on the table.</li>
-              <li>Turn on the flashlight.</li>
-              <li>Shine the light so that the object makes a clear shadow on the table or wall.</li>
-            </ul>
-          </div>
-
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Light almost on top of the object</h3>
-            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
-              <li>Hold the flashlight almost straight above the object, pointing down.</li>
-              <li>Look at the shadow.</li>
-            </ul>
-            <div className="bg-black/30 p-4 rounded-lg border-l-2 border-yellow-500 text-gray-300">
-              <strong>Guiding question:</strong> "What happens if the light is almost on top of the object? Is the shadow longer or shorter?"
-            </div>
-          </div>
-
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Make a long shadow</h3>
-            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
-              <li>Move the flashlight lower, closer to the table, so the light is almost sideways.</li>
-              <li>Look at the shadow again.</li>
-            </ul>
-            <div className="bg-black/30 p-4 rounded-lg border-l-2 border-yellow-500 text-gray-300">
-              <strong>Guiding question:</strong> "Can you make long shadows? How do you need to move the flashlight?"
-            </div>
-          </div>
-
-          <div className="bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Light concentration vs. spreading</h3>
-            <ul className="list-decimal list-inside text-gray-300 space-y-2 ml-4 mb-4">
-              <li>Keep the same distance between flashlight and object.</li>
-              <li>Slowly tilt the flashlight:
-                <ul className="list-circle list-inside ml-6 mt-1 text-gray-400">
-                  <li>First, point it straight at the object.</li>
-                  <li>Then tilt it so the light hits from the side.</li>
-                </ul>
-              </li>
-              <li>Observe how the bright area on the table changes.</li>
-            </ul>
-            <div className="space-y-3 mt-4">
-              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
-                "The flashlight does not get brighter or dimmer. So, think about it: how do you concentrate the light the most? Do you angle the light or do you point it straight at the object?"
-              </div>
-              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
-                "What happens if you shine the light sideways? Do you get a larger area illuminated?"
-              </div>
-              <div className="bg-black/30 p-3 rounded-lg text-gray-300 text-sm">
-                "But what do you lose with that? Is the larger area illuminated as bright as the focused one?"
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-6 bg-space-800/50 p-6 rounded-xl border border-white/5">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Reflection</h3>
-            <p className="text-gray-300">
-              Discuss with your group: When the light is more concentrated, how does the brightness change? When the light is more spread out, how does the brightness change?
-            </p>
-          </div>
-
-          <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30 mt-8">
-            <div className="p-2 bg-green-500/20 rounded-full shrink-0">
-              <img 
-                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                alt="Astronaut" 
-                className="w-6 h-6"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <p className="text-green-200 italic">
-              “You’ve just discovered something very important about light: same flashlight, different heating power. You are ready for your Solo Mission! Click on the ‘Path 2: Exploration Mission’ window.”
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const Path2SoloMission: React.FC = () => {
+const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBackIntercept }) => {
   const [phase, setPhase] = useState<'A' | 'B'>('A');
   const [angle, setAngle] = useState(90);
   const [ballY, setBallY] = useState(0);
+
+  React.useEffect(() => {
+    if (setBackIntercept) {
+      setBackIntercept({
+        handler: () => {
+          if (phase === 'B') {
+            setPhase('A');
+            return true;
+          }
+          return false;
+        }
+      });
+    }
+    return () => {
+      if (setBackIntercept) setBackIntercept(null);
+    };
+  }, [phase, setBackIntercept]);
+
+  React.useEffect(() => {
+    setStage('Light Incidence and Heating');
+  }, [setStage]);
 
   // Derived values for Phase A
   const spread = angle > 60 ? 'small' : angle > 30 ? 'medium' : 'large';
@@ -217,11 +45,10 @@ const Path2SoloMission: React.FC = () => {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-12">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+      <div className="text-center mb-6">
+        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
           Light Incidence and Heating
         </h1>
-        <p className="text-xl text-gray-400 mt-2">Path 2: Exploration Mission</p>
       </div>
 
       <div className="flex justify-center mb-6">
@@ -242,11 +69,11 @@ const Path2SoloMission: React.FC = () => {
       </div>
 
       {phase === 'A' ? (
-        <div className="grid lg:grid-cols-2 gap-8">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col">
-            <h2 className="text-2xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
+        <div className="w-full">
+          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col w-full">
+            <h2 className="text-xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
             <p className="text-gray-400 text-sm mb-6 italic">
-              "Welcome to your Solo Mission! This is a magic heating flashlight. It always sends the same light, but the heating changes with the angle."
+              This is a magic heating flashlight. It always sends the same light, but the heating changes with the angle.
             </p>
 
             {/* Simulation Area */}
@@ -471,45 +298,11 @@ const Path2SoloMission: React.FC = () => {
               </div>
             </div>
           </div>
-
-          <div className="space-y-6">
-            <div className="glass-panel p-6 rounded-2xl border border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">Reflection Guides</h3>
-              <div className="space-y-4">
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
-                  “What did you notice about how spread the light gets when you change the angle?”
-                </div>
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
-                  “When the light is most concentrated (around 90°), what happens to the temperature of the ball?”
-                </div>
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-orange-500 text-gray-300 text-sm">
-                  "When the light is more spread out (small angle), what happens to the temperature? Why do you think the temperature changes, since the light is still the same flashlight?"
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 bg-orange-900/30 p-4 rounded-xl border border-orange-500/30">
-              <div className="p-2 bg-orange-500/20 rounded-full shrink-0">
-                <img 
-                  src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                  alt="Astronaut" 
-                  className="w-6 h-6"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <p className="text-orange-200 italic">
-                “Straight light = strong heating in a small area. Tilted light = weak heating in a larger area. This is the secret of seasons!”
-              </p>
-            </div>
-          </div>
         </div>
       ) : (
-        <div className="grid lg:grid-cols-2 gap-8 animate-fade-in">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col">
-            <h2 className="text-2xl font-bold text-white mb-2">Moving the Ball</h2>
-            <p className="text-gray-400 text-sm mb-6 italic">
-              "Now we keep the flashlight still, and we move the ball instead. This is more like what happens in space: the Sun stays in the center, and planets move."
-            </p>
+        <div className="w-full animate-fade-in space-y-8">
+          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col w-full">
+            <h2 className="text-xl font-bold text-white mb-6">Moving the Ball</h2>
 
             {/* Simulation Area */}
             <div className="relative flex-1 min-h-[350px] bg-gradient-to-b from-space-900 to-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center mb-6 shadow-2xl">
@@ -646,7 +439,6 @@ const Path2SoloMission: React.FC = () => {
               <div>
                 <div className="flex justify-between text-sm text-gray-300 mb-2">
                   <span>Move the ball up/down</span>
-                  <span className="font-mono text-blue-400">{ballY > 0 ? 'South' : ballY < 0 ? 'North' : 'Equator'}</span>
                 </div>
                 <input
                   type="range"
@@ -656,11 +448,6 @@ const Path2SoloMission: React.FC = () => {
                   onChange={(e) => setBallY(Number(e.target.value))}
                   className="w-full accent-blue-500"
                 />
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>North Pole</span>
-                  <span>Equator</span>
-                  <span>South Pole</span>
-                </div>
               </div>
 
               <div className="bg-space-800 p-3 rounded-lg border border-white/5 mt-4 text-center">
@@ -672,45 +459,30 @@ const Path2SoloMission: React.FC = () => {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="glass-panel p-6 rounded-2xl border border-white/10">
-              <h3 className="text-xl font-bold text-white mb-4">Reflection Guides</h3>
-              <div className="space-y-4">
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
-                  "Now, what if we move the ball instead of the flashlight? Can you find similar results to the first part?"
-                </div>
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
-                  "When the light hits the center (Equator) as a circle, what happens to the heating? And when it spreads into an oval at the poles?"
-                </div>
-                <div className="bg-space-800/50 p-4 rounded-xl border-l-2 border-blue-500 text-gray-300 text-sm">
-                  “In the solar system, what case is most likely to happen most of the time: the light moving side to side or the ball moving somehow?”
-                </div>
-              </div>
+          <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30 w-full">
+            <div className="p-2 bg-green-500/20 rounded-full shrink-0">
+              <img 
+                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+                alt="Astronaut" 
+                className="w-6 h-6"
+                referrerPolicy="no-referrer"
+              />
             </div>
-
-            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 shadow-lg">
-              <h4 className="font-bold text-white mb-2">Conclusion</h4>
-              <p className="text-gray-300 text-sm leading-relaxed">
-                “In our magic experiment, the flashlight was the Sun and the ball was the Earth.
-                When we changed the angle, the heating changed—even though the light stayed the same.
-                On real Earth, we don’t move the Sun. The Earth moves and tilts, changing the angle of sunlight and how much we heat up.”
-              </p>
-            </div>
-
-            <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30">
-              <div className="p-2 bg-green-500/20 rounded-full shrink-0">
-                <img 
-                  src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                  alt="Astronaut" 
-                  className="w-6 h-6"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <p className="text-green-200 italic">
-                “Great work, explorer! You are now ready to see what happens on real Earth. Open the second tile of the app and start exploring!”
-              </p>
-            </div>
+            <p className="text-green-200 italic">
+              Great work, explorer! Once you are done exploring and reflecting according to your teacher's instructions, we can move onto the "Tilt and Orbit Consequences" area of the app.
+            </p>
           </div>
+
+          {onHome && (
+            <div className="flex justify-center mt-8">
+              <button 
+                onClick={onHome}
+                className="px-6 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+              >
+                Return to Dashboard
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

@@ -35,26 +35,16 @@ const FOCAL_OFFSET = 80;
 
 const SUN_RADIUS = 18;     
 
-// --- REAL LIFE PROPORTIONAL SPEEDS (SLOWED DOWN) ---
-// To maintain visual stability while using real data, we define two base units:
-// 1. Visually pleasing Rotation Speed (for Earth)
-// 2. Visually pleasing Orbital Speed (for Earth)
-// All other bodies are calculated as ratios of these bases.
-
-// PREVIOUS VALUES: Rotation 0.5, Orbit 0.15
-// NEW VALUES: Scaled down by approx factor of 3-4 for better observation
-const BASE_ROTATION_SPEED = 0.15; // Visual speed for Earth's rotation
-const BASE_ORBIT_SPEED = 0.04;    // Visual speed for Earth's revolution (Year)
-
+// --- REAL LIFE PROPORTIONAL SPEEDS ---
 // 1. Earth Day is the base unit for rotation.
-const EARTH_ROTATION_SPEED = BASE_ROTATION_SPEED; 
+const EARTH_ROTATION_SPEED = 0.5; // 1 day = ~0.2 seconds at 60fps
 
-// 2. Earth Year is the base unit for orbit.
-const EARTH_YEAR_SPEED = BASE_ORBIT_SPEED;
+// 2. Moon Orbit: The Moon orbits Earth in ~28 days. 
+// Earth rotates 28 times faster than the Moon's orbit/rotation.
+const MOON_ORBIT_SPEED = EARTH_ROTATION_SPEED / 28;
 
-// 3. Moon Orbit: The Moon orbits Earth ~27.3 days. 
-// Earth orbits Sun ~365.25 days. Ratio: 13.03571428571429 (Specific Request)
-const MOON_ORBIT_SPEED = EARTH_YEAR_SPEED * 13.03571428571429;
+// 3. Earth Year: 365 days
+const EARTH_YEAR_SPEED = EARTH_ROTATION_SPEED / 365;
 
 // Types
 type ViewMode = 'EARTH_FREE' | 'EARTH_DAY' | 'EARTH_NIGHT' | 'SYSTEM_TOP' | 'SYSTEM_AUTO' | 'SOLAR_SYSTEM';
@@ -77,15 +67,14 @@ void main() {
   // Dot product of normal and view vector (0,0,1 in view space)
   float viewDot = dot(vNormal, vec3(0, 0, 1.0));
   
-  // Calculate intensity with a softer falloff (power 4.0 instead of 8.0)
-  // This allows the gradient to spread further inwards, making the atmosphere look "thicker" and softer
-  float intensity = pow(clamp(1.0 + viewDot, 0.0, 1.0), 4.0);
+  // Calculate intensity with a softer falloff
+  float intensity = pow(clamp(1.0 + viewDot, 0.0, 1.0), 3.0);
   
-  // Atmosphere Color: Brighter, more vibrant blue to interact better with Bloom
-  vec3 atmosphereColor = vec3(0.3, 0.6, 1.0);
+  // Atmosphere Color: Brighter, more vibrant blue
+  vec3 atmosphereColor = vec3(0.4, 0.7, 1.0);
   
-  // Low alpha (0.15) to make it very subtle and not obstruct the planet view
-  gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * 0.15;
+  // Higher alpha for better visibility
+  gl_FragColor = vec4(atmosphereColor, 1.0) * intensity * 0.3;
 }
 `;
 
@@ -246,13 +235,16 @@ void main() {
   // LOWER INTENSITY (0.8) -> Subtle, realistic shine, not overpowering
   vec3 specularColor = vec3(1.0, 0.95, 0.8) * specular * 0.8;
   
-  vec3 finalDay = dayColor * (diffuse + 0.1) + specularColor; 
-  vec3 cleanNight = max(nightColorSample - 0.2, 0.0);
-  vec3 finalNight = cleanNight * vec3(6.0, 4.5, 3.0); 
+  // BRIGHTNESS TWEAKS: Increased base light and overall multiplier
+  vec3 finalDay = (dayColor * (diffuse + 0.25) + specularColor) * 1.3; 
+  
+  // Brighter city lights
+  vec3 cleanNight = max(nightColorSample - 0.1, 0.0);
+  vec3 finalNight = cleanNight * vec3(8.0, 6.0, 4.0); 
   
   // Sunset / Atmosphere scattering at terminator
   float sunsetIntensity = 1.0 - smoothstep(0.0, 0.25, abs(dotProd));
-  vec3 sunsetColor = vec3(0.9, 0.4, 0.1) * sunsetIntensity * 0.6 * (1.0 - specularStrength);
+  vec3 sunsetColor = vec3(0.9, 0.4, 0.1) * sunsetIntensity * 0.8 * (1.0 - specularStrength);
 
   vec3 finalColor = mix(finalNight, finalDay, dayFactor);
   finalColor += sunsetColor;
@@ -423,10 +415,10 @@ const SunMesh = () => {
         />
       </sprite>
       <pointLight 
-        intensity={2.5} 
+        intensity={4.0} 
         distance={2000} 
         decay={0.0} 
-        color="#fffaed" 
+        color="#ffffff" 
         castShadow 
         shadow-mapSize-width={4096} 
         shadow-mapSize-height={4096}
@@ -439,7 +431,7 @@ const SunMesh = () => {
   );
 };
 
-const MoonMesh = () => {
+const MoonMesh: React.FC<{ simSpeed: number }> = ({ simSpeed }) => {
   // Use a reliable remote texture from Three.js examples
   const colorMap = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}moon.jpg`);
   const orbitGroupRef = useRef<THREE.Group>(null);
@@ -453,7 +445,7 @@ const MoonMesh = () => {
 
   useFrame((state, delta) => {
     // Sync logic: Use same safeDelta as Earth for perfect synchronization
-    const safeDelta = Math.min(delta, 0.05);
+    const safeDelta = Math.min(delta, 0.05) * simSpeed;
 
     // Rotate the group to orbit the moon around earth
     if (orbitGroupRef.current) orbitGroupRef.current.rotation.y += safeDelta * MOON_ORBIT_SPEED;
@@ -511,8 +503,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Mercury', 
     radius: 0.8, 
     distance: 70, 
-    speed: BASE_ORBIT_SPEED * (1 / 0.24),  // ~4.16x Earth speed
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / 58.6), // Very slow
+    speed: EARTH_YEAR_SPEED * (170500 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (10.8 / 1670),
     texture: 'mercury.jpg', 
     orbitColor: '#A5A5A5', 
     startAngle: 0 
@@ -521,8 +513,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Venus', 
     radius: 1.9, 
     distance: 110, 
-    speed: BASE_ORBIT_SPEED * (1 / 0.615), // ~1.62x Earth speed
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / -243), // Extremely slow & retrograde
+    speed: EARTH_YEAR_SPEED * (126000 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (-6.5 / 1670), // Clockwise
     texture: 'venus_atmosphere.jpg', 
     orbitColor: '#E3BB76', 
     startAngle: 2,
@@ -533,8 +525,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Mars', 
     radius: 1.1, 
     distance: 320, 
-    speed: BASE_ORBIT_SPEED * (1 / 1.88), // ~0.53x Earth speed
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / 1.03), // Similar to Earth
+    speed: EARTH_YEAR_SPEED * (86600 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (868 / 1670),
     texture: 'mars.jpg', 
     orbitColor: '#FF4500', 
     startAngle: 4,
@@ -544,8 +536,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Jupiter', 
     radius: 10, 
     distance: 450, 
-    speed: BASE_ORBIT_SPEED * (1 / 11.86), // Slow orbit
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.41), // Fast spin
+    speed: EARTH_YEAR_SPEED * (47000 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (45300 / 1670),
     texture: 'jupiter.jpg', 
     orbitColor: '#FFA500', 
     startAngle: 1,
@@ -555,8 +547,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Saturn', 
     radius: 8.5, 
     distance: 580, 
-    speed: BASE_ORBIT_SPEED * (1 / 29.4), // Very slow orbit
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.45), // Fast spin
+    speed: EARTH_YEAR_SPEED * (34800 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (35500 / 1670),
     texture: 'saturn.jpg', 
     hasRings: true, 
     orbitColor: '#F4C542', 
@@ -567,8 +559,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Uranus', 
     radius: 3.5, 
     distance: 700, 
-    speed: BASE_ORBIT_SPEED * (1 / 84), // Crawling orbit
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / -0.72), // Fast retrograde spin
+    speed: EARTH_YEAR_SPEED * (24500 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (9320 / 1670),
     texture: 'uranus.jpg', 
     orbitColor: '#00FFFF', 
     startAngle: 5,
@@ -578,8 +570,8 @@ const PLANETS: PlanetConfig[] = [
     name: 'Neptune', 
     radius: 3.4, 
     distance: 800, 
-    speed: BASE_ORBIT_SPEED * (1 / 164.8), // Almost static orbit
-    rotationSpeed: BASE_ROTATION_SPEED * (1 / 0.67), // Fast spin
+    speed: EARTH_YEAR_SPEED * (19500 / 107000), 
+    rotationSpeed: EARTH_ROTATION_SPEED * (9660 / 1670),
     texture: 'neptune.jpg', 
     orbitColor: '#4169E1', 
     startAngle: 0.5,
@@ -617,7 +609,7 @@ const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: D
         const dayOfYear = Math.floor((simDate.getTime() - new Date(simDate.getFullYear(), 0, 0).getTime()) / 86400000);
         // We use the startAngle as a base and add the orbital progress for that day
         // This is a simplified model but keeps planets in sync
-        currentAngleRef.current = config.startAngle + (dayOfYear / 365) * 2 * Math.PI * (config.speed / BASE_ORBIT_SPEED);
+        currentAngleRef.current = config.startAngle - (dayOfYear / 365) * 2 * Math.PI * (config.speed / EARTH_YEAR_SPEED);
     }
   }, [simDate, config.startAngle, config.speed]);
 
@@ -631,7 +623,7 @@ const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: D
 
   useFrame((state, delta) => {
     const safeDelta = Math.min(delta, 0.05) * simSpeed;
-    currentAngleRef.current += safeDelta * config.speed; 
+    currentAngleRef.current -= safeDelta * config.speed; 
     
     if (orbitRef.current) {
         orbitRef.current.position.x = Math.cos(currentAngleRef.current) * config.distance;
@@ -727,11 +719,11 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
     if (simDate) {
       const dayOfYear = Math.floor((simDate.getTime() - new Date(simDate.getFullYear(), 0, 0).getTime()) / 86400000);
       // 80 is roughly the spring equinox where angle should be 0 in this model
-      orbitAngle.current = ((dayOfYear - 80) / 365) * 2 * Math.PI;
+      orbitAngle.current = -((dayOfYear - 80) / 365) * 2 * Math.PI;
 
       // Initialize other planets
       PLANETS.forEach(p => {
-        planetAngles.current[p.name] = p.startAngle + (dayOfYear / 365) * 2 * Math.PI * (p.speed / BASE_ORBIT_SPEED);
+        planetAngles.current[p.name] = p.startAngle - (dayOfYear / 365) * 2 * Math.PI * (p.speed / EARTH_YEAR_SPEED);
       });
     }
   }, [simDate]);
@@ -791,15 +783,15 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
     const safeDelta = Math.min(delta, 0.05) * simSpeed; // Apply simulation speed
     
     // Use the correctly scaled Year Speed
-    orbitAngle.current += safeDelta * EARTH_YEAR_SPEED; 
+    orbitAngle.current -= safeDelta * EARTH_YEAR_SPEED; 
     
     // Update other planets angles in sync
     PLANETS.forEach(p => {
-      if (!planetAngles.current[p.name]) {
+      if (planetAngles.current[p.name] === undefined) {
          // Fallback initialization if not done by useEffect
          planetAngles.current[p.name] = p.startAngle;
       }
-      planetAngles.current[p.name] += safeDelta * p.speed;
+      planetAngles.current[p.name] -= safeDelta * p.speed;
     });
 
     const x = -FOCAL_OFFSET + SEMI_MAJOR_AXIS * Math.cos(orbitAngle.current);
@@ -819,14 +811,24 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
     if (viewMode === 'EARTH_FREE' && !isTransitioning.current) {
         // Manual Camera Follow for Earth Free Mode
         if (state.camera && controlsRef.current) {
-             state.camera.position.add(posDelta);
-             controlsRef.current.target.add(posDelta);
+             // Use smooth follow logic consistent with focused planet mode
+             // This creates a slight lag that makes translational movement visible
+             const targetPos = currentEarthPos;
+             const offset = state.camera.position.clone().sub(prevEarthPos.current);
              
-             // Check for Drift Error
+             // Update target and position smoothly
+             controlsRef.current.target.copy(targetPos);
+             state.camera.position.lerp(targetPos.clone().add(offset), 0.1);
+             
+             // CRITICAL: Update controls to sync with manual position change
+             controlsRef.current.update();
+             
+             // Check for Drift Error (Safety)
              const dist = state.camera.position.distanceTo(currentEarthPos);
-             if (dist > 300) {
+             if (dist > 500) {
                  state.camera.position.copy(currentEarthPos).add(new THREE.Vector3(0, 10, 40));
                  controlsRef.current.target.copy(currentEarthPos);
+                 controlsRef.current.update();
              }
         }
     } 
@@ -845,7 +847,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
              const targetPlanet = PLANETS.find(p => p.name === focusedPlanet);
              if (targetPlanet) {
                  // Use the synchronized angle
-                 const angle = planetAngles.current[targetPlanet.name] || targetPlanet.startAngle;
+                 const angle = planetAngles.current[targetPlanet.name] !== undefined ? planetAngles.current[targetPlanet.name] : targetPlanet.startAngle;
                  const pX = Math.cos(angle) * targetPlanet.distance;
                  const pZ = Math.sin(angle) * targetPlanet.distance;
                  targetPos = new THREE.Vector3(pX, 0, pZ);
@@ -854,11 +856,11 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
         }
 
         if (targetPos && state.camera && controlsRef.current) {
-            // Lerp Controls Target to Planet
-            controlsRef.current.target.lerp(targetPos, 0.1);
+            // Snap Controls Target to Planet immediately to keep it in center
+            controlsRef.current.target.copy(targetPos);
             
             // Calculate desired camera position based on current relative offset
-            const offset = state.camera.position.clone().sub(controlsRef.current.target);
+            const offset = state.camera.position.clone().sub(targetPos);
             
             // Clamp offset distance to stay close to planet but allow closer inspection
             // idealDist is the "snap-to" distance when switching focus
@@ -978,7 +980,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
                 <meshLambertMaterial 
                   map={cloudsTexture} 
                   transparent={true} 
-                  opacity={0.4} 
+                  opacity={0.6} 
                   blending={THREE.AdditiveBlending} 
                   side={THREE.DoubleSide}
                   depthWrite={false}
@@ -1028,7 +1030,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
             <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">Earth</div>
           </Html>
 
-          <MoonMesh />
+          <MoonMesh simSpeed={simSpeed} />
       </group>
 
       {/* CAMERA SETUP - ROOT LEVEL */}
@@ -1067,7 +1069,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
   );
 };
 
-const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void; mode?: GameMode }> = ({ className, setStage, mode }) => {
+const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void; mode?: GameMode; setBackIntercept?: (intercept: { handler: () => boolean } | null) => void }> = ({ className, setStage, mode, setBackIntercept }) => {
   const [viewMode, setViewMode] = useState<ViewMode>('EARTH_FREE');
   const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
   const [simSpeed, setSimSpeed] = useState(1);
@@ -1075,8 +1077,30 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
   const [activitiesCompleted, setActivitiesCompleted] = useState(mode !== GameMode.GROUP);
   const [isReflectExpanded, setIsReflectExpanded] = useState(true);
 
+  React.useEffect(() => {
+    if (activitiesCompleted && setBackIntercept) {
+      setBackIntercept({
+        handler: () => {
+          // If in group mode and exploration is done, allow going back to activities
+          if (mode === GameMode.GROUP) {
+            setActivitiesCompleted(false);
+            return true;
+          }
+          return false;
+        }
+      });
+    }
+    // If activities are NOT completed, SolarSystemActivities will handle setBackIntercept
+  }, [activitiesCompleted, setBackIntercept, mode]);
+
   if (!activitiesCompleted) {
-    return <SolarSystemActivities onComplete={() => setActivitiesCompleted(true)} />;
+    return <SolarSystemActivities 
+      onComplete={() => {
+        console.log('Activities completed, switching to Exploration Mission');
+        setActivitiesCompleted(true);
+      }} 
+      setBackIntercept={setBackIntercept}
+    />;
   }
 
   return (
@@ -1086,7 +1110,7 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
         
         <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
            <StarBackground />
-           <ambientLight intensity={0.1} />
+           <ambientLight intensity={0.6} />
            
            <SunMesh />
            <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} simSpeed={simSpeed} simDate={simDate} setStage={setStage} />
@@ -1142,17 +1166,7 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
           <Moon size={18} />
         </button>
         
-        <div className="flex items-center gap-2 px-3">
-          <span className="text-[10px] font-mono text-gray-400">DATE</span>
-          <input 
-            type="date" 
-            value={simDate.toISOString().split('T')[0]} 
-            onChange={(e) => setSimDate(new Date(e.target.value))}
-            className="bg-black/40 border border-white/10 rounded px-2 py-0.5 text-[10px] text-white outline-none focus:border-neon-blue"
-          />
-        </div>
 
-        <div className="w-px h-6 bg-white/10 mx-1"></div>
         
         <div className="flex items-center gap-2 px-3">
           <span className="text-[10px] font-mono text-gray-400">SPEED</span>
@@ -1160,9 +1174,9 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
             type="range" 
             min="0" 
             max="10" 
-            step="0.1" 
+            step="1" 
             value={simSpeed} 
-            onChange={(e) => setSimSpeed(parseFloat(e.target.value))}
+            onChange={(e) => setSimSpeed(parseInt(e.target.value))}
             className="w-20 accent-neon-blue"
           />
           <span className="text-[10px] font-mono text-neon-blue w-6">{simSpeed.toFixed(1)}x</span>
@@ -1191,45 +1205,7 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
          </div>
        )}
        
-       {/* Reflect with me box */}
-       <div className="absolute top-4 right-4 z-10 max-w-sm">
-         <div className="bg-space-800/90 p-4 rounded-2xl border border-neon-blue/30 backdrop-blur-md shadow-lg">
-           <div className="flex items-start justify-between mb-3">
-             <div className="flex items-start space-x-3">
-               <img 
-                 src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                 alt="Astronaut" 
-                 className="w-10 h-10 shrink-0 drop-shadow-[0_0_5px_rgba(0,255,255,0.5)]"
-                 referrerPolicy="no-referrer"
-               />
-               <div>
-                 <h3 className="text-neon-blue font-bold text-sm">Reflect with me</h3>
-                 {isReflectExpanded && (
-                   <p className="text-xs text-gray-300 italic mt-1">
-                     In class with your teacher or by yourself, think about the reflective questions below. Remeber, you can search online to confirm your guesses or ask your teacher.
-                   </p>
-                 )}
-               </div>
-             </div>
-             <button 
-               onClick={() => setIsReflectExpanded(!isReflectExpanded)}
-               className="text-gray-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors"
-               title={isReflectExpanded ? "Minimize" : "Restore"}
-             >
-               {isReflectExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-             </button>
-           </div>
-           
-           {isReflectExpanded && (
-             <ul className="text-xs text-gray-300 space-y-2 list-disc pl-4">
-               <li>Are all planets rotating or revolving at the same speed? which one is the fastest in revolution?</li>
-               <li>Can you find the slowest in rotation?</li>
-               <li>Based on the orbits of all planets, would you be worried that some planets could colide at some point? Why or why not?</li>
-               <li>Do you think the sizes and distances of planets are accurate? Why or why not?</li>
-             </ul>
-           )}
-         </div>
-       </div>
+
 
        <div className="absolute top-4 left-40 z-0 pointer-events-none opacity-0">
           <div className="text-[10px] text-gray-500 font-mono">

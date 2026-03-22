@@ -5,6 +5,7 @@ import OrbitCommand from './components/activities/OrbitCommand';
 import LightIncidence from './components/activities/LightIncidence';
 import TiltOrbitExplorer from './components/activities/TiltOrbitExplorer';
 import Earth3D from './components/activities/Earth3D';
+import SizesDistances from './components/activities/SizesDistances';
 import QuizModule from './components/QuizModule';
 import { ArrowLeft, Users, User, Info, Globe } from 'lucide-react';
 
@@ -13,24 +14,36 @@ const App: React.FC = () => {
   const [activeActivityId, setActiveActivityId] = useState<ActivityId | null>(null);
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
   const [currentStage, setCurrentStage] = useState<string>('');
+  const [backIntercept, setBackIntercept] = useState<{ handler: () => boolean } | null>(null);
 
   const handleSelectActivity = (id: ActivityId) => {
     setActiveActivityId(id);
-    setGameMode(null);
-    setCurrentStage('Select Path');
+    if (id === ActivityId.LIGHT_INCIDENCE) {
+      setGameMode(GameMode.SOLO);
+      setCurrentStage('Light Incidence and Heating');
+    } else if (id === ActivityId.SIZES_DISTANCES) {
+      setGameMode(GameMode.SOLO);
+      setCurrentStage('Real Sizes and Distances');
+    } else {
+      setGameMode(null);
+      setCurrentStage('Select Path');
+    }
     setCurrentView(AppView.ACTIVITY);
   };
 
-  const handleBackToSelectPath = () => {
-    setGameMode(null);
-    setCurrentStage('Select Path');
-  };
-
-  const handleHome = () => {
-    setCurrentView(AppView.DASHBOARD);
-    setActiveActivityId(null);
-    setGameMode(null);
-    setCurrentStage('');
+  const handleBack = () => {
+    if (backIntercept && backIntercept.handler()) {
+      return;
+    }
+    if (gameMode && activeActivityId !== ActivityId.LIGHT_INCIDENCE && activeActivityId !== ActivityId.SIZES_DISTANCES) {
+      setGameMode(null);
+      setCurrentStage('Select Path');
+    } else {
+      setCurrentView(AppView.DASHBOARD);
+      setActiveActivityId(null);
+      setCurrentStage('');
+      setGameMode(null);
+    }
   };
 
   const getActiveActivityTitle = () => {
@@ -39,7 +52,7 @@ const App: React.FC = () => {
       { id: ActivityId.LIGHT_INCIDENCE, title: "Light & Heat" },
       { id: ActivityId.SEASONS, title: "Tilt and Orbit Consequences" },
       { id: ActivityId.ORBIT_REVOLUTION, title: "Solar System View" },
-      { id: ActivityId.SUNLIGHT_INTENSITY, title: "Sunlight Intensity" }
+      { id: ActivityId.SIZES_DISTANCES, title: "Real Sizes and Distances" }
     ];
     return activities.find(a => a.id === activeActivityId)?.title || '';
   };
@@ -90,38 +103,33 @@ const App: React.FC = () => {
 
     switch (activeActivityId) {
       case ActivityId.LIGHT_INCIDENCE: // Tile 1
-        return <LightIncidence mode={gameMode} setStage={setCurrentStage} />;
+        return <LightIncidence 
+          mode={gameMode!} 
+          setStage={setCurrentStage} 
+          onHome={handleBack} 
+          setBackIntercept={setBackIntercept}
+        />;
       case ActivityId.SEASONS: // Tile 2
         return <TiltOrbitExplorer 
           mode={gameMode} 
           onNavigateToSolarSystem={() => handleSelectActivity(ActivityId.ORBIT_REVOLUTION)}
           setStage={setCurrentStage}
+          setBackIntercept={setBackIntercept}
         />;
       case ActivityId.ORBIT_REVOLUTION: // Tile 3
         return <Earth3D 
           className="w-full h-full min-h-[600px] rounded-2xl overflow-hidden" 
           setStage={setCurrentStage}
-          mode={gameMode}
+          mode={gameMode!}
+          setBackIntercept={setBackIntercept}
         />;
-      case ActivityId.SUNLIGHT_INTENSITY: // Tile 4
-        return (
-          <div className="space-y-8 max-w-7xl mx-auto">
-            <div className="glass-panel p-6 rounded-xl border-l-4 border-yellow-400">
-               <h2 className="text-2xl font-bold mb-2">Sunlight Intensity</h2>
-               <div className="flex justify-center my-6">
-                 {/* Simple Flashlight SVG visualization */}
-                 <div className="relative w-64 h-32">
-                   <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-yellow-500/20 to-transparent transform -skew-x-12 border border-white/10 rounded"></div>
-                   <p className="absolute bottom-2 left-2 text-xs text-gray-400">Angle spreads energy</p>
-                 </div>
-               </div>
-               <p className="text-gray-300">
-                 In Finland (high latitude), sunlight hits the ground at a low angle, spreading the energy over a large area. This makes it cooler than at the Equator where light hits directly.
-               </p>
-            </div>
-            <QuizModule topic="Sunlight intensity and angle of incidence" />
-          </div>
-        );
+      case ActivityId.SIZES_DISTANCES: // Tile 4
+        return <SizesDistances 
+          mode={gameMode} 
+          setStage={setCurrentStage} 
+          onHome={handleBack} 
+          setBackIntercept={setBackIntercept}
+        />;
       default:
         return <div className="text-center text-gray-500">Module Under Construction</div>;
     }
@@ -137,9 +145,9 @@ const App: React.FC = () => {
         <div className="flex items-center">
           {currentView === AppView.ACTIVITY && (
             <button 
-              onClick={handleBackToSelectPath} 
+              onClick={handleBack} 
               className="mr-4 p-2 rounded-full hover:bg-white/10 transition-colors text-neon-blue"
-              title="Back to Path Selection"
+              title="Back"
             >
               <ArrowLeft size={24} />
             </button>
@@ -156,15 +164,6 @@ const App: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          {currentView === AppView.ACTIVITY && (
-            <button 
-              onClick={handleHome}
-              className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all flex items-center gap-2"
-            >
-              <Globe size={14} className="text-neon-blue" />
-              HOME
-            </button>
-          )}
           <div className="hidden md:flex items-center text-xs font-mono text-gray-400">
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
             SYSTEM ONLINE

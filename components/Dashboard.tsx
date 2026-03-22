@@ -40,7 +40,7 @@ const activities: DashboardActivity[] = [
   },
   {
     // Tile 4
-    id: ActivityId.SUNLIGHT_INTENSITY,
+    id: ActivityId.SIZES_DISTANCES,
     title: "Real Sizes and Distances",
     description: "Discovering how vast space truly is",
     iconName: "Ruler",

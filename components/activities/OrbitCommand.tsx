@@ -154,7 +154,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             <Users className="mr-2 text-neon-pink" size={20} />
             What’s your favorite season?
           </h3>
-          <p className="text-gray-300">“What’s your favorite season? How does it look like?” (snow, rain, green trees, flowers, etc.)</p>
+          <p className="text-gray-300">What’s your favorite season? How does it look like? (snow, rain, green trees, flowers, etc.)</p>
         </div>
 
         <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-blue">
@@ -162,7 +162,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             <Calendar className="mr-2 text-neon-blue" size={20} />
             Daylight and your birthday
           </h3>
-          <p className="text-gray-300">“How long is the daylight during your birthday every year? What about the temperature?”</p>
+          <p className="text-gray-300">How long is the daylight during your birthday every year? What about the temperature?</p>
         </div>
 
         <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-purple">
@@ -170,13 +170,13 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             <Info className="mr-2 text-neon-purple" size={20} />
             Explaining dark winters and bright summers
           </h3>
-          <p className="text-gray-300">“Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?”</p>
+          <p className="text-gray-300">Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?</p>
         </div>
       </div>
 
       <div className="bg-space-800/50 p-6 rounded-2xl border border-white/5 text-center">
         <p className="text-gray-300 italic mb-6">
-          “Good group discussion! Now let’s find out the reasons behind your ideas and all the topics you discussed. Time to start the exploration mission!”
+          Good group discussion! Now let’s find out the reasons behind your ideas and all the topics you discussed. Time to start the exploration mission!
         </p>
         
         <div className="flex items-center justify-center gap-4 mb-8">
@@ -187,7 +187,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             referrerPolicy="no-referrer"
           />
           <div className="bg-white text-space-900 p-3 rounded-2xl rounded-bl-none text-sm font-medium relative">
-            “Winter and summer feel so different… but the Sun is the same star. Let’s uncover what the Earth is doing!”
+            Winter and summer feel so different… but the Sun is the same star. Let’s uncover what the Earth is doing!
           </div>
         </div>
 
@@ -231,7 +231,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             "Look at Finland. In this spinning Earth, can you see how Finland is dark for half of the day and bright for the other half?",
             "Is it like reality? Think about your summers here. How long are your days in summer?"
           ],
-          prompt: "Something is wrong with this ‘perfect’ spinning Earth. How can we fix it?",
+          prompt: "Something is wrong with this perfect spinning Earth. How can we fix it?",
           question: "What should we do to make the model more like real Earth, where summer days in Finland are much longer?",
           options: [
             { id: 'closer', label: 'Move the Earth closer to the Sun' },
@@ -299,7 +299,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
             referrerPolicy="no-referrer"
           />
           <div className="bg-white text-space-900 p-4 rounded-2xl rounded-bl-none font-bold shadow-xl">
-            “Great job, space explorer! Now let’s see all this happening in the whole solar system. Are you ready?”
+            Great job, space explorer! Now let’s see all this happening in the whole solar system. Are you ready?
           </div>
         </div>
 
@@ -461,7 +461,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                     <span className="font-bold text-sm">Task 1: Find Spring</span>
                     {completedTasks.includes('spring') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">“Can you find spring in Finland? Choose a date in spring (March/April).”</p>
+                  <p className="text-xs text-gray-400 mb-3">Can you find spring in Finland? Choose a date in spring (March/April).</p>
                   {completedTasks.includes('spring') ? (
                     <div className="space-y-2 text-xs text-gray-300">
                       <p>✅ Daytime and nighttime in Oulu are getting closer to equal.</p>
@@ -477,7 +477,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                     <span className="font-bold text-sm">Task 2: Find Winter</span>
                     {completedTasks.includes('winter') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">“Now, find winter in Finland. Choose a date in winter (Dec/Jan).”</p>
+                  <p className="text-xs text-gray-400 mb-3">Now, find winter in Finland. Choose a date in winter (Dec/Jan).</p>
                   {completedTasks.includes('winter') ? (
                     <div className="space-y-2 text-xs text-gray-300">
                       <p>✅ Daytime is very short. Nights are very long.</p>
@@ -493,7 +493,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                     <span className="font-bold text-sm">Task 3: Find Summer</span>
                     {completedTasks.includes('summer') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">“Now find summer in Finland. Choose a date in summer (June/July).”</p>
+                  <p className="text-xs text-gray-400 mb-3">Now find summer in Finland. Choose a date in summer (June/July).</p>
                   {completedTasks.includes('summer') ? (
                     <div className="space-y-2 text-xs text-gray-300">
                       <p>✅ Daytime is very long. Nights are very short.</p>
@@ -520,7 +520,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                   referrerPolicy="no-referrer"
                 />
                 <p className="text-space-900 text-xs font-medium">
-                  “Great observation! Seasons are not caused mainly by how far the Earth is from the Sun, but by the tilt of Earth’s axis.”
+                  Great observation! Seasons are not caused mainly by how far the Earth is from the Sun, but by the tilt of Earth’s axis.
                 </p>
               </div>
             )}

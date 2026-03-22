@@ -34,7 +34,7 @@ const DEFAULT_QUESTIONS: QuizQuestion[] = [
 
 const KAAMOS_QUESTIONS: QuizQuestion[] = [
   {
-    question: "What is 'Kaamos'?",
+    question: "What is Kaamos?",
     options: ["A type of snow", "Polar Night (Sun doesn't rise)", "The Northern Lights", "Midsummer Festival"],
     correctAnswerIndex: 1,
     explanation: "Kaamos is the Finnish term for the Polar Night, a period in winter north of the Arctic Circle when the sun does not rise above the horizon."
@@ -89,13 +89,13 @@ const TOPIC_MAP: Record<string, QuizQuestion[]> = {
 const COMMAND_DATA: AstroCommand[] = [
   {
     role: "Earth",
-    action: "Tilt your upper body to the right. Keep this tilt and walk in a circle around the 'Sun'.",
+    action: "Tilt your upper body to the right. Keep this tilt and walk in a circle around the Sun.",
     question: "When your tilt points towards the Sun, what season is it in the North?",
     answer: "Summer"
   },
   {
     role: "Sun",
-    action: "Stand still. Shine your 'light' (arms) directly at Earth's waist (Equator).",
+    action: "Stand still. Shine your light (arms) directly at Earth's waist (Equator).",
     question: "Where is the sunlight hitting most directly?",
     answer: "The Equator"
   },
@@ -107,7 +107,7 @@ const COMMAND_DATA: AstroCommand[] = [
   },
   {
     role: "Observer",
-    action: "Stand in 'Finland' (Top of Earth). Look at the Sun when Earth is tilted away.",
+    action: "Stand in Finland (Top of Earth). Look at the Sun when Earth is tilted away.",
     question: "Does the Sun look high or low in the sky?",
     answer: "Low"
   }
