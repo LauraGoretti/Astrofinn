@@ -334,7 +334,8 @@ void main() {
   float offset = days * speed;
   
   vec2 uv = vUv;
-  uv.x = fract(uv.x - offset);
+  // Hardware RepeatWrapping handles the wrap-around seamlessly without the mipmap seam artifact.
+  uv.x -= offset;
   
   gl_FragColor = texture2D(sunTexture, uv);
 }
@@ -342,6 +343,15 @@ void main() {
 
 const Sun = ({ position }: { position: [number, number, number] }) => {
   const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
+
+  useEffect(() => {
+    if (sunTexture) {
+      sunTexture.wrapS = THREE.RepeatWrapping;
+      sunTexture.wrapT = THREE.RepeatWrapping;
+      sunTexture.needsUpdate = true;
+    }
+  }, [sunTexture]);
+
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const haloMaterialRef = useRef<THREE.ShaderMaterial>(null);

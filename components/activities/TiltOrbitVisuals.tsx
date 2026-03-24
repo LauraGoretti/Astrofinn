@@ -92,15 +92,18 @@ uniform float time;
 varying vec2 vUv;
 
 void main() {
-  float lat = (vUv.y - 0.5) * 3.14159265;
-  // Speed in rotations per Earth day. Equator: ~24 days, Poles: ~34 days
-  float speed = mix(1.0/34.0, 1.0/24.0, pow(cos(lat), 2.0));
+  // Simplified rotation to prevent texture distortion while remaining scientifically grounded.
+  // The Sun's average rotation period is approximately 27 Earth days.
+  float speed = 1.0 / 27.0;
   
+  // time is in radians (0 to 2PI represents one Earth day in this simulation context)
   float days = time / 6.28318530718;
   float offset = days * speed;
   
   vec2 uv = vUv;
-  uv.x = fract(uv.x - offset);
+  // Use the raw offset. Hardware RepeatWrapping (configured in JS) handles the wrap-around 
+  // seamlessly without the mipmap "seam" artifact caused by manual fract().
+  uv.x -= offset;
   
   gl_FragColor = texture2D(sunTexture, uv);
 }
@@ -108,6 +111,15 @@ void main() {
 
 const Sun: React.FC = () => {
   const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
+
+  React.useEffect(() => {
+    if (sunTexture) {
+      sunTexture.wrapS = THREE.RepeatWrapping;
+      sunTexture.wrapT = THREE.RepeatWrapping;
+      sunTexture.needsUpdate = true;
+    }
+  }, [sunTexture]);
+
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const timeRef = useRef(0);
 
