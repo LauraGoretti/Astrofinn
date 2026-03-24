@@ -44,9 +44,9 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
   const phaseBHeat = absBallY < 30 ? 'high' : absBallY < 70 ? 'medium' : 'low';
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8 pb-12">
+    <div className="max-w-7xl mx-auto space-y-8 pb-12">
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
+        <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
           Light Incidence and Heating
         </h1>
       </div>
@@ -70,9 +70,9 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
 
       {phase === 'A' ? (
         <div className="w-full">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col w-full">
-            <h2 className="text-xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
-            <p className="text-gray-400 text-sm mb-6 italic">
+          <div className="glass-panel flex flex-col w-full">
+            <h2 className="text-2xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
+            <p className="text-gray-400 text-base leading-relaxed mb-6 italic">
               This is a magic heating flashlight. It always sends the same light, but the heating changes with the angle.
             </p>
 
@@ -301,8 +301,8 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
         </div>
       ) : (
         <div className="w-full animate-fade-in space-y-8">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col w-full">
-            <h2 className="text-xl font-bold text-white mb-6">Moving the Ball</h2>
+          <div className="glass-panel flex flex-col w-full">
+            <h2 className="text-2xl font-bold text-white mb-6">Moving the Ball</h2>
 
             {/* Simulation Area */}
             <div className="relative flex-1 min-h-[350px] bg-gradient-to-b from-space-900 to-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center mb-6 shadow-2xl">
@@ -459,16 +459,14 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
             </div>
           </div>
 
-          <div className="flex items-start gap-4 bg-green-900/30 p-4 rounded-xl border border-green-500/30 w-full">
-            <div className="p-2 bg-green-500/20 rounded-full shrink-0">
-              <img 
-                src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
-                alt="Astronaut" 
-                className="w-6 h-6"
-                referrerPolicy="no-referrer"
-              />
-            </div>
-            <p className="text-green-200 italic">
+          <div className="astronaut-box border-green-500/30 w-full">
+            <img 
+              src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
+              alt="Astronaut" 
+              className="w-12 h-12 shrink-0"
+              referrerPolicy="no-referrer"
+            />
+            <p className="text-green-200 italic text-base leading-relaxed">
               Great work, explorer! Once you are done exploring and reflecting according to your teacher's instructions, we can move onto the "Tilt and Orbit Consequences" area of the app.
             </p>
           </div>
@@ -477,7 +475,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
             <div className="flex justify-center mt-8">
               <button 
                 onClick={onHome}
-                className="px-6 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                className="btn-primary px-8 py-3 text-2xl font-bold"
               >
                 Return to Dashboard
               </button>

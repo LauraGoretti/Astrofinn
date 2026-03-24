@@ -31,6 +31,14 @@ const App: React.FC = () => {
     setCurrentView(AppView.ACTIVITY);
   };
 
+  const goToDashboard = () => {
+    setBackIntercept(null);
+    setCurrentView(AppView.DASHBOARD);
+    setActiveActivityId(null);
+    setCurrentStage('');
+    setGameMode(null);
+  };
+
   const handleBack = () => {
     if (backIntercept && backIntercept.handler()) {
       return;
@@ -62,7 +70,7 @@ const App: React.FC = () => {
       return (
         <div className="flex flex-col items-center justify-center h-full min-h-[50vh] space-y-8 animate-fade-in relative">
           <div className="relative">
-            <h2 className="text-3xl font-bold text-white">Select Path</h2>
+            <h2 className="text-2xl font-bold text-white">Select Path</h2>
             {/* Floating Astronaut */}
             <div className="absolute -top-16 -right-16 animate-bounce-slow">
               <img 
@@ -79,22 +87,22 @@ const App: React.FC = () => {
                 setGameMode(GameMode.GROUP);
                 setCurrentStage('Path 1: Warm-up');
               }}
-              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-pink/30 hover:border-neon-pink group"
+              className="glass-panel hover:bg-white/5 transition-all flex flex-col items-center border-neon-pink/30 hover:border-neon-pink group"
             >
               <Users size={64} className="text-neon-pink mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white text-center">Path 1: Warm-up with reflective and creative thinking</h3>
-              <p className="text-center text-gray-400 mt-2 text-sm">In class, before the simulation.</p>
+              <h3 className="text-2xl font-bold text-white text-center">Path 1: Warm-up with reflective and creative thinking</h3>
+              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">In class, before the simulation.</p>
             </button>
             <button
               onClick={() => {
                 setGameMode(GameMode.SOLO);
                 setCurrentStage('Path 2: Exploration');
               }}
-              className="glass-panel p-8 rounded-2xl hover:bg-white/5 transition-all flex flex-col items-center border border-neon-blue/30 hover:border-neon-blue group"
+              className="glass-panel hover:bg-white/5 transition-all flex flex-col items-center border-neon-blue/30 hover:border-neon-blue group"
             >
               <User size={64} className="text-neon-blue mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold text-white text-center">Path 2: Exploration Mission</h3>
-              <p className="text-center text-gray-400 mt-2 text-sm">Interactive digital simulations.</p>
+              <h3 className="text-2xl font-bold text-white text-center">Path 2: Exploration Mission</h3>
+              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">Interactive digital simulations.</p>
             </button>
           </div>
         </div>
@@ -106,7 +114,7 @@ const App: React.FC = () => {
         return <LightIncidence 
           mode={gameMode!} 
           setStage={setCurrentStage} 
-          onHome={handleBack} 
+          onHome={goToDashboard} 
           setBackIntercept={setBackIntercept}
         />;
       case ActivityId.SEASONS: // Tile 2
@@ -114,6 +122,7 @@ const App: React.FC = () => {
           mode={gameMode} 
           onNavigateToSolarSystem={() => handleSelectActivity(ActivityId.ORBIT_REVOLUTION)}
           setStage={setCurrentStage}
+          onHome={goToDashboard}
           setBackIntercept={setBackIntercept}
         />;
       case ActivityId.ORBIT_REVOLUTION: // Tile 3
@@ -127,7 +136,7 @@ const App: React.FC = () => {
         return <SizesDistances 
           mode={gameMode} 
           setStage={setCurrentStage} 
-          onHome={handleBack} 
+          onHome={goToDashboard} 
           setBackIntercept={setBackIntercept}
         />;
       default:
@@ -172,7 +181,7 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content Area - Scrollable */}
-      <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:px-6 pb-6 w-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-space-700 hover:scrollbar-thumb-neon-blue">
+      <main className={`flex-1 overflow-y-auto overflow-x-hidden ${currentView === AppView.DASHBOARD ? 'p-4 md:px-6' : 'p-2 md:px-4 lg:px-4'} pb-6 w-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-space-700 hover:scrollbar-thumb-neon-blue`}>
          <div className="w-full h-full">
             {currentView === AppView.DASHBOARD ? (
               <Dashboard onSelectActivity={handleSelectActivity} />

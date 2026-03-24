@@ -142,58 +142,58 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
   }, [orbitDate]);
 
   const renderWarmup = () => (
-    <div className="max-w-2xl mx-auto space-y-8 py-12">
+    <div className="max-w-7xl mx-auto space-y-8 py-12">
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold text-white">Step 1 – Talk about seasons, light, and darkness</h2>
-        <p className="text-gray-400">Turn to your classmates and share your thoughts.</p>
+        <h2 className="text-2xl font-bold text-white">Step 1 – Talk about seasons, light, and darkness</h2>
+        <p className="text-gray-400 text-base leading-relaxed">Turn to your classmates and share your thoughts.</p>
       </div>
 
       <div className="grid gap-6">
-        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-pink">
-          <h3 className="font-bold text-lg mb-2 flex items-center">
+        <div className="glass-panel border-l-4 border-l-neon-pink">
+          <h3 className="font-bold text-2xl mb-2 flex items-center">
             <Users className="mr-2 text-neon-pink" size={20} />
             What’s your favorite season?
           </h3>
-          <p className="text-gray-300">What’s your favorite season? How does it look like? (snow, rain, green trees, flowers, etc.)</p>
+          <p className="text-gray-300 text-base leading-relaxed">What’s your favorite season? How does it look like? (snow, rain, green trees, flowers, etc.)</p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-blue">
-          <h3 className="font-bold text-lg mb-2 flex items-center">
+        <div className="glass-panel border-l-4 border-l-neon-blue">
+          <h3 className="font-bold text-2xl mb-2 flex items-center">
             <Calendar className="mr-2 text-neon-blue" size={20} />
             Daylight and your birthday
           </h3>
-          <p className="text-gray-300">How long is the daylight during your birthday every year? What about the temperature?</p>
+          <p className="text-gray-300 text-base leading-relaxed">How long is the daylight during your birthday every year? What about the temperature?</p>
         </div>
 
-        <div className="glass-panel p-6 rounded-2xl border-l-4 border-neon-purple">
-          <h3 className="font-bold text-lg mb-2 flex items-center">
+        <div className="glass-panel border-l-4 border-l-neon-purple">
+          <h3 className="font-bold text-2xl mb-2 flex items-center">
             <Info className="mr-2 text-neon-purple" size={20} />
             Explaining dark winters and bright summers
           </h3>
-          <p className="text-gray-300">Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?</p>
+          <p className="text-gray-300 text-base leading-relaxed">Can you imagine an explanation about why winters are dark and cold and summers are hot and bright?</p>
         </div>
       </div>
 
-      <div className="bg-space-800/50 p-6 rounded-2xl border border-white/5 text-center">
-        <p className="text-gray-300 italic mb-6">
+      <div className="glass-panel text-center">
+        <p className="text-gray-300 italic mb-6 text-base leading-relaxed">
           Good group discussion! Now let’s find out the reasons behind your ideas and all the topics you discussed. Time to start the exploration mission!
         </p>
         
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="astronaut-box justify-center mb-8">
           <img 
             src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
             alt="Astronaut" 
-            className="w-12 h-12"
+            className="w-12 h-12 shrink-0"
             referrerPolicy="no-referrer"
           />
-          <div className="bg-white text-space-900 p-3 rounded-2xl rounded-bl-none text-sm font-medium relative">
+          <div className="text-white text-base leading-relaxed font-medium">
             Winter and summer feel so different… but the Sun is the same star. Let’s uncover what the Earth is doing!
           </div>
         </div>
 
         <button 
           onClick={() => setPhase(GamePhase.PHASE1)}
-          className="btn-primary px-8 py-4 text-lg group"
+          className="btn-primary px-8 py-4 text-2xl font-bold group"
         >
           Start Exploration Mission
           <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -267,38 +267,38 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
 
   if (phase === GamePhase.FINISHED) {
     return (
-      <div className="max-w-2xl mx-auto py-12 text-center space-y-8">
+      <div className="max-w-7xl mx-auto py-12 text-center space-y-8">
         <div className="inline-flex p-4 bg-green-500/20 rounded-full">
           <CheckCircle2 className="text-green-500 w-16 h-16" />
         </div>
-        <h2 className="text-4xl font-bold text-white">Mission Accomplished!</h2>
+        <h2 className="text-2xl font-bold text-white">Mission Accomplished!</h2>
         
-        <div className="glass-panel p-8 rounded-2xl space-y-4 text-left">
-          <p className="text-gray-300 text-lg">You have now:</p>
+        <div className="glass-panel space-y-4 text-left">
+          <p className="text-gray-300 text-base leading-relaxed">You have now:</p>
           <ul className="space-y-3">
-            <li className="flex items-center text-white">
+            <li className="flex items-center text-white text-base leading-relaxed">
               <CheckCircle2 className="text-green-500 mr-3" size={20} />
               Used rotation to create day and night.
             </li>
-            <li className="flex items-center text-white">
+            <li className="flex items-center text-white text-base leading-relaxed">
               <CheckCircle2 className="text-green-500 mr-3" size={20} />
               Used tilt to create longer and shorter days in different places.
             </li>
-            <li className="flex items-center text-white">
+            <li className="flex items-center text-white text-base leading-relaxed">
               <CheckCircle2 className="text-green-500 mr-3" size={20} />
               Used revolution to see how seasons change around the year.
             </li>
           </ul>
         </div>
 
-        <div className="flex items-center justify-center gap-4">
+        <div className="astronaut-box justify-center">
           <img 
             src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
             alt="Astronaut" 
-            className="w-16 h-16"
+            className="w-16 h-16 shrink-0"
             referrerPolicy="no-referrer"
           />
-          <div className="bg-white text-space-900 p-4 rounded-2xl rounded-bl-none font-bold shadow-xl">
+          <div className="text-white font-bold">
             Great job, space explorer! Now let’s see all this happening in the whole solar system. Are you ready?
           </div>
         </div>
@@ -326,9 +326,9 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
         />
         
         {/* Phase Info Overlay */}
-        <div className="absolute top-4 left-4 p-4 glass-panel rounded-xl border-l-4 border-neon-blue max-w-md pointer-events-none">
-          <h3 className="text-lg font-bold text-white mb-2">{phaseContent?.title || "Orbit Simulator"}</h3>
-          <p className="text-sm text-gray-300 leading-relaxed">{phaseContent?.text || "Perfect! Welcome to the orbit simulator according to the dates."}</p>
+        <div className="absolute top-4 left-4 glass-panel border-l-4 border-l-neon-blue max-w-md pointer-events-none">
+          <h3 className="text-2xl font-bold text-white mb-2">{phaseContent?.title || "Orbit Simulator"}</h3>
+          <p className="text-base text-gray-300 leading-relaxed">{phaseContent?.text || "Perfect! Welcome to the orbit simulator according to the dates."}</p>
         </div>
 
         {/* Feedback Overlay */}
@@ -355,11 +355,11 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
       <div className="w-full lg:w-[450px] shrink-0 flex flex-col gap-4 overflow-y-auto max-h-full pb-6">
         {phase !== GamePhase.PHASE4 ? (
           <div className="space-y-4">
-            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 space-y-4">
-              <h4 className="font-bold text-neon-purple uppercase tracking-widest text-xs">Scaffolding Questions</h4>
+            <div className="glass-panel space-y-4">
+              <h4 className="font-bold text-neon-purple uppercase tracking-widest text-2xl">Scaffolding Questions</h4>
               <div className="space-y-3">
                 {phaseContent?.questions.map((q, i) => (
-                  <div key={i} className="flex gap-3 text-sm text-gray-300 bg-black/30 p-3 rounded-lg border-l-2 border-neon-purple">
+                  <div key={i} className="flex gap-3 text-base text-gray-300 bg-black/30 p-3 rounded-lg border-l-2 border-neon-purple leading-relaxed">
                     <Info size={16} className="shrink-0 mt-0.5 text-neon-purple" />
                     <p>{q}</p>
                   </div>
@@ -367,14 +367,14 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 rounded-xl border border-neon-blue space-y-6">
+            <div className="glass-panel border-l-4 border-l-neon-blue space-y-6">
               <div className="space-y-2">
-                <p className="text-neon-blue font-bold text-sm uppercase tracking-wider">Current Challenge</p>
-                <p className="text-white text-lg font-medium">{phaseContent?.prompt}</p>
+                <p className="text-neon-blue font-bold text-2xl uppercase tracking-wider">Current Challenge</p>
+                <p className="text-white text-base leading-relaxed font-medium">{phaseContent?.prompt}</p>
               </div>
 
               <div className="space-y-3">
-                <p className="text-gray-400 text-sm font-mono">{phaseContent?.question}</p>
+                <p className="text-gray-400 text-base leading-relaxed font-mono">{phaseContent?.question}</p>
                 <div className="grid gap-2">
                   {phaseContent?.options.map((opt) => (
                     <button
@@ -382,7 +382,7 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                       onClick={() => handleChoice(opt.id)}
                       className="w-full p-4 text-left rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-neon-blue transition-all group flex items-center justify-between"
                     >
-                      <span className="text-gray-200 group-hover:text-white">{opt.label}</span>
+                      <span className="text-gray-200 group-hover:text-white text-base leading-relaxed">{opt.label}</span>
                       <ChevronRight size={18} className="text-gray-500 group-hover:text-neon-blue group-hover:translate-x-1 transition-all" />
                     </button>
                   ))}
@@ -392,15 +392,15 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="glass-panel p-6 rounded-xl border border-neon-blue space-y-6">
+            <div className="glass-panel border-l-4 border-l-neon-blue space-y-6">
               <div className="flex items-center gap-3">
                 <Calendar className="text-neon-blue" />
-                <h3 className="text-xl font-bold">Orbit Simulator</h3>
+                <h3 className="text-2xl font-bold">Orbit Simulator</h3>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-xs text-gray-500 uppercase mb-2">Select Date</label>
+                  <label className="block text-2xl font-bold text-gray-500 uppercase mb-2">Select Date</label>
                   <div className="flex gap-2 mb-3 overflow-x-auto pb-2">
                     {[
                       { label: 'Spring', date: new Date(2024, 2, 21) },
@@ -449,8 +449,8 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
               </div>
             </div>
 
-            <div className="bg-space-800/80 p-6 rounded-xl border border-white/10 space-y-6">
-              <h4 className="font-bold text-white flex items-center gap-2">
+            <div className="glass-panel space-y-6">
+              <h4 className="font-bold text-white flex items-center gap-2 text-2xl">
                 <Play size={18} className="text-neon-green" />
                 Mission Tasks
               </h4>
@@ -458,44 +458,44 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
               <div className="space-y-4">
                 <div className={`p-4 rounded-xl border transition-all ${phase4Task === 'spring' ? 'bg-neon-blue/10 border-neon-blue' : 'bg-black/20 border-white/5'}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-sm">Task 1: Find Spring</span>
+                    <span className="font-bold text-2xl">Task 1: Find Spring</span>
                     {completedTasks.includes('spring') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">Can you find spring in Finland? Choose a date in spring (March/April).</p>
+                  <p className="text-base leading-relaxed text-gray-400 mb-3">Can you find spring in Finland? Choose a date in spring (March/April).</p>
                   {completedTasks.includes('spring') ? (
-                    <div className="space-y-2 text-xs text-gray-300">
+                    <div className="space-y-2 text-base leading-relaxed text-gray-300">
                       <p>✅ Daytime and nighttime in Oulu are getting closer to equal.</p>
                       <button onClick={() => setPhase4Task('winter')} className="text-neon-blue hover:underline">Next Task →</button>
                     </div>
                   ) : (
-                    <button onClick={() => setPhase4Task('spring')} className="text-xs text-neon-blue hover:underline">Active Task</button>
+                    <button onClick={() => setPhase4Task('spring')} className="text-base leading-relaxed text-neon-blue hover:underline">Active Task</button>
                   )}
                 </div>
 
                 <div className={`p-4 rounded-xl border transition-all ${phase4Task === 'winter' ? 'bg-neon-blue/10 border-neon-blue' : 'bg-black/20 border-white/5'}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-sm">Task 2: Find Winter</span>
+                    <span className="font-bold text-2xl">Task 2: Find Winter</span>
                     {completedTasks.includes('winter') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">Now, find winter in Finland. Choose a date in winter (Dec/Jan).</p>
+                  <p className="text-base leading-relaxed text-gray-400 mb-3">Now, find winter in Finland. Choose a date in winter (Dec/Jan).</p>
                   {completedTasks.includes('winter') ? (
-                    <div className="space-y-2 text-xs text-gray-300">
+                    <div className="space-y-2 text-base leading-relaxed text-gray-300">
                       <p>✅ Daytime is very short. Nights are very long.</p>
                       <button onClick={() => setPhase4Task('summer')} className="text-neon-blue hover:underline">Next Task →</button>
                     </div>
                   ) : (
-                    <button onClick={() => setPhase4Task('winter')} className="text-xs text-neon-blue hover:underline">Switch to Task</button>
+                    <button onClick={() => setPhase4Task('winter')} className="text-base leading-relaxed text-neon-blue hover:underline">Switch to Task</button>
                   )}
                 </div>
 
                 <div className={`p-4 rounded-xl border transition-all ${phase4Task === 'summer' ? 'bg-neon-blue/10 border-neon-blue' : 'bg-black/20 border-white/5'}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-sm">Task 3: Find Summer</span>
+                    <span className="font-bold text-2xl">Task 3: Find Summer</span>
                     {completedTasks.includes('summer') && <CheckCircle2 className="text-green-500" size={18} />}
                   </div>
-                  <p className="text-xs text-gray-400 mb-3">Now find summer in Finland. Choose a date in summer (June/July).</p>
+                  <p className="text-base leading-relaxed text-gray-400 mb-3">Now find summer in Finland. Choose a date in summer (June/July).</p>
                   {completedTasks.includes('summer') ? (
-                    <div className="space-y-2 text-xs text-gray-300">
+                    <div className="space-y-2 text-base leading-relaxed text-gray-300">
                       <p>✅ Daytime is very long. Nights are very short.</p>
                       <button 
                         onClick={() => setPhase(GamePhase.FINISHED)} 
@@ -505,21 +505,21 @@ const OrbitCommand: React.FC<OrbitCommandProps> = ({ mode }) => {
                       </button>
                     </div>
                   ) : (
-                    <button onClick={() => setPhase4Task('summer')} className="text-xs text-neon-blue hover:underline">Switch to Task</button>
+                    <button onClick={() => setPhase4Task('summer')} className="text-base leading-relaxed text-neon-blue hover:underline">Switch to Task</button>
                   )}
                 </div>
               </div>
             </div>
 
             {completedTasks.length > 0 && (
-              <div className="bg-white p-4 rounded-xl flex gap-3 shadow-xl">
+              <div className="astronaut-box">
                 <img 
                   src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
                   alt="Astronaut" 
-                  className="w-10 h-10"
+                  className="w-10 h-10 shrink-0"
                   referrerPolicy="no-referrer"
                 />
-                <p className="text-space-900 text-xs font-medium">
+                <p className="text-white text-base leading-relaxed font-medium">
                   Great observation! Seasons are not caused mainly by how far the Earth is from the Sun, but by the tilt of Earth’s axis.
                 </p>
               </div>

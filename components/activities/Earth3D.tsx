@@ -371,17 +371,55 @@ const StarBackground = () => {
   );
 };
 
+const sunVertexShader = `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const sunFragmentShader = `
+uniform sampler2D sunTexture;
+uniform float time;
+varying vec2 vUv;
+
+void main() {
+  float lat = (vUv.y - 0.5) * 3.14159265;
+  // Speed in rotations per Earth day. Equator: ~24 days, Poles: ~34 days
+  float speed = mix(1.0/34.0, 1.0/24.0, pow(cos(lat), 2.0));
+  
+  float days = time / 6.28318530718;
+  float offset = days * speed;
+  
+  vec2 uv = vUv;
+  uv.x = fract(uv.x - offset);
+  
+  gl_FragColor = texture2D(sunTexture, uv);
+}
+`;
+
 const SunMesh = () => {
   const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
   const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
   const haloMaterialRef = useRef<THREE.ShaderMaterial>(null);
+  const timeRef = useRef(0);
+
+  const uniforms = useMemo(() => ({
+    sunTexture: { value: sunTexture },
+    time: { value: 0 }
+  }), [sunTexture]);
 
   const haloUniforms = useMemo(() => ({
     uTime: { value: 0 }
   }), []);
 
   useFrame((state, delta) => {
-    if (meshRef.current) meshRef.current.rotation.y += delta * 0.002;
+    timeRef.current += delta * EARTH_ROTATION_SPEED;
+    if (materialRef.current) {
+      materialRef.current.uniforms.time.value = timeRef.current;
+    }
     if (haloMaterialRef.current) haloMaterialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
   });
 
@@ -389,8 +427,12 @@ const SunMesh = () => {
     <group position={[0, 0, 0]}>
       <mesh ref={meshRef}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
-        {/* Use meshBasicMaterial with map and subtle color boost for bloom emission */}
-        <meshBasicMaterial map={sunTexture} color={[1.2, 1.2, 1.2]} toneMapped={false} />
+        <shaderMaterial 
+          ref={materialRef}
+          vertexShader={sunVertexShader}
+          fragmentShader={sunFragmentShader}
+          uniforms={uniforms}
+        />
       </mesh>
       <mesh scale={[1.15, 1.15, 1.15]}>
         <sphereGeometry args={[SUN_RADIUS, 64, 64]} />
@@ -415,7 +457,7 @@ const SunMesh = () => {
         />
       </sprite>
       <pointLight 
-        intensity={1.8} 
+        intensity={1.2} 
         distance={2000} 
         decay={0.0} 
         color="#ffffff" 
@@ -488,6 +530,13 @@ interface PlanetConfig {
   rotationSpeed: number;
   texture: string;
   hasRings?: boolean;
+  ringConfig?: {
+    innerRadius: number;
+    outerRadius: number;
+    color: string;
+    opacity: number;
+    texture?: string;
+  };
   orbitColor: string;
   startAngle: number; // For deterministic positioning
   tilt?: number; // Axial tilt in radians
@@ -539,6 +588,13 @@ const PLANETS: PlanetConfig[] = [
     speed: EARTH_YEAR_SPEED * (47000 / 107000), 
     rotationSpeed: EARTH_ROTATION_SPEED * (45300 / 1670),
     texture: 'jupiter.jpg', 
+    hasRings: true,
+    ringConfig: {
+      innerRadius: 1.2,
+      outerRadius: 1.5,
+      color: '#997755',
+      opacity: 0.2
+    },
     orbitColor: '#FFA500', 
     startAngle: 1,
     tilt: 3 * (Math.PI / 180)
@@ -551,6 +607,13 @@ const PLANETS: PlanetConfig[] = [
     rotationSpeed: EARTH_ROTATION_SPEED * (35500 / 1670),
     texture: 'saturn.jpg', 
     hasRings: true, 
+    ringConfig: {
+      innerRadius: 1.4,
+      outerRadius: 2.2,
+      color: '#ffffff',
+      opacity: 0.8,
+      texture: 'saturn_ring.png'
+    },
     orbitColor: '#F4C542', 
     startAngle: 3,
     tilt: 27 * (Math.PI / 180)
@@ -562,6 +625,13 @@ const PLANETS: PlanetConfig[] = [
     speed: EARTH_YEAR_SPEED * (24500 / 107000), 
     rotationSpeed: EARTH_ROTATION_SPEED * (9320 / 1670),
     texture: 'uranus.jpg', 
+    hasRings: true,
+    ringConfig: {
+      innerRadius: 1.5,
+      outerRadius: 1.8,
+      color: '#222222',
+      opacity: 0.4
+    },
     orbitColor: '#00FFFF', 
     startAngle: 5,
     tilt: 98 * (Math.PI / 180) // Rolling on side
@@ -573,25 +643,34 @@ const PLANETS: PlanetConfig[] = [
     speed: EARTH_YEAR_SPEED * (19500 / 107000), 
     rotationSpeed: EARTH_ROTATION_SPEED * (9660 / 1670),
     texture: 'neptune.jpg', 
+    hasRings: true,
+    ringConfig: {
+      innerRadius: 1.4,
+      outerRadius: 1.7,
+      color: '#333333',
+      opacity: 0.3
+    },
     orbitColor: '#4169E1', 
     startAngle: 0.5,
     tilt: 28 * (Math.PI / 180)
   },
 ];
 
-const PlanetRing: React.FC<{ radius: number }> = ({ radius }) => {
-  const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}saturn_ring.png`);
+const PlanetRing: React.FC<{ radius: number; config: PlanetConfig['ringConfig'] }> = ({ radius, config }) => {
+  if (!config) return null;
+  
+  const texture = config.texture ? useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}${config.texture}`) : null;
   
   return (
     // Rotate ring -90 deg on X to be flat on the planet's equatorial plane
     <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[radius * 1.4, radius * 2.2, 64]} />
+        <ringGeometry args={[radius * config.innerRadius, radius * config.outerRadius, 64]} />
         <meshStandardMaterial 
             map={texture} 
             side={THREE.DoubleSide} 
             transparent 
-            opacity={0.8} 
-            color="#ffffff"
+            opacity={config.opacity} 
+            color={config.color}
         />
     </mesh>
   );
@@ -647,7 +726,7 @@ const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: D
                 </mesh>
                 
                 {/* Planet Ring - Inside the tilt group so it aligns with equator */}
-                {config.hasRings && <PlanetRing radius={config.radius} />}
+                {config.hasRings && <PlanetRing radius={config.radius} config={config.ringConfig} />}
             </group>
             
             {/* Simple Label */}
@@ -825,7 +904,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
              
              // Check for Drift Error (Safety)
              const dist = state.camera.position.distanceTo(currentEarthPos);
-             if (dist > 500) {
+             if (dist > 500 || isNaN(dist)) {
                  state.camera.position.copy(currentEarthPos).add(new THREE.Vector3(0, 10, 40));
                  controlsRef.current.target.copy(currentEarthPos);
                  controlsRef.current.update();
@@ -865,8 +944,12 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
             // Clamp offset distance to stay close to planet but allow closer inspection
             // idealDist is the "snap-to" distance when switching focus
             const idealDist = targetRadius * 3 + 10;
-            if (offset.length() > idealDist * 3) {
+            const offsetLen = offset.length();
+            if (offsetLen > idealDist * 3 || isNaN(offsetLen)) {
                 offset.setLength(idealDist);
+                if (isNaN(offset.x)) {
+                    offset.set(0, idealDist, idealDist);
+                }
             }
             
             state.camera.position.lerp(targetPos.clone().add(offset), 0.1);
@@ -1017,7 +1100,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
                }}
              >
                <div className="flex flex-col items-center transform -translate-x-1/2 -translate-y-full">
-                  <div className="bg-black/60 border border-neon-pink px-2 py-0.5 rounded text-[8px] font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
+                  <div className="bg-black/60 border border-neon-pink px-2 py-1 rounded text-base font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
                     North Pole
                   </div>
                   <div className="w-px h-2 bg-neon-pink"></div>
@@ -1110,66 +1193,64 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
         
         <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
            <StarBackground />
-           <ambientLight intensity={0.2} />
+           <ambientLight intensity={0.15} />
            
            <SunMesh />
            <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} simSpeed={simSpeed} simDate={simDate} setStage={setStage} />
 
            <EffectComposer>
-             <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={1.0} />
+             <Bloom luminanceThreshold={0.9} luminanceSmoothing={0.2} intensity={0.7} />
            </EffectComposer>
         </Suspense>
       </Canvas>
 
       {/* Control Overlay */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 bg-black/50 p-1.5 rounded-full backdrop-blur-md border border-white/10 z-10">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 glass-panel p-2 rounded-full z-10">
         <button 
            onClick={() => { setViewMode('EARTH_FREE'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_FREE' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_FREE' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Free Earth View"
         >
-          <Globe size={18} />
+          <Globe size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SOLAR_SYSTEM'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'SOLAR_SYSTEM' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'SOLAR_SYSTEM' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Solar System Overview"
         >
-          <Disc size={18} />
+          <Disc size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SYSTEM_TOP'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'SYSTEM_TOP' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'SYSTEM_TOP' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Top-Down View"
         >
-          <ArrowDownToLine size={18} />
+          <ArrowDownToLine size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SYSTEM_AUTO'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'SYSTEM_AUTO' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'SYSTEM_AUTO' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Cinematic View"
         >
-          <Move3d size={18} />
+          <Move3d size={20} />
         </button>
          <button 
            onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_DAY' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_DAY' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Day View"
         >
-          <Sun size={18} />
+          <Sun size={20} />
         </button>
          <button 
            onClick={() => { setViewMode('EARTH_NIGHT'); setFocusedPlanet(null); }}
-           className={`p-2 rounded-full transition-all ${viewMode === 'EARTH_NIGHT' ? 'bg-neon-blue text-black shadow-[0_0_10px_rgba(0,240,255,0.5)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
+           className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_NIGHT' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
            title="Night View"
         >
-          <Moon size={18} />
+          <Moon size={20} />
         </button>
         
-
-        
-        <div className="flex items-center gap-2 px-3">
-          <span className="text-[10px] font-mono text-gray-400">SPEED</span>
+        <div className="flex items-center gap-3 px-4 border-l border-white/10 ml-2">
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Speed</span>
           <input 
             type="range" 
             min="0" 
@@ -1177,31 +1258,33 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
             step="1" 
             value={simSpeed} 
             onChange={(e) => setSimSpeed(parseInt(e.target.value))}
-            className="w-20 accent-neon-blue"
+            className="w-24 accent-neon-blue cursor-pointer"
           />
-          <span className="text-[10px] font-mono text-neon-blue w-6">{simSpeed.toFixed(1)}x</span>
+          <span className="text-xs font-mono text-neon-blue w-8 font-bold">{simSpeed.toFixed(1)}x</span>
         </div>
       </div>
 
        {/* Planet Selector (Only in Solar System Mode) */}
        {viewMode === 'SOLAR_SYSTEM' && (
-         <div className="absolute top-4 left-4 flex flex-col gap-1 bg-black/80 p-3 rounded-xl backdrop-blur-md border border-white/10 max-h-[80%] overflow-y-auto z-10 w-32">
-            <h3 className="text-[10px] font-bold text-gray-400 mb-2 uppercase tracking-wider border-b border-gray-700 pb-1">Planetary Focus</h3>
-            {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
-              <button
-                key={p}
-                onClick={() => setFocusedPlanet(p)}
-                className={`text-xs text-left px-2 py-1.5 rounded transition-colors ${focusedPlanet === p ? 'bg-neon-blue text-black font-bold' : 'text-gray-300 hover:bg-white/10'}`}
-              >
-                {p}
-              </button>
-            ))}
-             <button
-                onClick={() => setFocusedPlanet(null)}
-                className={`text-[10px] text-center px-2 py-1.5 rounded transition-colors border border-dashed border-gray-600 text-gray-400 hover:text-white mt-2`}
-              >
-                Overview
-              </button>
+         <div className="absolute top-6 left-6 flex flex-col gap-1 glass-panel max-h-[80%] overflow-y-auto z-10 w-56">
+            <h3 className="text-xl font-bold text-gray-400 mb-3 uppercase tracking-widest border-b border-white/10 pb-2">Planetary Focus</h3>
+            <div className="space-y-1">
+              {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
+                <button
+                  key={p}
+                  onClick={() => setFocusedPlanet(p)}
+                  className={`w-full text-base text-left px-3 py-2 rounded-lg transition-all ${focusedPlanet === p ? 'bg-neon-blue text-black font-bold shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'text-gray-300 hover:bg-white/10 hover:text-white'}`}
+                >
+                  {p}
+                </button>
+              ))}
+               <button
+                  onClick={() => setFocusedPlanet(null)}
+                  className={`w-full text-base text-center px-3 py-2 rounded-lg transition-all border border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white/40 mt-3 font-bold`}
+                >
+                  Overview
+                </button>
+            </div>
          </div>
        )}
        

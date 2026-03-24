@@ -52,14 +52,14 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
   };
 
   const renderAstronautBubble = (text: string) => (
-    <div className="flex items-start space-x-4 bg-space-800/90 p-6 rounded-2xl border border-neon-blue/30 animate-fade-in max-w-2xl mx-auto">
+    <div className="astronaut-box animate-fade-in w-full max-w-7xl mx-auto">
       <img 
         src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
         alt="Astronaut" 
         className="w-16 h-16 shrink-0 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]"
         referrerPolicy="no-referrer"
       />
-      <p className="text-gray-200 text-lg leading-relaxed font-medium whitespace-pre-wrap">{text}</p>
+      <p className="text-gray-200 text-base leading-relaxed font-medium whitespace-pre-wrap">{text}</p>
     </div>
   );
 
@@ -70,7 +70,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
       <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-neon-blue/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-pink/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="z-10 w-full max-w-4xl">
+      <div className="z-10 w-full max-w-7xl">
         {phase === ActivityPhase.INTRO_1 && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -81,7 +81,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             
             <button 
               onClick={() => setPhase(ActivityPhase.ACTIVITY_1)}
-              className="mt-8 px-6 py-3 bg-neon-blue/20 hover:bg-neon-blue/30 border border-neon-blue text-white rounded-full font-bold text-lg flex items-center transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(0,255,255,0.4)]"
+              className="mt-8 btn-primary px-8 py-3 text-xl font-bold"
             >
               <Play className="mr-3" /> Start Activity 1: The Astros Dance
             </button>
@@ -92,7 +92,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-panel p-6 rounded-2xl border border-neon-blue/30 w-full"
+            className="glass-panel w-full"
           >
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
               <Users className="mr-3 text-neon-blue" /> The Astros Dance
@@ -103,7 +103,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                 referrerPolicy="no-referrer"
               />
             </h2>
-            <p className="text-gray-300 mb-6 text-center">Work in groups of 4. Complete each step and check it off!</p>
+            <p className="text-gray-300 mb-6 text-center text-base leading-relaxed">Work in groups of 4. Complete each step and check it off!</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
               {[
@@ -128,7 +128,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                       <Circle className="text-gray-500" size={24} />
                     )}
                   </div>
-                  <p className="text-base leading-tight">{step}</p>
+                  <p className="text-base leading-relaxed">{step}</p>
                 </div>
               ))}
             </div>
@@ -140,10 +140,10 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                   setCompletedSteps([]);
                 }}
                 disabled={completedSteps.length < 4}
-                className={`px-6 py-3 rounded-full font-bold flex items-center transition-all ${
+                className={`px-8 py-3 text-xl font-bold ${
                   completedSteps.length >= 4 
-                    ? 'bg-neon-pink text-white hover:bg-pink-600 hover:shadow-[0_0_15px_rgba(255,20,147,0.5)]' 
-                    : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                    ? 'btn-primary' 
+                    : 'bg-gray-700 text-gray-400 cursor-not-allowed rounded-full'
                 }`}
               >
                 Go to Activity 2 <ArrowRight className="ml-2" />
@@ -162,7 +162,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             
             <button 
               onClick={() => setPhase(ActivityPhase.ACTIVITY_2)}
-              className="mt-8 px-6 py-3 bg-neon-pink/20 hover:bg-neon-pink/30 border border-neon-pink text-white rounded-full font-bold text-lg flex items-center transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,20,147,0.4)]"
+              className="mt-8 btn-primary px-8 py-3 text-xl font-bold"
             >
               <PenTool className="mr-3" /> Start Activity 2
             </button>
@@ -173,14 +173,14 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="glass-panel p-6 rounded-2xl border border-neon-pink/30 w-full"
+            className="glass-panel w-full"
           >
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
               <PenTool className="mr-3 text-neon-pink" /> Activity 2
             </h2>
             
-            <div className="bg-white/5 p-4 rounded-xl border border-white/10 mb-6">
-              <p className="text-base text-gray-200 text-center whitespace-pre-wrap">
+            <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6">
+              <p className="text-base leading-relaxed text-gray-200 text-center whitespace-pre-wrap">
                 {"In pairs, groups, or working alone at home, choose a writing style (song, rap, poem, little story, etc) to express the correct order of all the planets of the Solar System!\n\nFollow your teacher's instructions on how and when to present your masterpiece.\n\nThen once you are ready, dive into the Solar System to see all planets and its features in the Exploration Mission."}
               </p>
             </div>
@@ -188,7 +188,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             <div className="flex justify-center">
               <button 
                 onClick={onComplete}
-                className="px-6 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+                className="btn-primary px-8 py-3 text-xl font-bold"
               >
                 <Rocket className="mr-3" /> Start Exploration Mission
               </button>

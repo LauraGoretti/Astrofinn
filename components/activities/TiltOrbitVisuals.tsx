@@ -78,11 +78,60 @@ const Earth: React.FC<{
   );
 };
 
+const sunVertexShader = `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+const sunFragmentShader = `
+uniform sampler2D sunTexture;
+uniform float time;
+varying vec2 vUv;
+
+void main() {
+  float lat = (vUv.y - 0.5) * 3.14159265;
+  // Speed in rotations per Earth day. Equator: ~24 days, Poles: ~34 days
+  float speed = mix(1.0/34.0, 1.0/24.0, pow(cos(lat), 2.0));
+  
+  float days = time / 6.28318530718;
+  float offset = days * speed;
+  
+  vec2 uv = vUv;
+  uv.x = fract(uv.x - offset);
+  
+  gl_FragColor = texture2D(sunTexture, uv);
+}
+`;
+
 const Sun: React.FC = () => {
+  const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
+  const timeRef = useRef(0);
+
+  const uniforms = useMemo(() => ({
+    sunTexture: { value: sunTexture },
+    time: { value: 0 }
+  }), [sunTexture]);
+
+  useFrame((state, delta) => {
+    timeRef.current += delta * 0.5; // 0.5 is Earth's rotation speed in this file
+    if (materialRef.current) {
+      materialRef.current.uniforms.time.value = timeRef.current;
+    }
+  });
+
   return (
     <mesh position={[-15, 0, 0]}>
       <sphereGeometry args={[4, 32, 32]} />
-      <meshBasicMaterial color="#ffcc00" />
+      <shaderMaterial 
+        ref={materialRef}
+        vertexShader={sunVertexShader}
+        fragmentShader={sunFragmentShader}
+        uniforms={uniforms}
+      />
       <pointLight intensity={2000} distance={100} decay={2} />
     </mesh>
   );

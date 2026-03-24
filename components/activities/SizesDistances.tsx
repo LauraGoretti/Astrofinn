@@ -96,7 +96,7 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
   }, [selectedJourney, selectedSpeed]);
 
   const renderAstronautBubble = (text: string) => (
-    <div className="w-full bg-space-800/90 p-6 rounded-2xl border border-neon-blue/30 animate-fade-in mb-6 flex items-start space-x-6">
+    <div className="astronaut-box animate-fade-in w-full max-w-7xl mx-auto mb-6">
       <img 
         src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
         alt="Astronaut" 
@@ -115,8 +115,8 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
       animate={{ opacity: 1, y: 0 }}
       className="w-full space-y-8 flex flex-col items-center"
     >
-      <div className="space-y-6 w-full">
-        <h2 className="text-3xl font-bold text-white tracking-tighter text-center">Real Sizes and Distances</h2>
+      <div className="w-full max-w-7xl space-y-6">
+        <h2 className="text-2xl font-bold text-white tracking-tighter text-center">Real Sizes and Distances</h2>
         {renderAstronautBubble("Welcome to the Real Sizes and Distances tile!\nIn class, you’ve already talked about how far the Moon is from the Earth and tried to imagine where the Sun would be at that same scale.\nNow, this digital explorer will help you:\n\nZoom through different size scales\nCompare everything to Earth\nSee how long it would take to travel in space at different speeds\n\nReady to play with huge and tiny numbers at the same time?")}
       </div>
       <button 
@@ -124,7 +124,7 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
           setStep(Step.ZOOMER);
           setStage("Step 1: Scale Zoomer");
         }}
-        className="w-fit mx-auto px-8 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center justify-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+        className="btn-primary px-8 py-3 text-xl font-bold"
       >
         Start Digital Explorer <ArrowRight className="ml-3" size={20} />
       </button>
@@ -172,7 +172,7 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
           </p>
         </div>
 
-        <div className="glass-panel p-12 rounded-3xl border border-white/10 min-h-[500px] flex flex-col items-center justify-center relative overflow-hidden bg-space-950/50">
+        <div className="glass-panel min-h-[500px] flex flex-col items-center justify-center relative overflow-hidden bg-space-950/50">
           <div className="flex items-end justify-center gap-6 mb-16 flex-wrap">
             {info.planets.map(p => {
               const data = PLANET_DATA[p as keyof typeof PLANET_DATA];
@@ -205,7 +205,7 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
             })}
           </div>
 
-          <div className="w-full max-w-2xl space-y-6">
+          <div className="w-full max-w-7xl space-y-6">
             <div className="flex justify-between text-sm font-bold text-neon-blue uppercase tracking-widest">
               <span>{info.label}</span>
               <div className="flex items-center gap-2">
@@ -231,28 +231,17 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 bg-neon-pink/5">
-            <h4 className="text-neon-pink font-bold text-sm mb-2 uppercase tracking-widest flex items-center gap-2">
-              <Info size={18} />
-              Notebook Reflection
-            </h4>
-            <p className="text-gray-200 italic text-sm leading-relaxed">
-              "How does it feel to see Earth become so small when the Sun appears?"
-            </p>
-          </div>
-          {renderAstronautBubble(info.text)}
+        <div className="flex justify-center">
+          <button 
+            onClick={() => {
+              setStep(Step.COMPARE);
+              setStage("Step 2: Compare to Earth");
+            }}
+            className="btn-primary px-8 py-3 text-xl font-bold"
+          >
+            Go to Step 2 – Compare to Earth <ArrowRight className="ml-3" size={20} />
+          </button>
         </div>
-
-        <button 
-          onClick={() => {
-            setStep(Step.COMPARE);
-            setStage("Step 2: Compare to Earth");
-          }}
-          className="w-fit mx-auto px-8 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center justify-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-        >
-          Go to Step 2 – Compare to Earth <ArrowRight className="ml-3" size={20} />
-        </button>
       </motion.div>
     );
   };
@@ -290,23 +279,24 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
         className="w-full space-y-6 flex flex-col items-center"
       >
         <div className="text-center w-full">
-          <h2 className="text-xl font-bold text-white mb-3">Step 2 – Compare Everything to Earth</h2>
-          <p className="text-gray-400 text-sm max-w-3xl mx-auto">
+          <h2 className="text-2xl font-bold text-white mb-3">Step 2 – Compare Everything to Earth</h2>
+          <p className="text-gray-400 text-base max-w-4xl mx-auto leading-relaxed">
             In this step, Earth becomes your reference size. Choose any other object and see it side by side with Earth at the same scale.
           </p>
         </div>
 
-        <div className="flex flex-col space-y-8 w-full">
-          <div className="glass-panel p-6 rounded-2xl border border-white/10 bg-space-950/30">
-            <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6 text-center">Select Object to Compare</h3>
-            <div className="flex flex-wrap justify-center gap-3">
+        <div className="w-full glass-panel p-0 flex relative overflow-hidden bg-space-950/50">
+          {/* Vertical Selection Sidebar */}
+          <div className="w-40 shrink-0 border-r border-white/10 p-4 flex flex-col gap-2 z-10 bg-black/20">
+            <h3 className="text-2xl font-bold text-gray-500 uppercase tracking-widest mb-2">Select Object</h3>
+            <div className="flex flex-col gap-1.5 overflow-y-auto pr-1 scrollbar-hide">
               {Object.keys(PLANET_DATA).filter(p => p !== 'Earth').map(p => (
                 <button
                   key={p}
                   onClick={() => setCompareTarget(p)}
-                  className={`px-6 py-3 rounded-2xl border text-sm font-bold transition-all ${
+                  className={`px-3 py-2 rounded-xl border text-[11px] font-bold transition-all text-left ${
                     compareTarget === p 
-                      ? 'bg-neon-blue/20 border-neon-blue text-white shadow-[0_0_20px_rgba(0,255,255,0.3)] scale-105' 
+                      ? 'bg-neon-blue/20 border-neon-blue text-white shadow-[0_0_15px_rgba(0,255,255,0.2)]' 
                       : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                   }`}
                 >
@@ -316,18 +306,19 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
             </div>
           </div>
 
-          <div className="w-full glass-panel p-12 rounded-3xl border border-white/10 min-h-[500px] flex flex-col items-center justify-center relative overflow-hidden bg-space-950/50">
+          {/* Main Display Area */}
+          <div className="flex-1 flex flex-col items-center justify-center p-8">
             {!compareTarget ? (
               <div className="text-center space-y-6">
-                <div className="w-20 h-20 bg-neon-blue/10 rounded-full flex items-center justify-center mx-auto border border-neon-blue/20">
-                  <Info className="w-10 h-10 text-neon-blue opacity-70" />
+                <div className="w-16 h-16 bg-neon-blue/10 rounded-full flex items-center justify-center mx-auto border border-neon-blue/20">
+                  <Info className="w-8 h-8 text-neon-blue opacity-70" />
                 </div>
-                <p className="text-gray-400 font-bold uppercase tracking-widest text-lg">Choose an object from the list to compare it with Earth.</p>
+                <p className="text-gray-400 font-bold uppercase tracking-widest text-2xl">Choose an object to compare with Earth.</p>
               </div>
             ) : (
-              <div className="w-full flex flex-col items-center gap-16">
-                <div className="flex items-center justify-center gap-12 md:gap-24 w-full flex-wrap">
-                  <div className="flex flex-col items-center gap-6">
+              <div className="w-full flex flex-col items-center gap-12">
+                <div className="flex items-center justify-center gap-8 md:gap-16 w-full flex-wrap">
+                  <div className="flex flex-col items-center gap-4">
                     <div 
                       style={{ 
                         width: scaleFactor, 
@@ -340,32 +331,32 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
                         border: '1px solid rgba(255,255,255,0.2)'
                       }} 
                     />
-                    <span className="text-sm font-bold text-white uppercase tracking-widest">Earth</span>
+                    <span className="text-xs font-bold text-white uppercase tracking-widest">Earth</span>
                   </div>
-                  <div className="flex flex-col items-center gap-6">
-                  <motion.div 
-                    key={compareTarget}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                    style={{ 
-                      width: scaleFactor * targetData!.size, 
-                      height: scaleFactor * targetData!.size, 
-                      backgroundImage: `url(${TEXTURE_BASE_URL}${targetData!.texture})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      borderRadius: '50%',
-                      boxShadow: `0 0 60px ${targetData!.color}40, inset 0 0 30px rgba(0,0,0,0.5)`,
-                      border: '1px solid rgba(255,255,255,0.2)'
-                    }} 
-                  />
-                    <span className="text-sm font-bold text-white uppercase tracking-widest">{compareTarget}</span>
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.div 
+                      key={compareTarget}
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                      style={{ 
+                        width: scaleFactor * targetData!.size, 
+                        height: scaleFactor * targetData!.size, 
+                        backgroundImage: `url(${TEXTURE_BASE_URL}${targetData!.texture})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        borderRadius: '50%',
+                        boxShadow: `0 0 60px ${targetData!.color}40, inset 0 0 30px rgba(0,0,0,0.5)`,
+                        border: '1px solid rgba(255,255,255,0.2)'
+                      }} 
+                    />
+                    <span className="text-xs font-bold text-white uppercase tracking-widest">{compareTarget}</span>
                   </div>
                 </div>
                 
-                <div className="max-w-2xl text-center space-y-4 bg-white/5 p-6 rounded-2xl border border-white/10">
-                  <p className="text-gray-100 text-lg font-medium">
-                    Here is Earth and the {compareTarget}, side by side at the same scale.
+                <div className="max-w-4xl text-center space-y-3 bg-white/5 p-5 rounded-2xl border border-white/10">
+                  <p className="text-gray-100 text-base leading-relaxed font-medium">
+                    Earth and {compareTarget} at the same scale.
                   </p>
                   <p className="text-neon-blue text-base italic leading-relaxed">
                     {targetData!.description}
@@ -397,7 +388,7 @@ ${
             setStep(Step.TRAVEL);
             setStage("Step 3: Travel Time");
           }}
-          className="w-fit mx-auto px-8 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center justify-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+          className="btn-primary px-8 py-3 text-xl font-bold"
         >
           Go to Step 3 – Travel Time <ArrowRight className="ml-3" size={20} />
         </button>
@@ -410,27 +401,31 @@ ${
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="space-y-6 flex flex-col items-center"
+        className="space-y-8 flex flex-col items-center"
       >
         <div className="text-center w-full">
-          <h2 className="text-lg font-bold text-white mb-2">Step 3 – Travel Time: How Long Would It Take?</h2>
-          <p className="text-gray-400 text-xs max-w-xl mx-auto">
-            Distances in space are not only big in kilometers. They are also huge in time, when you think about how fast we can travel.
+          <h2 className="text-2xl font-bold text-white mb-2">Step 3 – Travel Time: How Long Would It Take?</h2>
+          <p className="text-gray-400 text-base max-w-4xl mx-auto leading-relaxed">
+            Distances in space are not only big in kilometers. They are also huge in time, when you think about how fast we can travel. 
+            Explore how long it would take to reach different destinations at various speeds!
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 w-full">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">1. Choose Journey</h3>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-neon-blue/20 flex items-center justify-center border border-neon-blue/30 text-neon-blue font-bold">1</div>
+                <h3 className="text-xl font-bold text-white uppercase tracking-widest">Choose Journey</h3>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {JOURNEYS.map(j => (
                   <button
                     key={j.id}
                     onClick={() => setSelectedJourney(j)}
-                    className={`p-4 rounded-xl border text-sm font-bold transition-all ${
+                    className={`p-4 rounded-xl border text-base leading-relaxed font-bold transition-all ${
                       selectedJourney.id === j.id 
-                        ? 'bg-neon-blue/20 border-neon-blue text-white' 
+                        ? 'bg-neon-blue/20 border-neon-blue text-white shadow-[0_0_15px_rgba(0,255,255,0.2)]' 
                         : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                     }`}
                   >
@@ -441,7 +436,10 @@ ${
             </div>
 
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest">2. Choose Speed</h3>
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-neon-pink/20 flex items-center justify-center border border-neon-pink/30 text-neon-pink font-bold">2</div>
+                <h3 className="text-xl font-bold text-white uppercase tracking-widest">Choose Speed</h3>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 {SPEEDS.map(s => {
                   const Icon = s.icon;
@@ -449,16 +447,16 @@ ${
                     <button
                       key={s.id}
                       onClick={() => setSelectedSpeed(s)}
-                      className={`p-4 rounded-xl border text-sm font-bold transition-all flex items-center gap-3 ${
+                      className={`p-4 rounded-xl border text-base leading-relaxed font-bold transition-all flex items-center gap-3 ${
                         selectedSpeed.id === s.id 
-                          ? 'bg-neon-pink/20 border-neon-pink text-white' 
+                          ? 'bg-neon-pink/20 border-neon-pink text-white shadow-[0_0_15px_rgba(255,0,127,0.2)]' 
                           : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
                       }`}
                     >
-                      <Icon size={20} />
+                      <Icon size={20} className={selectedSpeed.id === s.id ? 'text-neon-pink' : 'text-gray-400'} />
                       <div className="text-left">
                         <div>{s.label}</div>
-                        <div className="text-[10px] opacity-50">~{s.speed.toLocaleString()} {s.unit}</div>
+                        <div className="text-sm opacity-50 font-mono">~{s.speed.toLocaleString()} {s.unit}</div>
                       </div>
                     </button>
                   );
@@ -467,51 +465,60 @@ ${
             </div>
           </div>
 
-          <div className="glass-panel p-8 rounded-2xl border border-white/10 flex flex-col justify-between min-h-[400px]">
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <div className="text-xs font-bold text-gray-500 uppercase tracking-widest">Travel Log</div>
-                <div className="px-3 py-1 bg-neon-green/20 text-neon-green text-[10px] font-bold rounded-full border border-neon-green/30">CALCULATING...</div>
+          <div className="glass-panel border border-white/10 flex flex-col justify-between min-h-[450px] relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,255,0.03)_0%,transparent_70%)] pointer-events-none" />
+            
+            <div className="relative z-10 space-y-8">
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-neon-blue animate-pulse" />
+                  <h3 className="text-xl font-bold text-white uppercase tracking-widest">Travel Log</h3>
+                </div>
+                <div className="px-3 py-1 bg-neon-green/20 text-neon-green text-[10px] font-bold rounded-full border border-neon-green/30 tracking-widest">SYSTEM_ACTIVE</div>
               </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Journey:</span>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                  <span className="text-gray-400 text-sm uppercase font-bold tracking-wider">Destination</span>
                   <span className="text-white font-bold">{selectedJourney.label}</span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Mode:</span>
+                <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                  <span className="text-gray-400 text-sm uppercase font-bold tracking-wider">Velocity</span>
                   <span className="text-white font-bold">{selectedSpeed.label}</span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Distance:</span>
-                  <span className="text-white font-mono">{selectedJourney.distance.toLocaleString()} km</span>
+                <div className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                  <span className="text-gray-400 text-sm uppercase font-bold tracking-wider">Distance</span>
+                  <span className="text-neon-blue font-mono font-bold">{selectedJourney.distance.toLocaleString()} km</span>
                 </div>
               </div>
 
-              <div className="relative h-24 bg-space-900/50 rounded-xl border border-white/5 flex items-center px-8">
-                <div className="absolute left-8 w-4 h-4 bg-neon-blue rounded-full blur-[2px]"></div>
-                <div className="absolute right-8 w-4 h-4 bg-neon-pink rounded-full blur-[2px]"></div>
-                <div className="w-full h-[1px] bg-white/10"></div>
+              <div className="relative h-24 bg-black/40 rounded-xl border border-white/10 flex items-center px-8 overflow-hidden">
+                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+                <div className="absolute left-8 w-3 h-3 bg-neon-blue rounded-full shadow-[0_0_10px_rgba(0,255,255,0.8)]"></div>
+                <div className="absolute right-8 w-3 h-3 bg-neon-pink rounded-full shadow-[0_0_10px_rgba(255,0,127,0.8)]"></div>
+                <div className="w-full h-[1px] bg-white/20"></div>
                 
                 <motion.div 
                   key={`${selectedJourney.id}-${selectedSpeed.id}`}
                   initial={{ left: '2rem' }}
                   animate={{ left: 'calc(100% - 3rem)' }}
                   transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  className="absolute"
+                  className="absolute z-20"
                 >
-                  <selectedSpeed.icon size={16} className="text-white" />
+                  <div className="relative">
+                    <selectedSpeed.icon size={20} className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-white/10 rounded-full blur-md" />
+                  </div>
                 </motion.div>
               </div>
 
-              <div className="bg-white/5 p-6 rounded-xl border border-white/10 text-center space-y-2">
-                <div className="text-gray-400 text-xs uppercase tracking-widest">Estimated Time</div>
-                <div className="text-3xl font-bold text-neon-blue font-mono">{travelTime}</div>
+              <div className="bg-neon-blue/5 p-6 rounded-xl border border-neon-blue/20 text-center space-y-2 shadow-[inset_0_0_20px_rgba(0,255,255,0.05)]">
+                <div className="text-gray-400 text-sm font-bold uppercase tracking-widest">Estimated Arrival Time</div>
+                <div className="text-4xl font-bold text-neon-blue font-mono tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]">{travelTime}</div>
               </div>
             </div>
 
-            <div className="text-sm text-gray-300 italic text-center">
+            <div className="text-sm text-gray-400 leading-relaxed italic text-center mt-6 px-4 py-3 bg-white/5 rounded-lg border border-white/5">
               {selectedSpeed.id === 'light' ? (
                 selectedJourney.id === 'earth-moon' 
                   ? "That’s faster than you can say ‘astronomy’!" 
@@ -527,16 +534,9 @@ ${
           </div>
         </div>
 
-        <div className="glass-panel p-4 rounded-xl border border-white/10">
-          <h4 className="text-neon-pink font-bold text-xs mb-2 uppercase tracking-wider">Reflection Prompt</h4>
-          <p className="text-gray-300 italic text-xs mb-2">
-            "Which journey surprised you the most? Which speed made you feel that space is almost ‘empty’ because things are so far apart? How does this change the way you imagine the solar system?"
-          </p>
-        </div>
-
         <button 
           onClick={onHome}
-          className="w-fit mx-auto px-8 py-3 bg-gradient-to-r from-neon-blue to-neon-pink text-white rounded-full font-bold text-lg flex items-center justify-center transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
+          className="btn-primary px-10 py-4 text-xl font-bold shadow-[0_0_20px_rgba(0,255,255,0.3)] hover:shadow-[0_0_30px_rgba(0,255,255,0.5)]"
         >
           Back to Dashboard
         </button>

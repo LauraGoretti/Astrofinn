@@ -55,7 +55,7 @@ const IconMap: Record<string, React.FC<any>> = {
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
   return (
-    <div className="max-w-6xl mx-auto py-12 px-4">
+    <div className="w-full py-12 px-4">
       <div className="text-center mb-16 space-y-4 flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-400 flex items-center justify-center font-orbitron">
           ASTROFINN
@@ -68,14 +68,14 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
         </h1>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {activities.map((act) => {
           const Icon = IconMap[act.iconName];
           return (
             <button
               key={act.id}
               onClick={() => onSelectActivity(act.id)}
-              className="group relative h-64 rounded-2xl overflow-hidden glass-panel hover:border-white/40 transition-all duration-500 text-center p-6 flex flex-col items-center justify-center hover:scale-[1.02]"
+              className="group relative h-64 overflow-hidden glass-panel hover:border-white/40 transition-all duration-500 text-center flex flex-col items-center justify-center hover:scale-[1.02]"
             >
               {/* Gradient Background on Hover */}
               <div className={`absolute inset-0 bg-gradient-to-br ${act.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
@@ -86,7 +86,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
 
               <div className="z-10">
                 <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-cyan-200 transition-colors">{act.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-200">{act.description}</p>
+                <p className="text-gray-400 text-base leading-relaxed group-hover:text-gray-200">{act.description}</p>
               </div>
 
               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-4 group-hover:translate-x-0 text-cyan-400 z-10">

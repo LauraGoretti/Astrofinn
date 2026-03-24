@@ -57,7 +57,7 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
       <div className="grid lg:grid-cols-2 gap-8 h-full">
         
         {/* Interactive Viewer */}
-        <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col h-full min-h-[600px]">
+        <div className="glass-panel flex flex-col h-full min-h-[600px]">
           <div className="flex items-center justify-between mb-4 shrink-0">
             <h2 className="text-2xl font-bold text-white flex items-center">
               <MapPin className="mr-2 text-neon-blue" />
@@ -188,12 +188,12 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
 
         {/* Content & Quiz */}
         <div className="flex flex-col gap-6 overflow-y-auto custom-scrollbar pr-2">
-           <div className="bg-space-800/80 backdrop-blur p-6 rounded-xl border-l-4 border-neon-blue shadow-lg">
-             <h3 className="text-lg font-bold text-neon-blue mb-3 flex items-center gap-2">
+           <div className="glass-panel border-l-4 border-l-neon-blue">
+             <h3 className="text-2xl font-bold text-neon-blue mb-3 flex items-center gap-2">
                <MapPin size={18} />
                Location Analysis: {selectedLoc.name}
              </h3>
-             <p className="text-gray-300 leading-relaxed mb-4">
+             <p className="text-gray-300 text-base leading-relaxed mb-4">
                {selectedLoc.lat > 66.5 ? (
                  <>
                    Located at <span className="text-white font-mono">{selectedLoc.lat}°N</span>, this location is 
@@ -209,7 +209,7 @@ const KaamosViewer: React.FC<KaamosViewerProps> = ({ mode }) => {
                )}
              </p>
              
-             <div className="bg-black/30 p-4 rounded-lg text-sm text-gray-400">
+             <div className="bg-black/30 p-4 rounded-lg text-base leading-relaxed text-gray-400">
                <strong className="text-white block mb-1">Why does this happen?</strong>
                Earth's axis is tilted 23.5°. In June, the North Pole tilts towards the Sun, keeping the Arctic in constant daylight. In December, it tilts away, leaving the Arctic in shadow.
              </div>

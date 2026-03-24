@@ -90,7 +90,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete, className })
         </div>
 
         {/* Question - Matches Mission Briefing Header Style */}
-        <h2 className="text-lg font-bold text-white mb-6 leading-relaxed">
+        <h2 className="text-2xl font-bold text-white mb-6 leading-relaxed">
           {currentQ.question}
         </h2>
 
@@ -119,7 +119,7 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete, className })
               >
                 <div className="flex items-center justify-between">
                   {/* Options - Matches Mission Briefing Body Style */}
-                  <span className={`text-sm font-medium transition-colors leading-relaxed ${isAnswered ? (idx === currentQ.correctAnswerIndex ? 'text-green-100' : idx === selectedOption ? 'text-red-100' : '') : 'text-gray-300 group-hover:text-white'}`}>
+                  <span className={`text-base font-medium transition-colors leading-relaxed ${isAnswered ? (idx === currentQ.correctAnswerIndex ? 'text-green-100' : idx === selectedOption ? 'text-red-100' : '') : 'text-gray-300 group-hover:text-white'}`}>
                     {option}
                   </span>
                   {isAnswered && idx === currentQ.correctAnswerIndex && <CheckCircle className="text-green-400 shrink-0 ml-3" size={18} />}
@@ -132,11 +132,11 @@ const QuizModule: React.FC<QuizModuleProps> = ({ topic, onComplete, className })
 
         {isAnswered && (
           <div className="mt-6 p-4 rounded-xl bg-space-800/50 border border-neon-blue/20 animate-fade-in-up backdrop-blur-sm">
-            <p className="text-xs text-neon-blue font-bold mb-2 tracking-wider uppercase">Scientific Explanation</p>
-            <p className="text-gray-300 text-sm leading-relaxed">{currentQ.explanation}</p>
+            <p className="text-base text-neon-blue font-bold mb-2 tracking-wider uppercase">Scientific Explanation</p>
+            <p className="text-gray-300 text-base leading-relaxed">{currentQ.explanation}</p>
             <button 
               onClick={nextQuestion}
-              className="mt-4 flex items-center space-x-2 bg-neon-blue hover:bg-cyan-400 text-space-900 font-bold py-2 px-6 rounded-full transition-all shadow-lg shadow-neon-blue/20 hover:shadow-neon-blue/40 w-full md:w-auto justify-center text-sm"
+              className="mt-4 flex items-center space-x-2 bg-neon-blue hover:bg-cyan-400 text-space-900 font-bold py-2 px-6 rounded-full transition-all shadow-lg shadow-neon-blue/20 hover:shadow-neon-blue/40 w-full md:w-auto justify-center text-base"
             >
               <span>Next Challenge</span>
               <ArrowRight size={16} />
