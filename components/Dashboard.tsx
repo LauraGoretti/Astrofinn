@@ -1,59 +1,54 @@
 import React from 'react';
-import { ActivityConfig, ActivityId } from '../types';
+import { ActivityId } from '../types';
 import { Globe, Sun, ThermometerSun, Snowflake, Orbit, Ruler } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface DashboardProps {
   onSelectActivity: (id: ActivityId) => void;
 }
-
-interface DashboardActivity extends ActivityConfig {
-  shadowClass: string;
-}
-
-const activities: DashboardActivity[] = [
-  {
-    // Tile 1
-    id: ActivityId.LIGHT_INCIDENCE,
-    title: "Light Incidence and Heat",
-    description: "Exploring Light, Shadows, and warmth",
-    iconName: "ThermometerSun",
-    color: "from-purple-500 to-pink-500",
-    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(236,72,153,0.8)]" // pink
-  },
-  {
-    // Tile 2
-    id: ActivityId.SEASONS,
-    title: "Tilt and Orbit Consequences",
-    description: "Exploring the reason behind seasons on Earth",
-    iconName: "Orbit",
-    color: "from-orange-500 to-red-500",
-    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.8)]" // orange
-  },
-  {
-    // Tile 3
-    id: ActivityId.ORBIT_REVOLUTION,
-    title: "Solar System View",
-    description: "Exploring all planets and their movements",
-    iconName: "Globe",
-    color: "from-blue-500 to-cyan-400",
-    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(6,182,212,0.8)]" // cyan
-  },
-  {
-    // Tile 4
-    id: ActivityId.SIZES_DISTANCES,
-    title: "Real Sizes and Distances",
-    description: "Discovering how vast space truly is",
-    iconName: "Ruler",
-    color: "from-yellow-400 to-orange-300",
-    shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(250,204,21,0.8)]" // yellow
-  }
-];
 
 const IconMap: Record<string, React.FC<any>> = {
   Globe, Sun, ThermometerSun, Snowflake, Orbit, Ruler
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
+  const { t } = useTranslation();
+
+  const activities = [
+    {
+      id: ActivityId.LIGHT_INCIDENCE,
+      title: t('activities.light_incidence.title'),
+      description: t('activities.light_incidence.desc'),
+      iconName: "ThermometerSun",
+      color: "from-purple-500 to-pink-500",
+      shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(236,72,153,0.8)]"
+    },
+    {
+      id: ActivityId.SEASONS,
+      title: t('activities.tilt_orbit.title'),
+      description: t('activities.tilt_orbit.desc'),
+      iconName: "Orbit",
+      color: "from-orange-500 to-red-500",
+      shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(249,115,22,0.8)]"
+    },
+    {
+      id: ActivityId.ORBIT_REVOLUTION,
+      title: t('activities.solar_system.title'),
+      description: t('activities.solar_system.desc'),
+      iconName: "Globe",
+      color: "from-blue-500 to-cyan-400",
+      shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(6,182,212,0.8)]"
+    },
+    {
+      id: ActivityId.SIZES_DISTANCES,
+      title: t('activities.sizes_distances.title'),
+      description: t('activities.sizes_distances.desc'),
+      iconName: "Ruler",
+      color: "from-yellow-400 to-orange-300",
+      shadowClass: "group-hover:drop-shadow-[0_0_20px_rgba(250,204,21,0.8)]"
+    }
+  ];
+
   return (
     <div className="w-full py-12 px-4">
       <div className="text-center mb-16 space-y-4 flex flex-col items-center">
@@ -66,6 +61,9 @@ const Dashboard: React.FC<DashboardProps> = ({ onSelectActivity }) => {
             referrerPolicy="no-referrer"
           />
         </h1>
+        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          {t('welcome_desc')}
+        </p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">

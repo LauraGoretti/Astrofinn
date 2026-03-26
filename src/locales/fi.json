@@ -1,0 +1,374 @@
+{
+  "translation": {
+    "welcome": "Tervetuloa AstroFinniin",
+    "welcome_desc": "Tutki avaruuden ihmeitä ja aurinkokuntamme tiedettä.",
+    "select_language": "Valitse kieli",
+    "back_to_dashboard": "Takaisin hallintapaneeliin",
+    "common": {
+      "back_to_dashboard": "Takaisin hallintapaneeliin",
+      "back": "Takaisin",
+      "system_online": "JÄRJESTELMÄ ONLINE",
+      "language": "KIELI",
+      "change_language": "Vaihda kieli"
+    },
+    "dashboard": {
+      "select_path": "Valitse polku",
+      "path1_title": "Polku 1: Lämmittely pohtivalla ja luovalla ajattelulla",
+      "path1_desc": "Luokassa, ennen simulaatiota.",
+      "path2_title": "Polku 2: Tutkimusmatka",
+      "path2_desc": "Interaktiiviset digitaaliset simulaatiot."
+    },
+    "months": {
+      "january": "Tammikuu",
+      "february": "Helmikuu",
+      "march": "Maaliskuu",
+      "april": "Huhtikuu",
+      "may": "Toukokuu",
+      "june": "Kesäkuu",
+      "july": "Heinäkuu",
+      "august": "Elokuu",
+      "september": "Syyskuu",
+      "october": "Lokakuu",
+      "november": "Marraskuu",
+      "december": "Joulukuu"
+    },
+    "activities": {
+      "light_incidence": {
+        "title": "Valon tulokulma ja lämpö",
+        "desc": "Valon, varjojen ja lämmön tutkiminen",
+        "phase_a": "Vaihe A: Valon kulma",
+        "phase_b": "Vaihe B: Etäisyys",
+        "angle": "Valon kulma",
+        "heating": "Lämmitysteho",
+        "spread": "Valon leviäminen",
+        "distance": "Etäisyys lähteestä",
+        "heat": "Lämpötaso",
+        "steam": "Höyryn voimakkuus",
+        "reset": "Nollaa simulaatio",
+        "heating_status": "Lämmitetään...",
+        "cooling_status": "Jäähdytetään...",
+        "angle_val": "Kulma: {{val}}°",
+        "distance_val": "Etäisyys: {{val}}",
+        "info_a": "Valon tulokulma vaikuttaa siihen, kuinka paljon energiaa keskittyy pinnalle.",
+        "info_b": "Kun etäisyys valonlähteestä kasvaa, lämmön voimakkuus vähenee.",
+        "astronaut_feedback": "Hienoa työtä, tutkija! Kun olet valmis tutkimisen ja pohdinnan kanssa opettajasi ohjeiden mukaan, voimme siirtyä sovelluksen \"Kallistus ja kiertorata\" -alueelle.",
+        "angle_direct": "90° (Suora)",
+        "angle_glancing": "0° (Viisto)",
+        "high": "Korkea",
+        "medium": "Keskitaso",
+        "low": "Matala",
+        "small": "Pieni",
+        "large": "Suuri"
+      },
+      "tilt_orbit": {
+        "title": "Kallistus ja kiertorata",
+        "desc": "Maan vuodenaikojen syiden tutkiminen",
+        "mission_task": "Tehtävä",
+        "optional_task": "Valinnainen tehtävä",
+        "start_mission": "Aloita tutkimusmatka",
+        "finland_pinpoint": "Suomen sijainti",
+        "move_to_see_poles": "Liikuta nähdäksesi navat",
+        "collapse_sidebar": "Pienennä sivupalkki",
+        "expand_sidebar": "Laajenna sivupalkki",
+        "south": "ETELÄ",
+        "north": "POHJOINEN",
+        "select_date": "Valitse päivämäärä",
+        "finland_data": "Suomen tiedot",
+        "million_km": "miljoonaa km",
+        "data_values": {
+          "summer_daylight": "19h - 24h",
+          "summer_temp": "15°C - 25°C",
+          "winter_daylight": "0h - 6h",
+          "winter_temp": "-5°C - -20°C",
+          "spring_daylight": "12h - 18h",
+          "spring_temp": "0°C - 10°C",
+          "autumn_daylight": "12h - 8h",
+          "autumn_temp": "5°C - 12°C"
+        },
+        "phases": {
+          "discussion": "Keskustelu",
+          "day_night": "Osa 1: Päivä ja yö",
+          "tilt_seasons": "Osa 2: Kallistus ja vuodenajat",
+          "orbit_simulator": "Osa 3: Kiertoratasimulaattori",
+          "phase1": "Osa 1: Päivä ja yö",
+          "phase2": "Osa 2: Kallistus ja vuodenajat",
+          "phase3": "Osa 3: Kallistus ja vuodenajat (Edistynyt)",
+          "phase4": "Osa 4: Kiertoratasimulaattori",
+          "finished": "Tehtävä suoritettu!"
+        },
+        "discussion": {
+          "intro": "Hei tutkija! Ennen kuin sukellamme 3D-maailmaan, keskustellaan ryhmäsi kanssa joistakin tärkeistä käsitteistä.",
+          "tasks": [
+            "Keskustele: Miksi meillä on vuodenajat?",
+            "Keskustele: Mikä tekee päivistä pidempiä kesällä?",
+            "Keskustele: Miten Maan kallistus vaikuttaa auringonvaloon?",
+            "Keskustele: Mitä eroa on pyörimisellä ja kiertämisellä?",
+            "Keskustele: Miten Kuu vaikuttaa Maahan?"
+          ],
+          "optional_desc": "Katso tämä video oppiaksesi lisää Maan kallistuksesta ja vuodenajoista.",
+          "video_title": "Maan kallistus ja vuodenajat"
+        },
+        "phase1": {
+          "task": "Hienoa, nyt kun näit, miten lämmittävä taskulamppu vaikutti pinnan ja pallon lämpötilaan, vaihdetaan taskulamppu Aurinkoon ja pallo Maahan. Pohdi muiden oppilaiden ja opettajan kanssa tai itseksesi astronauttikysymystemme pohjalta. Valitse sitten, mitä tehdään seuraavaksi!",
+          "error": "ei aivan, mutta olisi mielenkiintoista nähdä näiden liikkeiden tulokset tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka palauttaa päivät kaikkialle Maahan.",
+          "success": "Hienoa työtä! Pyörimisliike on avain siihen, että meillä on päiviä ja öitä kaikkialla!",
+          "choices": [
+            "Liikuta Aurinkoa puolelta toiselle",
+            "Liikuta Maata ylös ja alas",
+            "Pyöritä Maata itsensä ympäri"
+          ]
+        },
+        "phase2": {
+          "task": "Jee! Päivät ovat palanneet kaikille! Mutta... toivoisin, että Suomessa olisi kesä ja ne todella pitkät ja valoisat päivät... Keskustele muiden oppilaiden ja opettajan kanssa tai pohdi itseksesi, voisitko auttaa minua tässä. Ole kiltti!",
+          "error": "ei aivan, mutta olisi mielenkiintoista nähdä näiden liikkeiden tulokset tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka aiheuttaa kesän Suomeen",
+          "success": "Kyllä! Maan kallistaminen on avain siihen, että saamme enemmän valoa Suomeen!",
+          "choices": [
+            "Siirrä Aurinko pohjoisnavan yläpuolelle",
+            "Kallista pohjoisnapaa Aurinkoa kohti",
+            "Pyöritä Maata nopeammin, jotta auringonvaloa on useammin"
+          ]
+        },
+        "phase3": {
+          "task": "Ota aurinkolasit esiin, sillä kesä on saapunut Suomeen! Kiitos, että ratkaisit tämän! Tarkastele molempia napoja ja vertaa niitä samalla kun pohdit kysymyksiä itseksesi tai opettajan ja muiden oppilaiden kanssa.",
+          "error0": "ei aivan, mutta olisi mielenkiintoista pystyä liikuttamaan Aurinkoa tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka jakaa kesän tasaisesti molemmille navoille",
+          "error1": "Toivon, että se olisi niin yksinkertaista, mutta Maalla on kiinteä kallistus... yritä uudelleen ja valitse vaihtoehto, joka jakaa kesän tasaisesti molemmille navoille",
+          "success": "Loistava valinta! Kiertoliike on avain siihen, että molemmilla navoilla on mahdollisuus hienoon kesään!",
+          "choices": [
+            "Siirrä Aurinko etelänavan yläpuolelle",
+            "Kallista etelänapaa Aurinkoa kohti",
+            "Kierrä Maa Auringon ympäri"
+          ]
+        },
+        "phase4": {
+          "astronaut_hint": "Liikuta liukusäädintä nähdäksesi Maan matkaavan Auringon ympäri!"
+        },
+        "seasons": {
+          "summer": "Kesä",
+          "winter": "Talvi",
+          "spring": "Kevät",
+          "autumn": "Syksy"
+        },
+        "nature": {
+          "summer": "Rehevän vihreät metsät, pitkät päivät, yötön yö Lapissa.",
+          "winter": "Lumen peittämät maisemat, kaamos, revontulet.",
+          "spring": "Sulava lumi, ensimmäiset kukat, palaavat linnut.",
+          "autumn": "Värikkäät lehdet (ruska), viilenevät lämpötilat, muuttolinnut."
+        },
+        "mission_tasks": {
+          "discussion": "Keskustele ryhmäsi kanssa: Miksi meillä on vuodenajat? Mikä tekee päivistä pidempiä kesällä?",
+          "day_night": "Pyöritä Maata nähdäksesi, miten päivä ja yö syntyvät. Löydätkö paikan, jossa olet juuri nyt?",
+          "tilt_seasons": "Muuta Maan kallistusta. Miten se vaikuttaa auringonvaloon, joka saavuttaa pohjoisnavan?",
+          "orbit_simulator": "Liikuta Maata Auringon ympäri. Tarkkaile, miten vuodenajat vaihtuvat Suomessa ja Brasiliassa."
+        },
+        "controls": {
+          "rotate_earth": "Pyöritä Maata",
+          "tilt_earth": "Kallista Maata",
+          "orbit_progress": "Kiertoradan edistyminen",
+          "horizontal_pole": "Vaakasuora napa",
+          "reset_view": "Nollaa näkymä"
+        },
+        "feedback": {
+          "day": "Täällä on päivä!",
+          "night": "Täällä on yö!",
+          "summer": "Kesäpäivänseisaus",
+          "winter": "Talvipäivänseisaus",
+          "spring": "Kevätpäiväntasaus",
+          "autumn": "Syyspäiväntasaus"
+        },
+        "data_labels": {
+          "season": "Vuodenaika",
+          "daylight": "Päivänvalo",
+          "avg_temp": "Keskilämpötila",
+          "nature": "Luonto",
+          "dist_to_sun": "Etäisyys Aurinkoon"
+        },
+        "view_modes": {
+          "earth_free": "Vapaa maanäkymä",
+          "system_top": "Näkymä ylhäältä"
+        },
+        "hints": {
+          "orbit": "Liikuta liukusäädintä nähdäksesi Maan matkaavan Auringon ympäri!"
+        },
+        "finished": {
+          "title": "Tehtävä suoritettu!",
+          "summary": "Olet nyt",
+          "tasks": [
+            "Käyttänyt pyörimisliikettä päivän ja yön luomiseen.",
+            "Käyttänyt kallistusta luodaksesi pidempiä ja lyhyempiä päiviä eri paikoissa.",
+            "Käyttänyt kiertoliikettä nähdäksesi, miten vuodenajat vaihtuvat vuoden aikana."
+          ],
+          "next_steps": "Nyt olet valmis näkemään kaiken tämän tapahtuvan todellisessa avaruudessa, useampien planeettojen kanssa!",
+          "astronaut_message": "Hienoa työtä, avaruustutkija! Katsotaanpa nyt, miten tämä kaikki tapahtuu koko aurinkokunnassa kaikkien planeettojen kanssa. Oletko valmis tulemaan hienoksi astronautiksi kuten minä?"
+        },
+        "go_to_solar_system": "Siirry aurinkokuntanäkymään",
+        "spring_equinox": "Kevätpäiväntasaus (21. maal.)",
+        "summer_solstice": "Kesäpäivänseisaus (21. kesäk.)",
+        "autumn_equinox": "Syyspäiväntasaus (21. syysk.)",
+        "winter_solstice": "Talvipäivänseisaus (21. jouluk.)",
+        "perihelion": "Periheli (3. tammik.)",
+        "aphelion": "Apheli (4. heinäk.)",
+        "north_pole": "Pohjoisnapa",
+        "earth": "MAA",
+        "sun": "AURINKO",
+        "day": "Vuoden päivä: {{val}}",
+        "tilt": "Akselin kallistus: {{val}}°",
+        "orbit": "Kiertoradan edistyminen: {{val}}%",
+        "info_tilt": "Maan akselin kallistus on tärkein syy vuodenaikoihin.",
+        "info_orbit": "Maan kiertorata Auringon ympäri on elliptinen, ei täydellinen ympyrä."
+      },
+      "solar_system": {
+        "title": "Aurinkokuntanäkymä",
+        "desc": "Kaikkien planeettojen ja niiden liikkeiden tutkiminen",
+        "initializing": "JÄRJESTELMÄÄ ALUSTETAAN...",
+        "planetary_focus": "Planeettakeskitys",
+        "overview": "Yleiskatsaus",
+        "speed": "Nopeus",
+        "north_pole": "Pohjoisnapa",
+        "view_modes": {
+          "free_earth": "Vapaa maanäkymä",
+          "solar_system": "Aurinkokunnan yleiskatsaus",
+          "top_down": "Näkymä ylhäältä",
+          "cinematic": "Elokuvallinen näkymä",
+          "day": "Päivänäkymä",
+          "night": "Yönäkymä"
+        },
+        "planets": {
+          "sun": "Aurinko",
+          "mercury": "Merkurius",
+          "venus": "Venus",
+          "earth": "Maa",
+          "mars": "Mars",
+          "jupiter": "Jupiter",
+          "saturn": "Saturnus",
+          "uranus": "Uranus",
+          "neptune": "Neptunus"
+        },
+        "activities": {
+          "intro_1": "Hei tutkija!\n\nOlet päässyt pitkälle! Kerrataanpa, mitä olet oppinut Maan, Kuun ja Auringon liikkeistä (tässä sovelluksessa ja luokkahuoneessasi).\n\nTätä varten pelaatte hauskaa peliä 4 hengen ryhmissä.",
+          "start_activity_1": "Aloita tehtävä 1: Astrotanssi",
+          "activity_1": {
+            "title": "Astrotanssi",
+            "subtitle": "Työskennelkää 4 hengen ryhmissä. Suorittakaa jokainen vaihe ja merkitkää se tehdyksi!",
+            "steps": [
+              "1 - Avaa valitsemasi tekoäly ja pyydä sitä jakamaan satunnaisesti roolit: Komentaja, Aurinko, Maa ja Kuu ryhmänne jäsenille (älä käytä koko nimeäsi, vain etunimeä yksityisyytesi suojaamiseksi).",
+              "2 - Komentaja, pyydä tekoälyä ehdottamaan satunnaisia yhdistelmiä sijainnista, sen vuodenajasta ja kuun vaiheesta (esim. kesä Suomessa täysikuulla, kevät Brasiliassa uudenkuun aikaan...). Älä näytä tulosta vielä muille.",
+              "3 - Nyt Komentajan on kerrottava luotu yhdistelmä, ja muiden pelaajien on tanssittava oikeisiin paikkoihin!",
+              "4- Toistakaa prosessi uudelleen vaihtaaksenne rooleja niin monta kertaa kuin haluatte!"
+            ],
+            "next": "Siirry tehtävään 2"
+          },
+          "intro_2": "Tehän olitte loistavia astrotanssijoita!\n\nPidetäänpä taide elossa ja luodaan jotain hieman hullua, mikä valmistaa teitä tähän aurinkokuntanäkymän tutkimusmatkaan.",
+          "start_activity_2": "Aloita tehtävä 2",
+          "activity_2": {
+            "title": "Tehtävä 2",
+            "instruction": "Valitkaa pareittain, ryhmissä tai yksin kotona kirjoitustyyli (laulu, rap, runo, pieni tarina jne.) ilmaistaksenne aurinkokunnan kaikkien planeettojen oikean järjestyksen!\n\nSeuratkaa opettajanne ohjeita siitä, miten ja milloin esitätte mestariteoksenne.\n\nKun olette valmiita, sukeltakaa aurinkokuntaan nähdäksenne kaikki planeetat ja niiden ominaisuudet tutkimusmatkalla."
+          },
+          "start_mission": "Aloita tutkimusmatka"
+        }
+      },
+      "sizes_distances": {
+        "title": "Todelliset koot ja etäisyydet",
+        "desc": "Tutustu siihen, kuinka valtava avaruus todella on",
+        "intro_title": "Todelliset koot ja etäisyydet",
+        "intro_text": "Tervetuloa Todelliset koot ja etäisyydet -osioon!\nLuokassa olette jo puhuneet siitä, kuinka kaukana Kuu on Maasta ja yrittäneet kuvitella, missä Aurinko olisi samassa mittakaavassa.\nNyt tämä digitaalinen tutkimusmatka auttaa sinua:\n\nLiikkumaan eri kokomittakaavojen läpi\nVertamaan kaikkea Maahan\nNäkemään, kuinka kauan kestäisi matkustaa avaruudessa eri nopeuksilla\n\nOletko valmis leikkimään valtavilla ja pienillä luvuilla samanaikaisesti?",
+        "start_button": "Aloita digitaalinen tutkimusmatka",
+        "step_1_title": "Vaihe 1 – Kokosoomain: Kuusta Aurinkoon",
+        "step_1_desc": "Tässä vaiheessa käytät soomainta matkustaaksesi eri kokomittakaavojen läpi.\nAloitat Maasta ja Kuusta, sitten loitotat nähdäksesi sisäplaneetat, kaasujättiläiset ja lopulta Auringon.\nKatso tarkasti, miten Maan koko muuttuu verrattuna kaikkeen muuhun.",
+        "step_2_title": "Vaihe 2 – Vertaa kaikkea Maahan",
+        "step_2_desc": "Tässä vaiheessa Maa on vertailukokosi. Valitse mikä tahansa muu kohde ja näe se rinnakkain Maan kanssa samassa mittakaavassa.",
+        "step_3_title": "Vaihe 3 – Matka-aika: Kuinka kauan se kestäisi?",
+        "step_3_desc": "Etäisyydet avaruudessa eivät ole vain suuria kilometreissä. Ne ovat myös valtavia ajassa, kun ajattelemme, kuinka nopeasti voimme matkustaa.\nTutki, kuinka kauan kestäisi saavuttaa eri kohteet eri nopeuksilla!",
+        "zoom_levels": {
+          "level_1": {
+            "label": "Mittakaavataso: Maa ja Kuu",
+            "text": "Tässä näet Maan ja Kuun oikeassa kokosuhteessa.\n\nHuomaa:\n• Kuu on paljon pienempi kuin Maa.\n• Voit kuvitella todellisen etäisyyden niiden välillä luokkahuoneen mallistasi.\n• Yritä kuvitella: jos nämä ympyrät olisivat palloja luokassa, missä Aurinko olisi?"
+          },
+          "level_2": {
+            "label": "Mittakaavataso: Sisäplaneetat",
+            "text": "Nyt näet Merkuriuksen, Venuksen, Maan ja Marsin rinnakkain. Kaikki on piirretty samaan kokomittakaavaan.\n\nKatso:\n• Mikä planeetta on pienin?\n• Mikä niistä on kooltaan lähimpänä Maata?\n• Missä Mars sijaitsee tässä ryhmässä?"
+          },
+          "level_3": {
+            "label": "Mittakaavataso: Kaasujättiläiset lisätty",
+            "text": "Nyt lisäämme kaasujättiläiset: Jupiterin ja Saturnuksen.\nMaa ja sisäplaneetat ovat edelleen täällä, mutta katso kuinka pieniltä ne nyt näyttävät!\n\nMieti:\n• Kuinka monta Maata mahtuisi Jupiterin halkaisijalle?\n• Tuntuvatko sisäplaneetat enemmän 'isoiilta kiviltä' verrattuna näihin jättiläisiin?"
+          },
+          "level_4": {
+            "label": "Mittakaavataso: Aurinko vs kaikki planeetat",
+            "text": "Nyt Aurinko liittyy mukaan.\nKaikki planeetat, jopa Jupiter ja Saturnus, alkavat näyttää pieniltä Aurinkoon verrattuna.\n\nHuomaa:\n• Maa on nyt melkein vain piste.\n• Aurinko on niin valtava, että se hallitsee koko kuvaa."
+          }
+        },
+        "zoom_controls": {
+          "level_1": "Kuu ja Maa",
+          "level_2": "Sisäplaneetat",
+          "level_3": "Kaasujättiläiset",
+          "level_4": "Aurinko vs kaikki"
+        },
+        "zoom_level_indicator": "Soomataso: {{val}}",
+        "select_object": "Valitse kohde",
+        "choose_object_hint": "Valitse kohde verrattavaksi Maahan.",
+        "compare_label": "Maa ja {{target}} samassa mittakaavassa.",
+        "journey_title": "Valitse matka",
+        "speed_title": "Valitse nopeus",
+        "travel_log": "Matkapäiväkirja",
+        "destination": "Määränpää",
+        "velocity": "Nopeus",
+        "distance": "Etäisyys",
+        "estimated_arrival": "Arvioitu saapumisaika",
+        "system_active": "JÄRJESTELMÄ_AKTIIVINEN",
+        "next_step_2": "Siirry vaiheeseen 2 – Vertaa Maahan",
+        "next_step_3": "Siirry vaiheeseen 3 – Matka-aika",
+        "back_to_dashboard": "Takaisin hallintapaneeliin",
+        "time_units": {
+          "seconds": "{{val}} sekuntia",
+          "minutes": "{{val}} minuuttia",
+          "hours": "{{val}} tuntia",
+          "days": "{{val}} päivää",
+          "months": "{{val}} kuukautta",
+          "years": "{{val}} vuotta"
+        },
+        "travel_hints": {
+          "light_moon": "Se on nopeampaa kuin ehdit sanoa 'tähtitiede'!",
+          "light_general": "Avaruus on todella suuri, jopa maailmankaikkeuden nopeusrajoituksella!",
+          "walking": "Kävelynopeudella tämä matka kestäisi järjettömän kauan – pidempään kuin ihmisen elinikä.",
+          "plane_sun": "Tavallisen matkustajakoneen nopeudella kestäisi monta vuotta päästä Maasta Aurinkoon.",
+          "general": "Tämä osoittaa, kuinka jopa lähimmät kohteet avaruudessa ovat ihmisille kuvittelemattoman kaukana."
+        },
+        "planets": {
+          "Moon": "Kuu",
+          "Mercury": "Merkurius",
+          "Venus": "Venus",
+          "Earth": "Maa",
+          "Mars": "Mars",
+          "Jupiter": "Jupiter",
+          "Saturn": "Saturnus",
+          "Uranus": "Uranus",
+          "Neptune": "Neptunus",
+          "Sun": "Aurinko"
+        },
+        "planet_descriptions": {
+          "Moon": "Kuu on paljon pienempi kuin Maa.",
+          "Mercury": "Merkurius on aurinkokuntamme pienin planeetta.",
+          "Venus": "Venus on lähes saman kokoinen kuin Maa!",
+          "Earth": "Kotoplaneettamme.",
+          "Mars": "Mars on noin puolet Maan koosta.",
+          "Jupiter": "Jupiter on valtava Maahan verrattuna. Noin 11 Maata mahtuisi sen halkaisijalle!",
+          "Saturn": "Saturnus on toiseksi suurin planeetta, kuuluisa renkaistaan.",
+          "Uranus": "Uranus on jääjättiläinen, noin 4 kertaa Maata leveämpi.",
+          "Neptune": "Neptunus on kooltaan hyvin samanlainen kuin Uranus.",
+          "Sun": "Aurinko on niin valtava, että se hallitsee koko kuvaa."
+        },
+        "journeys": {
+          "earth-moon": "Maa → Kuu",
+          "earth-sun": "Maa → Aurinko",
+          "earth-mars": "Maa → Mars",
+          "sun-neptune": "Aurinko → Neptunus"
+        },
+        "speeds": {
+          "light": "Valonnopeus",
+          "plane": "Matkustajakone",
+          "car": "Auto",
+          "walking": "Kävely"
+        }
+      }
+    }
+  }
+}

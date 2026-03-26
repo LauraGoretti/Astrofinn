@@ -1,4 +1,5 @@
 export enum AppView {
+  LANGUAGE_SELECT = 'LANGUAGE_SELECT',
   DASHBOARD = 'DASHBOARD',
   ACTIVITY = 'ACTIVITY',
 }

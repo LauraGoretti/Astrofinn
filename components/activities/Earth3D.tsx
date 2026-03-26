@@ -3,6 +3,7 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { OrbitControls, Html, PerspectiveCamera } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
+import { useTranslation } from 'react-i18next';
 import { Loader2, Infinity as InfinityIcon, Sun, Moon, ArrowDownToLine, Move3d, Globe, Disc, Search, Minimize2, Maximize2 } from 'lucide-react';
 import { GameMode } from '../../types';
 import { SolarSystemActivities } from './SolarSystemActivities';
@@ -469,17 +470,17 @@ const SunMesh = () => {
         />
       </sprite>
       <pointLight 
-        intensity={1.2} 
-        distance={2000} 
-        decay={0.0} 
-        color="#ffffff" 
+        intensity={2.5} 
+        distance={4000} 
+        decay={0} 
+        color="#fff5e6" 
         castShadow 
         shadow-mapSize-width={4096} 
         shadow-mapSize-height={4096}
         shadow-bias={-0.0001}
         shadow-radius={4}
       >
-        <orthographicCamera attach="shadow-camera" args={[-150, 150, 150, -150, 0.1, 1000]} />
+        <orthographicCamera attach="shadow-camera" args={[-300, 300, 300, -300, 0.1, 2000]} />
       </pointLight>
     </group>
   );
@@ -689,6 +690,7 @@ const PlanetRing: React.FC<{ radius: number; config: PlanetConfig['ringConfig'] 
 };
 
 const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: Date }> = ({ config, simSpeed, simDate }) => {
+  const { t } = useTranslation();
   const texture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}${config.texture}`);
   const orbitRef = useRef<THREE.Group>(null);
   const meshRef = useRef<THREE.Mesh>(null);
@@ -743,7 +745,7 @@ const PlanetMesh: React.FC<{ config: PlanetConfig; simSpeed: number; simDate?: D
             
             {/* Simple Label */}
             <Html distanceFactor={120} position={[0, config.radius + 2, 0]} style={{ pointerEvents: 'none' }}>
-            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{config.name}</div>
+            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{t(`activities.solar_system.planets.${config.name.toLowerCase()}`)}</div>
             </Html>
         </group>
 
@@ -775,12 +777,13 @@ interface HeliocentricSystemProps {
 }
 
 const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focusedPlanet, simSpeed = 1, simDate, setStage }) => {
+  const { t } = useTranslation();
   useEffect(() => {
     if (setStage) {
       if (viewMode === 'SOLAR_SYSTEM') {
-        setStage('Solar System View');
+        setStage(t('activities.solar_system.title'));
       } else {
-        setStage('Earth View');
+        setStage(t('activities.solar_system.planets.earth'));
       }
     }
   }, [viewMode, setStage]);
@@ -1113,7 +1116,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
              >
                <div className="flex flex-col items-center transform -translate-x-1/2 -translate-y-full">
                   <div className="bg-black/60 border border-neon-pink px-2 py-1 rounded text-base font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
-                    North Pole
+                    {t('activities.solar_system.north_pole')}
                   </div>
                   <div className="w-px h-2 bg-neon-pink"></div>
                </div>
@@ -1122,7 +1125,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
 
           {/* Earth Label - Placed outside the rotated group to stay upright */}
           <Html distanceFactor={120} position={[0, EARTH_RADIUS + 2.5, 0]} style={{ pointerEvents: 'none' }}>
-            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">Earth</div>
+            <div className="text-white text-[10px] font-mono opacity-80 whitespace-nowrap">{t('activities.solar_system.planets.earth')}</div>
           </Html>
 
           <MoonMesh simSpeed={simSpeed} />
@@ -1165,6 +1168,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
 };
 
 const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void; mode?: GameMode; setBackIntercept?: (intercept: { handler: () => boolean } | null) => void }> = ({ className, setStage, mode, setBackIntercept }) => {
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState<ViewMode>('EARTH_FREE');
   const [focusedPlanet, setFocusedPlanet] = useState<string | null>(null);
   const [simSpeed, setSimSpeed] = useState(1);
@@ -1203,7 +1207,7 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
       <Canvas shadows dpr={[1, 2]} gl={{ antialias: true }} camera={{ position: [0, 20, 40], fov: 45 }}>
         <color attach="background" args={['#000005']} />
         
-        <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">INITIALIZING SYSTEM...</span></div></Html>}>
+        <Suspense fallback={<Html center><div className="flex flex-col items-center"><Loader2 className="w-8 h-8 text-neon-blue animate-spin mb-2" /><span className="text-xs text-neon-blue font-mono">{t('activities.solar_system.initializing')}</span></div></Html>}>
            <StarBackground />
            <ambientLight intensity={0.15} />
            
@@ -1221,48 +1225,48 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
         <button 
            onClick={() => { setViewMode('EARTH_FREE'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_FREE' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Free Earth View"
+           title={t('activities.solar_system.view_modes.free_earth')}
         >
           <Globe size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SOLAR_SYSTEM'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'SOLAR_SYSTEM' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Solar System Overview"
+           title={t('activities.solar_system.view_modes.solar_system')}
         >
           <Disc size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SYSTEM_TOP'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'SYSTEM_TOP' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Top-Down View"
+           title={t('activities.solar_system.view_modes.top_down')}
         >
           <ArrowDownToLine size={20} />
         </button>
         <button 
            onClick={() => { setViewMode('SYSTEM_AUTO'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'SYSTEM_AUTO' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Cinematic View"
+           title={t('activities.solar_system.view_modes.cinematic')}
         >
           <Move3d size={20} />
         </button>
-         <button 
+        <button 
            onClick={() => { setViewMode('EARTH_DAY'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_DAY' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Day View"
+           title={t('activities.solar_system.view_modes.day')}
         >
           <Sun size={20} />
         </button>
-         <button 
+        <button 
            onClick={() => { setViewMode('EARTH_NIGHT'); setFocusedPlanet(null); }}
            className={`p-3 rounded-full transition-all ${viewMode === 'EARTH_NIGHT' ? 'bg-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.6)]' : 'text-gray-400 hover:text-white hover:bg-white/10'}`}
-           title="Night View"
+           title={t('activities.solar_system.view_modes.night')}
         >
           <Moon size={20} />
         </button>
         
         <div className="flex items-center gap-3 px-4 border-l border-white/10 ml-2">
-          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">Speed</span>
+          <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('activities.solar_system.speed')}</span>
           <input 
             type="range" 
             min="0" 
@@ -1278,23 +1282,23 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
 
        {/* Planet Selector (Only in Solar System Mode) */}
        {viewMode === 'SOLAR_SYSTEM' && (
-         <div className="absolute top-6 left-6 flex flex-col gap-1 glass-panel max-h-[80%] overflow-y-auto z-10 w-56">
-            <h3 className="text-xl font-bold text-gray-400 mb-3 uppercase tracking-widest border-b border-white/10 pb-2">Planetary Focus</h3>
-            <div className="space-y-1">
+         <div className="absolute top-6 left-6 flex flex-col gap-1 glass-panel max-h-[80%] overflow-y-auto overflow-x-hidden z-10 w-56">
+            <h3 className="text-[14px] font-bold text-gray-400 mb-2 uppercase tracking-wider border-b border-white/10 pb-1 truncate">{t('activities.solar_system.planetary_focus')}</h3>
+            <div className="space-y-0.5">
               {['Sun', 'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'].map(p => (
                 <button
                   key={p}
                   onClick={() => setFocusedPlanet(p)}
-                  className={`w-full text-base text-left px-3 py-2 rounded-lg transition-all ${focusedPlanet === p ? 'bg-neon-blue text-black font-bold shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'text-gray-300 hover:bg-white/10 hover:text-white'}`}
+                  className={`w-full text-[12px] text-left px-2 py-1.5 rounded transition-all truncate ${focusedPlanet === p ? 'bg-neon-blue text-black font-bold shadow-[0_0_10px_rgba(0,240,255,0.4)]' : 'text-gray-300 hover:bg-white/10 hover:text-white'}`}
                 >
-                  {p}
+                  {t(`activities.solar_system.planets.${p.toLowerCase()}`)}
                 </button>
               ))}
                <button
                   onClick={() => setFocusedPlanet(null)}
-                  className={`w-full text-base text-center px-3 py-2 rounded-lg transition-all border border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white/40 mt-3 font-bold`}
+                  className={`w-full text-[12px] text-center px-2 py-1.5 rounded transition-all border border-dashed border-white/20 text-gray-400 hover:text-white hover:border-white/40 mt-2 font-bold truncate`}
                 >
-                  Overview
+                  {t('activities.solar_system.overview')}
                 </button>
             </div>
          </div>

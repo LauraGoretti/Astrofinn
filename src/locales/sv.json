@@ -1,0 +1,374 @@
+{
+  "translation": {
+    "welcome": "Välkommen till AstroFinn",
+    "welcome_desc": "Utforska rymdens underverk och vetenskapen bakom vårt solsystem.",
+    "select_language": "Välj språk",
+    "back_to_dashboard": "Tillbaka till instrumentpanelen",
+    "common": {
+      "back_to_dashboard": "Tillbaka till instrumentpanelen",
+      "back": "Tillbaka",
+      "system_online": "SYSTEM ONLINE",
+      "language": "SPRÅK",
+      "change_language": "Ändra språk"
+    },
+    "dashboard": {
+      "select_path": "Välj väg",
+      "path1_title": "Väg 1: Uppvärmning med reflekterande och kreativt tänkande",
+      "path1_desc": "I klassrummet, före simuleringen.",
+      "path2_title": "Väg 2: Utforskningsuppdrag",
+      "path2_desc": "Interaktiva digitala simuleringar."
+    },
+    "months": {
+      "january": "Januari",
+      "february": "Februari",
+      "march": "Mars",
+      "april": "April",
+      "may": "Maj",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "Augusti",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "December"
+    },
+    "activities": {
+      "light_incidence": {
+        "title": "Ljusinfall och värme",
+        "desc": "Utforska ljus, skuggor och värme",
+        "phase_a": "Fas A: Ljusvinkel",
+        "phase_b": "Fas B: Avstånd",
+        "angle": "Ljusvinkel",
+        "heating": "Uppvärmningsintensitet",
+        "spread": "Ljusspridning",
+        "distance": "Avstånd from källa",
+        "heat": "Värmenivå",
+        "steam": "Ångintensitet",
+        "reset": "Återställ simulering",
+        "heating_status": "Värmer...",
+        "cooling_status": "Kyler...",
+        "angle_val": "Vinkel: {{val}}°",
+        "distance_val": "Avstånd: {{val}}",
+        "info_a": "Ljusets infallsvinkel påverkar hur mycket energi som koncentreras på en yta.",
+        "info_b": "När avståndet från ljuskällan ökar, minskar värmens intensitet.",
+        "astronaut_feedback": "Bra jobbat, utforskare! När du är klar med att utforska och reflektera enligt din lärares instruktioner kan vi gå vidare till området \"Lutning och omloppsbana\" i appen.",
+        "angle_direct": "90° (Direkt)",
+        "angle_glancing": "0° (Sned)",
+        "high": "Hög",
+        "medium": "Mellan",
+        "low": "Låg",
+        "small": "Liten",
+        "large": "Stor"
+      },
+      "tilt_orbit": {
+        "title": "Lutning och omloppsbana",
+        "desc": "Utforska orsaken till årstider på jorden",
+        "mission_task": "Uppdrag",
+        "optional_task": "Valfri uppgift",
+        "start_mission": "Starta utforskningsuppdrag",
+        "finland_pinpoint": "Finland Pinpoint",
+        "move_to_see_poles": "Flytta för att se poler",
+        "collapse_sidebar": "Dölj sidofältet",
+        "expand_sidebar": "Visa sidofältet",
+        "south": "SYD",
+        "north": "NORD",
+        "select_date": "Välj datum",
+        "finland_data": "Finland Data",
+        "million_km": "miljoner km",
+        "data_values": {
+          "summer_daylight": "19h - 24h",
+          "summer_temp": "15°C - 25°C",
+          "winter_daylight": "0h - 6h",
+          "winter_temp": "-5°C - -20°C",
+          "spring_daylight": "12h - 18h",
+          "spring_temp": "0°C - 10°C",
+          "autumn_daylight": "12h - 8h",
+          "autumn_temp": "5°C - 12°C"
+        },
+        "phases": {
+          "discussion": "Diskussion",
+          "day_night": "Del 1: Dag och natt",
+          "tilt_seasons": "Del 2: Lutning och årstider",
+          "orbit_simulator": "Del 3: Omloppsbanesimulator",
+          "phase1": "Del 1: Dag och natt",
+          "phase2": "Del 2: Lutning och årstider",
+          "phase3": "Del 3: Lutning och årstider (Avancerad)",
+          "phase4": "Del 4: Omloppsbanesimulator",
+          "finished": "Uppdraget slutfört!"
+        },
+        "discussion": {
+          "intro": "Hej utforskare! Innan vi dyker in i 3D-världen, låt oss diskutera några viktiga koncept med din grupp.",
+          "tasks": [
+            "Diskutera: Varför har vi årstider?",
+            "Diskutera: Vad gör dagarna längre på sommaren?",
+            "Diskutera: Hur påverkar jordens lutning solljuset?",
+            "Diskutera: Vad är skillnaden mellan rotation och revolution?",
+            "Diskutera: Hur påverkar månen jorden?"
+          ],
+          "optional_desc": "Se den här videon för att lära dig mer om jordens lutning och årstider.",
+          "video_title": "Jordens lutning och årstider"
+        },
+        "phase1": {
+          "task": "Okej, nu när du har sett hur den uppvärmda ficklampan påverkade temperaturen på ytan och på bollen, låt oss byta ut ficklampan mot solen och bollen mot jorden. Reflektera med dina kamrater, med läraren eller ensam baserat på våra coola astronautfrågor. Välj sedan vad du ska göra härnäst!",
+          "error": "inte riktigt, men det vore intressant att se resultaten av dessa rörelser i verkligheten... försök igen och välj det alternativ som ger dagarna tillbaka till alla delar av jorden.",
+          "success": "Bra jobbat! Rotation är nyckeln till att vi har nätter och dagar överallt!",
+          "choices": [
+            "Flytta solen från sida till sida",
+            "Flytta jorden upp och ner",
+            "Snurra jorden runt sig själv"
+          ]
+        },
+        "phase2": {
+          "task": "Tjoho! Dagarna är tillbaka för alla! Men... jag önskar att det var sommar i Finland med de där riktigt långa och ljusa dagarna... Prata med dina kamrater och lärare, eller fundera själv igen för att se om du kan hjälpa mig med detta. Snälla!",
+          "error": "inte riktigt, men det vore intressant att se resultaten av dessa rörelser i verkligheten... försök igen och välj det alternativ som ger sommar i Finland",
+          "success": "Ja! Att luta jorden är nyckeln till att vi får mer ljus i Finland!",
+          "choices": [
+            "Flytta solen över till nordpolen",
+            "Luta nordpolen mot solen",
+            "Snurra jorden snabbare för att få solljus fler gånger"
+          ]
+        },
+        "phase3": {
+          "task": "Ta fram solglasögonen för nu har sommaren kommit till Finland! Tack för att du löste detta! Ta en titt på båda polerna och jämför dem medan du funderar på frågorna själv eller med din lärare och kamrater.",
+          "error0": "inte riktigt, men det vore intressant att kunna flytta solen i verkligheten... försök igen och välj det alternativ som delar sommaren jämnt mellan båda polerna",
+          "error1": "Jag önskar att det vore så enkelt, men jorden har en fast lutning... försök igen och välj det alternativ som delar sommaren jämnt mellan båda polerna",
+          "success": "Bra val! Revolution är nyckeln till att båda polerna ska få chansen till en härlig sommar!",
+          "choices": [
+            "Flytta solen över till sydpolen",
+            "Luta sydpolen mot solen",
+            "Låt jorden kretsa runt solen"
+          ]
+        },
+        "phase4": {
+          "astronaut_hint": "Flytta reglaget för att se jorden färdas runt solen!"
+        },
+        "seasons": {
+          "summer": "Sommar",
+          "winter": "Vinter",
+          "spring": "Vår",
+          "autumn": "Höst"
+        },
+        "nature": {
+          "summer": "Grönskande skogar, långa dagar, midnattssol i Lappland.",
+          "winter": "Snötäckta landskap, polarnatt, norrsken.",
+          "spring": "Smältande snö, de första blommorna, återvändande fåglar.",
+          "autumn": "Färgglada löv (ruska), sjunkande temperaturer, flyttfåglar."
+        },
+        "mission_tasks": {
+          "discussion": "Diskutera med din grupp: Varför har vi årstider? Vad gör dagarna längre på sommaren?",
+          "day_night": "Rotera jorden för att se hur dag och natt skapas. Kan du hitta var du är just nu?",
+          "tilt_seasons": "Ändra jordens lutning. Hur påverkar det solljuset som når nordpolen?",
+          "orbit_simulator": "Flytta jorden runt solen. Observera hur årstiderna förändras i Finland och Brasilien."
+        },
+        "controls": {
+          "rotate_earth": "Rotera jorden",
+          "tilt_earth": "Luta jorden",
+          "orbit_progress": "Omloppsbana framsteg",
+          "horizontal_pole": "Horisontell pol",
+          "reset_view": "Återställ vy"
+        },
+        "feedback": {
+          "day": "Det är dag här!",
+          "night": "Det är natt här!",
+          "summer": "Sommarsolstånd",
+          "winter": "Vintersolstånd",
+          "spring": "Vårdagjämning",
+          "autumn": "Höstdagjämning"
+        },
+        "data_labels": {
+          "season": "Årstid",
+          "daylight": "Dagsljus",
+          "avg_temp": "Medeltemp",
+          "nature": "Natur",
+          "dist_to_sun": "Avstånd till solen"
+        },
+        "view_modes": {
+          "earth_free": "Fri jordvy",
+          "system_top": "Vy uppifrån"
+        },
+        "hints": {
+          "orbit": "Flytta reglaget för att se jorden färdas runt solen!"
+        },
+        "finished": {
+          "title": "Uppdraget slutfört!",
+          "summary": "Du har nu",
+          "tasks": [
+            "Använt rotation för att skapa dag och natt.",
+            "Använt lutning för att skapa längre och kortare dagar på olika platser.",
+            "Använt revolution för att se hur årstiderna förändras under året."
+          ],
+          "next_steps": "Nu är du redo att se allt detta hända i den verkliga rymden, med fler planeter!",
+          "astronaut_message": "Bra jobbat, rymdutforskare! Låt oss nu se allt detta hända i hela solsystemet, med alla planeter. Är du redo att bli en cool astronaut som jag?"
+        },
+        "go_to_solar_system": "Gå till solsystemsvy",
+        "spring_equinox": "Vårdagjämning (21 mars)",
+        "summer_solstice": "Sommarsolstånd (21 juni)",
+        "autumn_equinox": "Höstdagjämning (21 sep)",
+        "winter_solstice": "Vintersolstånd (21 dec)",
+        "perihelion": "Perihelium (3 jan)",
+        "aphelion": "Aphelium (4 juli)",
+        "north_pole": "Nordpolen",
+        "earth": "JORDEN",
+        "sun": "SOLEN",
+        "day": "Dag på året: {{val}}",
+        "tilt": "Axellutning: {{val}}°",
+        "orbit": "Omloppsbana framsteg: {{val}}%",
+        "info_tilt": "Lutningen på jordens axel är den främsta orsaken till årstiderna.",
+        "info_orbit": "Jordens omloppsbana runt solen är elliptisk, inte en perfekt cirkel."
+      },
+      "solar_system": {
+        "title": "Solsystemsvy",
+        "desc": "Utforska alla planeter och deras rörelser",
+        "initializing": "INITIERAR SYSTEMET...",
+        "planetary_focus": "Planetfokus",
+        "overview": "Översikt",
+        "speed": "Hastighet",
+        "north_pole": "Nordpolen",
+        "view_modes": {
+          "free_earth": "Fri jordvy",
+          "solar_system": "Solsystemöversikt",
+          "top_down": "Vy uppifrån",
+          "cinematic": "Filmatisk vy",
+          "day": "Dagvy",
+          "night": "Nattvy"
+        },
+        "planets": {
+          "sun": "Solen",
+          "mercury": "Merkurius",
+          "venus": "Venus",
+          "earth": "Jorden",
+          "mars": "Mars",
+          "jupiter": "Jupiter",
+          "saturn": "Saturnus",
+          "uranus": "Uranus",
+          "neptune": "Neptunus"
+        },
+        "activities": {
+          "intro_1": "Hej utforskare!\n\nDu har kommit långt! Låt oss bara repetera vad du har lärt dig om jordens, månens och solens rörelser (i den här appen och i ditt klassrum).\n\nFör detta kommer ni att spela ett roligt spel i grupper om 4 personer.",
+          "start_activity_1": "Starta aktivitet 1: Astrodansen",
+          "activity_1": {
+            "title": "Astrodansen",
+            "subtitle": "Arbeta i grupper om 4. Slutför varje steg och bocka av det!",
+            "steps": [
+              "1 - Öppna valfri AI och be den att slumpmässigt tilldela rollerna Befälhavare, Sol, Jord och Måne till varje gruppmedlem (ange inte ditt fullständiga namn, bara förnamn för att skydda din integritet).",
+              "2 - Befälhavare, be AI:n att föreslå slumpmässiga kombinationer av plats, dess årstid och månfas (t.ex. sommar i Finland med fullmåne, vår i Brasilien med nymåne...). Visa inte resultatet för de andra än.",
+              "3 - Nu ska Befälhavaren berätta kombinationen som genererades och de andra spelarna måste dansa till rätt platser!",
+              "4- Upprepa processen igen för att byta roller så many gånger ni vill!"
+            ],
+            "next": "Gå till aktivitet 2"
+          },
+          "intro_2": "Ni var fantastiska på astrodans!\n\nLåt oss nu hålla konsten vid liv och skapa något lite galet som värmer upp er inför detta utforskningsuppdrag i solsystemsvyn.",
+          "start_activity_2": "Starta aktivitet 2",
+          "activity_2": {
+            "title": "Aktivitet 2",
+            "instruction": "Välj i par, grupper eller ensam hemma en skrivstil (sång, rap, dikt, liten berättelse etc.) för att uttrycka den korrekta ordningen på alla planeter i solsystemet!\n\nFölj din lärares instruktioner om hur och när du ska presentera ditt mästerverk.\n\nDyk sedan in i solsystemet när du är redo för att se alla planeter och deras egenskaper i utforskningsuppdraget."
+          },
+          "start_mission": "Starta utforskningsuppdrag"
+        }
+      },
+      "sizes_distances": {
+        "title": "Verkliga storlekar och avstånd",
+        "desc": "Upptäck hur enorm rymden verkligen är",
+        "intro_title": "Verkliga storlekar och avstånd",
+        "intro_text": "Välkommen till modulen Verkliga storlekar och avstånd!\nI klassrummet har ni redan pratat om hur långt bort månen är från jorden och försökt föreställa er var solen skulle vara i samma skala.\nNu kommer denna digitala utforskare att hjälpa dig:\n\nZooma genom olika storleksskalor\nJämföra allt med jorden\nSe hur lång tid det skulle ta att resa i rymden med olika hastigheter\n\nÄr du redo att leka med enorma och pyttesmå siffror samtidigt?",
+        "start_button": "Starta digital utforskare",
+        "step_1_title": "Steg 1 – Skalzoom: Från månen till solen",
+        "step_1_desc": "I det här steget kommer du att använda en zoomkontroll för att resa genom olika storleksskalor.\nDu börjar med jorden och månen, zoomar sedan ut för att se de inre planeterna, gasjättarna och slutligen solen.\nSe noga hur jordens storlek förändras jämfört med allt annat.",
+        "step_2_title": "Steg 2 – Jämför allt med jorden",
+        "step_2_desc": "I det här steget blir jorden din referensstorlek. Välj vilket annat objekt som helst och se det sida vid sida med jorden i samma skala.",
+        "step_3_title": "Steg 3 – Restid: Hur lång tid skulle det ta?",
+        "step_3_desc": "Avstånd i rymden är inte bara stora i kilometer. De är också enorma i tid när vi tänker på hur snabbt vi kan resa.\nUtforska hur lång tid det skulle ta att nå olika destinationer med olika hastigheter!",
+        "zoom_levels": {
+          "level_1": {
+            "label": "Skalnivå: Jorden och månen",
+            "text": "Här ser du jorden och månen i skalenlig storlek.\n\nNotera:\n• Månen är mycket mindre än jorden.\n• Du kan föreställa dig det verkliga avståndet mellan dem från din modell i klassrummet.\n• Försök att föreställa dig: om dessa cirklar vore dina bollar i klassrummet, var skulle solen vara?"
+          },
+          "level_2": {
+            "label": "Skalnivå: De inre planeterna",
+            "text": "Nu ser du Merkurius, Venus, jorden och Mars sida vid sida. Alla är ritade i samma storleksskala.\n\nTitta på:\n• Vilken planet är minst?\n• Vilken är närmast jorden i storlek?\n• Var hamnar Mars i den här gruppen?"
+          },
+          "level_3": {
+            "label": "Skalnivå: Gasjättar tillagda",
+            "text": "Nu lägger vi till gasjättarna: Jupiter och Saturnus.\nJorden och de inre planeterna är fortfarande kvar, men se hur små de verkar nu!\n\nTänk:\n• Hur många jordklot skulle få plats längs Jupiters diameter?\n• Känns de inre planeterna mer som 'stora stenar' jämfört med dessa jättar?"
+          },
+          "level_4": {
+            "label": "Skalnivå: Solen vs alla planeter",
+            "text": "Nu kommer solen in i bilden.\nAlla planeter, till och med Jupiter och Saturnus, börjar se pyttesmå ut jämfört med solen.\n\nNotera:\n• Jorden är nu nästan bara en prick.\n• Solen är så enorm att den dominerar hela bilden."
+          }
+        },
+        "zoom_controls": {
+          "level_1": "Månen & jorden",
+          "level_2": "Inre planeter",
+          "level_3": "Gasjättar",
+          "level_4": "Solen vs alla"
+        },
+        "zoom_level_indicator": "Zoomnivå: {{val}}",
+        "select_object": "Välj objekt",
+        "choose_object_hint": "Välj ett objekt att jämföra med jorden.",
+        "compare_label": "Jorden och {{target}} i samma skala.",
+        "journey_title": "Välj resa",
+        "speed_title": "Välj hastighet",
+        "travel_log": "Reselogg",
+        "destination": "Destination",
+        "velocity": "Hastighet",
+        "distance": "Avstånd",
+        "estimated_arrival": "Beräknad ankomsttid",
+        "system_active": "SYSTEM_AKTIVT",
+        "next_step_2": "Gå till steg 2 – Jämför med jorden",
+        "next_step_3": "Gå till steg 3 – Restid",
+        "back_to_dashboard": "Tillbaka till översikten",
+        "time_units": {
+          "seconds": "{{val}} sekunder",
+          "minutes": "{{val}} minuter",
+          "hours": "{{val}} timmar",
+          "days": "{{val}} dagar",
+          "months": "{{val}} månader",
+          "years": "{{val}} år"
+        },
+        "travel_hints": {
+          "light_moon": "Det går snabbare än du hinner säga 'astronomi'!",
+          "light_general": "Rymden är verkligen stor, även med universums hastighetsgräns!",
+          "walking": "I gånghastighet skulle den här resan ta en absurd mängd tid – längre än en människas livstid.",
+          "plane_sun": "Med hastigheten hos ett vanligt passagerarflygplan skulle det ta många år att ta sig från jorden till solen.",
+          "general": "Detta visar hur även de närmaste objekten i rymden är ofattbart långt borta för människor."
+        },
+        "planets": {
+          "Moon": "Månen",
+          "Mercury": "Merkurius",
+          "Venus": "Venus",
+          "Earth": "Jorden",
+          "Mars": "Mars",
+          "Jupiter": "Jupiter",
+          "Saturn": "Saturnus",
+          "Uranus": "Uranus",
+          "Neptune": "Neptunus",
+          "Sun": "Solen"
+        },
+        "planet_descriptions": {
+          "Moon": "Månen är mycket mindre än jorden.",
+          "Mercury": "Merkurius är den minsta planeten i vårt solsystem.",
+          "Venus": "Venus är nästan lika stor som jorden!",
+          "Earth": "Vår hemplanet.",
+          "Mars": "Mars är ungefär hälften så stor som jorden.",
+          "Jupiter": "Jupiter är enorm jämfört med jorden. Ungefär 11 jordklot skulle få plats längs dess diameter!",
+          "Saturn": "Saturnus är den näst största planeten, känd för sina ringar.",
+          "Uranus": "Uranus är en isjätte, ungefär 4 gånger bredare än jorden.",
+          "Neptune": "Neptunus är mycket lik Uranus i storlek.",
+          "Sun": "Solen är så stor att den dominerar hela bilden."
+        },
+        "journeys": {
+          "earth-moon": "Jorden → Månen",
+          "earth-sun": "Jorden → Solen",
+          "earth-mars": "Jorden → Mars",
+          "sun-neptune": "Solen → Neptunus"
+        },
+        "speeds": {
+          "light": "Ljusets hastighet",
+          "plane": "Passagerarflygplan",
+          "car": "Bil",
+          "walking": "Gång"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,374 @@
+{
+  "translation": {
+    "welcome": "Bem-vindo ao AstroFinn",
+    "welcome_desc": "Explore as maravilhas do espaço e a ciência por trás do nosso sistema solar.",
+    "select_language": "Selecione o Idioma",
+    "back_to_dashboard": "Voltar ao Painel",
+    "common": {
+      "back_to_dashboard": "Voltar ao Painel",
+      "back": "Voltar",
+      "system_online": "SISTEMA ONLINE",
+      "language": "IDIOMA",
+      "change_language": "Alterar Idioma"
+    },
+    "dashboard": {
+      "select_path": "Selecionar Caminho",
+      "path1_title": "Caminho 1: Aquecimento com pensamento reflexivo e criativo",
+      "path1_desc": "Na sala de aula, antes da simulação.",
+      "path2_title": "Caminho 2: Missão de Exploração",
+      "path2_desc": "Simulações digitais interativas."
+    },
+    "months": {
+      "january": "Janeiro",
+      "february": "Fevereiro",
+      "march": "Março",
+      "april": "Abril",
+      "may": "Maio",
+      "june": "Junho",
+      "july": "Julho",
+      "august": "Agosto",
+      "september": "Setembro",
+      "october": "Outubro",
+      "november": "Novembro",
+      "december": "Dezembro"
+    },
+    "activities": {
+      "light_incidence": {
+        "title": "Incidência de Luz e Calor",
+        "desc": "Explorando luz, sombras e calor",
+        "phase_a": "Fase A: Ângulo de Luz",
+        "phase_b": "Fase B: Distância",
+        "angle": "Ângulo de Luz",
+        "heating": "Intensidade de Aquecimento",
+        "spread": "Dispersão da Luz",
+        "distance": "Distância da Fonte",
+        "heat": "Nível de Calor",
+        "steam": "Intensidade do Vapor",
+        "reset": "Reiniciar Simulação",
+        "heating_status": "Aquecendo...",
+        "cooling_status": "Esfriando...",
+        "angle_val": "Ângulo: {{val}}°",
+        "distance_val": "Distância: {{val}}",
+        "info_a": "O ângulo de incidência da luz afeta quanta energia é concentrada em uma superfície.",
+        "info_b": "À medida que a distância da fonte de luz aumenta, a intensidade do calor diminui.",
+        "astronaut_feedback": "Ótimo trabalho, explorador! Quando terminar de explorar e refletir de acordo com as instruções do seu professor, podemos seguir para a área \"Inclinação e Órbita\" do aplicativo.",
+        "angle_direct": "90° (Direto)",
+        "angle_glancing": "0° (Oblíquo)",
+        "high": "Alto",
+        "medium": "Médio",
+        "low": "Baixo",
+        "small": "Pequeno",
+        "large": "Grande"
+      },
+      "tilt_orbit": {
+        "title": "Inclinação e Órbita",
+        "desc": "Explorando o motivo das estações na Terra",
+        "mission_task": "Tarefa da Missão",
+        "optional_task": "Tarefa Opcional",
+        "start_mission": "Iniciar Missão de Exploração",
+        "finland_pinpoint": "Localização da Finlândia",
+        "move_to_see_poles": "Mova para ver os polos",
+        "collapse_sidebar": "Recolher Barra Lateral",
+        "expand_sidebar": "Expandir Barra Lateral",
+        "south": "SUL",
+        "north": "NORTE",
+        "select_date": "Selecionar Data",
+        "finland_data": "Dados da Finlândia",
+        "million_km": "milhões de km",
+        "data_values": {
+          "summer_daylight": "19h - 24h",
+          "summer_temp": "15°C a 25°C",
+          "winter_daylight": "0h - 6h",
+          "winter_temp": "-5°C a -20°C",
+          "spring_daylight": "12h - 18h",
+          "spring_temp": "0°C a 10°C",
+          "autumn_daylight": "12h - 8h",
+          "autumn_temp": "5°C a 12°C"
+        },
+        "phases": {
+          "discussion": "Discussão",
+          "day_night": "Parte 1: Dia e Noite",
+          "tilt_seasons": "Parte 2: Inclinação e Estações",
+          "orbit_simulator": "Parte 3: Simulador de Órbita",
+          "phase1": "Parte 1: Dia e Noite",
+          "phase2": "Parte 2: Inclinação e Estações",
+          "phase3": "Parte 3: Inclinação e Estações (Avançado)",
+          "phase4": "Parte 4: Simulador de Órbita",
+          "finished": "Missão Cumprida!"
+        },
+        "discussion": {
+          "intro": "Olá explorador! Antes de mergulharmos no mundo 3D, vamos discutir alguns conceitos importantes com seu grupo.",
+          "tasks": [
+            "Discuta: Por que temos estações?",
+            "Discuta: O que torna os dias mais longos no verão?",
+            "Discuta: Como a inclinação da Terra afeta a luz solar?",
+            "Discuta: Qual a diferença entre rotação e revolução?",
+            "Discuta: Como a Lua afeta a Terra?"
+          ],
+          "optional_desc": "Assista a este vídeo para saber mais sobre a inclinação da Terra e as estações do ano.",
+          "video_title": "Inclinação da Terra e Estações"
+        },
+        "phase1": {
+          "task": "Tudo bem, agora que você viu como a lanterna de aquecimento influenciou a temperatura na superfície e na bola, vamos substituir a lanterna pelo Sol e a bola pela Terra. Reflita com seus colegas, com o professor ou sozinho com base em nossas perguntas legais de astronauta. Então escolha o que fazer a seguir!",
+          "error": "não exatamente, mas seria interessante ver os resultados desses movimentos na vida real... tente novamente e escolha a opção que trará os dias de volta a todas as partes da Terra.",
+          "success": "Bom trabalho! A rotação é a chave para termos noites e dias em todos os lugares!",
+          "choices": [
+            "Mover o Sol de um lado para o outro",
+            "Mover a Terra para cima e para baixo",
+            "Girar a Terra em torno de si mesma"
+          ]
+        },
+        "phase2": {
+          "task": "Uhuu! Os dias voltaram para todos! Mas... eu gostaria que fosse verão na Finlândia, com aqueles dias bem longos e claros... Converse com seus colegas e professor, ou reflita sozinho novamente para ver se você pode me ajudar com esta. Por favor!",
+          "error": "não exatamente, mas seria interessante ver os resultados desses movimentos na vida real... tente novamente e escolha a opção que causará o verão na Finlândia",
+          "success": "Sim! Inclinar a Terra é a chave para termos mais luz na Finlândia!",
+          "choices": [
+            "Mover o Sol para cima do Polo Norte",
+            "Inclinar o Polo Norte em direção ao Sol",
+            "Girar a Terra mais rápido para ter luz solar mais vezes"
+          ]
+        },
+        "phase3": {
+          "task": "Pegue seus óculos de sol porque o verão chegou na Finlândia! Obrigado por resolver isso! Dê uma olhada em ambos os polos e compare-os enquanto reflete sobre as perguntas sozinho ou com seu professor e colegas.",
+          "error0": "não exatamente, mas seria interessante poder mover o Sol na vida real... tente novamente e escolha a opção que compartilhará o verão uniformemente para ambos os polos",
+          "error1": "Eu gostaria que fosse tão simples, mas a Terra tem uma inclinação fixa... tente novamente e escolha a opção que compartilhará o verão uniformemente para ambos os polos",
+          "success": "Ótima escolha! A revolução é a chave para que ambos os polos tenham a chance de um belo verão!",
+          "choices": [
+            "Mover o Sol para cima do Polo Sul",
+            "Inclinar o Polo Sul em direção ao Sol",
+            "Transladar a Terra ao redor do Sol"
+          ]
+        },
+        "phase4": {
+          "astronaut_hint": "Mova o controle para ver a Terra viajando ao redor do Sol!"
+        },
+        "seasons": {
+          "summer": "Verão",
+          "winter": "Inverno",
+          "spring": "Primavera",
+          "autumn": "Outono"
+        },
+        "nature": {
+          "summer": "Florestas verdes exuberantes, dias longos, sol da meia-noite na Lapônia.",
+          "winter": "Paisagens cobertas de neve, noite polar, aurora boreal.",
+          "spring": "Neve derretendo, primeiras flores, pássaros retornando.",
+          "autumn": "Folhas coloridas (Ruska), temperaturas esfriando, pássaros migrando."
+        },
+        "mission_tasks": {
+          "discussion": "Discuta com seu grupo: Por que temos estações? O que torna os dias mais longos no verão?",
+          "day_night": "Gire a Terra para ver como o dia e a noite são criados. Você consegue encontrar onde está agora?",
+          "tilt_seasons": "Mude a inclinação da Terra. Como isso afeta a luz solar que atinge o Polo Norte?",
+          "orbit_simulator": "Mova a Terra ao redor do Sol. Observe como as estações mudam na Finlândia e no Brasil."
+        },
+        "controls": {
+          "rotate_earth": "Girar Terra",
+          "tilt_earth": "Inclinar Terra",
+          "orbit_progress": "Progresso da Órbita",
+          "horizontal_pole": "Polo Horizontal",
+          "reset_view": "Redefinir Visão"
+        },
+        "feedback": {
+          "day": "É dia aqui!",
+          "night": "É noite aqui!",
+          "summer": "Solstício de Verão",
+          "winter": "Solstício de Inverno",
+          "spring": "Equinócio de Primavera",
+          "autumn": "Equinócio de Outono"
+        },
+        "data_labels": {
+          "season": "Estação",
+          "daylight": "Luz do Dia",
+          "avg_temp": "Temp. Média",
+          "nature": "Natureza",
+          "dist_to_sun": "Distância ao Sol"
+        },
+        "view_modes": {
+          "earth_free": "Visão Livre da Terra",
+          "system_top": "Visão Superior"
+        },
+        "hints": {
+          "orbit": "Mova o controle para ver a Terra viajando ao redor do Sol!"
+        },
+        "finished": {
+          "title": "Missão Cumprida!",
+          "summary": "Você agora",
+          "tasks": [
+            "Usou a rotação para criar o dia e a noite.",
+            "Usou a inclinação para criar dias mais longos e curtos em diferentes lugares.",
+            "Usou a revolução para ver como as estações mudam ao longo do ano."
+          ],
+          "next_steps": "Agora você está pronto para ver tudo isso acontecer no espaço real, com mais planetas!",
+          "astronaut_message": "Bom trabalho, explorador espacial! Agora vamos ver tudo isso acontecer em todo o sistema solar, com todos os planetas. Você está pronto para ser um astronauta legal como eu?"
+        },
+        "go_to_solar_system": "Ir para Visão do Sistema Solar",
+        "spring_equinox": "Equinócio de Primavera (21 Mar)",
+        "summer_solstice": "Solstício de Verão (21 Jun)",
+        "autumn_equinox": "Equinócio de Outono (21 Set)",
+        "winter_solstice": "Solstício de Inverno (21 Dez)",
+        "perihelion": "Periélio (3 Jan)",
+        "aphelion": "Afélio (4 Jul)",
+        "north_pole": "Polo Norte",
+        "earth": "TERRA",
+        "sun": "SOL",
+        "day": "Dia do Ano: {{val}}",
+        "tilt": "Inclinação Axial: {{val}}°",
+        "orbit": "Progresso da Órbita: {{val}}%",
+        "info_tilt": "A inclinação do eixo da Terra é o principal motivo das estações do ano.",
+        "info_orbit": "A órbita da Terra ao redor do Sol é elíptica, não um círculo perfeito."
+      },
+      "solar_system": {
+        "title": "Visualização do Sistema Solar",
+        "desc": "Explorando todos os planetas e seus movimentos",
+        "initializing": "INICIALIZANDO SISTEMA...",
+        "planetary_focus": "Planetário",
+        "overview": "Visão Geral",
+        "speed": "Velocidade",
+        "north_pole": "Polo Norte",
+        "view_modes": {
+          "free_earth": "Visão Livre da Terra",
+          "solar_system": "Visão Geral do Sistema Solar",
+          "top_down": "Visão Superior",
+          "cinematic": "Visão Cinemática",
+          "day": "Visão Diurna",
+          "night": "Visão Noturna"
+        },
+        "planets": {
+          "sun": "Sol",
+          "mercury": "Mercúrio",
+          "venus": "Vênus",
+          "earth": "Terra",
+          "mars": "Marte",
+          "jupiter": "Júpiter",
+          "saturn": "Saturno",
+          "uranus": "Urano",
+          "neptune": "Netuno"
+        },
+        "activities": {
+          "intro_1": "Olá explorador!\n\nVocê percorreu um longo caminho! Vamos apenas recapitular o que você aprendeu sobre os movimentos da Terra, da Lua e do Sol (neste aplicativo e em sua sala de aula).\n\nPara isso, vocês jogarão um jogo divertido em grupos de 4 pessoas.",
+          "start_activity_1": "Iniciar Atividade 1: Astro Dance",
+          "activity_1": {
+            "title": "Astro Dance",
+            "subtitle": "Trabalhe em grupos de 4. Complete cada etapa e marque-a!",
+            "steps": [
+              "1 - Abra qualquer IA e peça para ela atribuir aleatoriamente os papéis de Comandante, Sol, Terra e Lua para cada membro do grupo (não forneça seu nome completo, apenas o primeiro nome para proteger sua privacidade).",
+              "2 - Comandante, peça à IA para sugerir combinações aleatórias de local, sua estação do ano e fase da lua (ex: verão na Finlândia com lua cheia, primavera no Brasil com lua nova...). Não mostre o resultado aos outros ainda.",
+              "3 - Agora o Comandante deve dizer a combinação gerada e os outros jogadores devem dançar para os lugares corretos!",
+              "4- Repita o processo novamente para trocar de papéis quantas vezes quiser!"
+            ],
+            "next": "Ir para Atividade 2"
+          },
+          "intro_2": "Vocês foram incríveis no Astro Dance!\n\nAgora vamos manter a arte viva e criar algo um pouco louco para aquecer vocês para esta missão de exploração na visualização do sistema solar.",
+          "start_activity_2": "Iniciar Atividade 2",
+          "activity_2": {
+            "title": "Atividade 2",
+            "instruction": "Escolha em duplas, grupos ou sozinho em casa um estilo de escrita (música, rap, poema, pequena história etc.) para expressar a ordem correta de todos os planetas do sistema solar!\n\nSiga as instruções do seu professor sobre como e quando apresentar sua obra-prima.\n\nEm seguida, mergulhe no sistema solar quando estiver pronto para ver todos os planetas e suas características na missão de exploração."
+          },
+          "start_mission": "Iniciar Missão de Exploração"
+        }
+      },
+      "sizes_distances": {
+        "title": "Tamanhos e Distâncias Reais",
+        "desc": "Descobrindo quão vasto o espaço realmente é",
+        "intro_title": "Tamanhos e Distâncias Reais",
+        "intro_text": "Bem-vindo ao tile de Tamanhos e Distâncias Reais!\nNa sala de aula, vocês já falaram sobre quão longe a Lua está da Terra e tentaram imaginar onde o Sol estaria nessa mesma escala.\nAgora, este explorador digital ajudará você a:\n\nNavegar por diferentes escalas de tamanho\nComparar tudo com a Terra\nVer quanto tempo levaria para viajar no espaço em diferentes velocidades\n\nPronto para brincar com números enormes e minúsculos ao mesmo tempo?",
+        "start_button": "Iniciar Explorador Digital",
+        "step_1_title": "Passo 1 – Zoom de Escala: Da Lua ao Sol",
+        "step_1_desc": "Neste passo, você usará um controle de zoom para viajar por diferentes escalas de tamanho.\nVocê começará com a Terra e a Lua, depois diminuirá o zoom para ver os planetas internos, os gigantes gasosos e, finalmente, o Sol.\nObserve cuidadosamente como o tamanho da Terra muda em comparação com todo o resto.",
+        "step_2_title": "Passo 2 – Comparar Tudo com a Terra",
+        "step_2_desc": "Neste passo, a Terra se torna sua escala de referência. Escolha qualquer outro objeto e veja-o lado a lado com a Terra na mesma escala.",
+        "step_3_title": "Passo 3 – Tempo de Viagem: Quanto Tempo Levaria?",
+        "step_3_desc": "As distâncias no espaço não são apenas grandes em quilômetros. Elas também são enormes em tempo, quando pensamos em quão rápido podemos viajar.\nExplore quanto tempo levaria para chegar a diferentes destinos em várias velocidades!",
+        "zoom_levels": {
+          "level_1": {
+            "label": "Nível de escala: Terra e Lua",
+            "text": "Aqui você vê a Terra e a Lua em escala de tamanho.\n\nObserve:\n• A Lua é muito menor que a Terra.\n• Você pode imaginar a distância real entre elas a partir do seu modelo prático de sala de aula.\n• Tente imaginar: se esses círculos fossem suas bolas na aula, onde estaria o Sol?"
+          },
+          "level_2": {
+            "label": "Nível de escala: Planetas internos",
+            "text": "Agora você vê Mercúrio, Vênus, Terra e Marte lado a lado. Todos são desenhados na mesma escala de tamanho.\n\nOlhe para:\n• Qual planeta é o menor?\n• Qual deles tem o tamanho mais próximo da Terra?\n• Onde Marte se encaixa neste grupo?"
+          },
+          "level_3": {
+            "label": "Nível de escala: Gigantes gasosos adicionados",
+            "text": "Agora adicionamos os gigantes gasosos: Júpiter e Saturno.\nA Terra e os planetas internos ainda estão aqui, mas veja como eles parecem pequenos agora!\n\nPense:\n• Quantas Terras poderiam caber no diâmetro de Júpiter?\n• Os planetas internos parecem mais 'grandes rochas' comparados a esses gigantes?"
+          },
+          "level_4": {
+            "label": "Nível de escala: Sol vs todos os planetas",
+            "text": "Agora o Sol entra em cena.\nTodos os planetas, até Júpiter e Saturno, começam a parecer minúsculos comparados ao Sol.\n\nObserve:\n• A Terra agora é quase apenas um ponto.\n• O Sol é tão grande que domina toda a imagem."
+          }
+        },
+        "zoom_controls": {
+          "level_1": "Lua e Terra",
+          "level_2": "Planetas Internos",
+          "level_3": "Gigantes Gasosos",
+          "level_4": "Sol vs Todos"
+        },
+        "zoom_level_indicator": "Nível de Zoom: {{val}}",
+        "select_object": "Selecionar Objeto",
+        "choose_object_hint": "Escolha um objeto para comparar com a Terra.",
+        "compare_label": "Terra e {{target}} na mesma escala.",
+        "journey_title": "Escolher Viagem",
+        "speed_title": "Escolher Velocidade",
+        "travel_log": "Diário de Viagem",
+        "destination": "Destino",
+        "velocity": "Velocidade",
+        "distance": "Distância",
+        "estimated_arrival": "Tempo de Chegada Estimado",
+        "system_active": "SISTEMA_ATIVO",
+        "next_step_2": "Ir para o Passo 2 – Comparar com a Terra",
+        "next_step_3": "Ir para o Passo 3 – Tempo de Viagem",
+        "back_to_dashboard": "Voltar ao Painel",
+        "time_units": {
+          "seconds": "{{val}} segundos",
+          "minutes": "{{val}} minutos",
+          "hours": "{{val}} horas",
+          "days": "{{val}} dias",
+          "months": "{{val}} meses",
+          "years": "{{val}} anos"
+        },
+        "travel_hints": {
+          "light_moon": "Isso é mais rápido do que você consegue dizer 'astronomia'!",
+          "light_general": "O espaço é realmente grande, mesmo no limite de velocidade do universo!",
+          "walking": "Na velocidade de caminhada, esta viagem levaria um tempo absurdo – mais do que uma vida humana.",
+          "plane_sun": "Na velocidade de um avião de passageiros normal, levaria muitos anos para ir da Terra ao Sol.",
+          "general": "Isso mostra como até os objetos mais próximos no espaço estão inimaginavelmente distantes para os humanos."
+        },
+        "planets": {
+          "Moon": "Lua",
+          "Mercury": "Mercúrio",
+          "Venus": "Vênus",
+          "Earth": "Terra",
+          "Mars": "Marte",
+          "Jupiter": "Júpiter",
+          "Saturn": "Saturno",
+          "Uranus": "Urano",
+          "Neptune": "Netuno",
+          "Sun": "Sol"
+        },
+        "planet_descriptions": {
+          "Moon": "A Lua é muito menor que a Terra.",
+          "Mercury": "Mercúrio é o menor planeta do nosso sistema solar.",
+          "Venus": "Vênus tem quase o mesmo tamanho da Terra!",
+          "Earth": "Nosso planeta natal.",
+          "Mars": "Marte tem cerca de metade do tamanho da Terra.",
+          "Jupiter": "Júpiter é enorme comparado à Terra. Cerca de 11 Terras poderiam caber no seu diâmetro!",
+          "Saturn": "Saturno é o segundo maior planeta, famoso por seus anéis.",
+          "Uranus": "Urano é um gigante de gelo, cerca de 4 vezes mais largo que a Terra.",
+          "Neptune": "Netuno é muito semelhante em tamanho a Urano.",
+          "Sun": "O Sol é tão grande que domina toda a imagem."
+        },
+        "journeys": {
+          "earth-moon": "Terra → Lua",
+          "earth-sun": "Terra → Sol",
+          "earth-mars": "Terra → Marte",
+          "sun-neptune": "Sol → Netuno"
+        },
+        "speeds": {
+          "light": "Velocidade da luz",
+          "plane": "Avião comercial",
+          "car": "Carro",
+          "walking": "Caminhada"
+        }
+      }
+    }
+  }
+}

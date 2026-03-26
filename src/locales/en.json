@@ -1,0 +1,374 @@
+{
+  "translation": {
+    "welcome": "Welcome to AstroFinn",
+    "welcome_desc": "Explore the wonders of space and the science behind our solar system.",
+    "select_language": "Select Language",
+    "back_to_dashboard": "Back to Dashboard",
+    "common": {
+      "back_to_dashboard": "Back to Dashboard",
+      "back": "Back",
+      "system_online": "SYSTEM ONLINE",
+      "language": "LANGUAGE",
+      "change_language": "Change Language"
+    },
+    "dashboard": {
+      "select_path": "Select Path",
+      "path1_title": "Path 1: Warm-up with reflective and creative thinking",
+      "path1_desc": "In class, before the simulation.",
+      "path2_title": "Path 2: Exploration Mission",
+      "path2_desc": "Interactive digital simulations."
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    },
+    "activities": {
+      "light_incidence": {
+        "title": "Light Incidence and Heat",
+        "desc": "Exploring Light, Shadows, and Warmth",
+        "phase_a": "Phase A: Light Angle",
+        "phase_b": "Phase B: Distance",
+        "angle": "Light Angle",
+        "heating": "Heating Intensity",
+        "spread": "Light Spread",
+        "distance": "Distance from Source",
+        "heat": "Heat Level",
+        "steam": "Steam Intensity",
+        "reset": "Reset Simulation",
+        "heating_status": "Heating...",
+        "cooling_status": "Cooling...",
+        "angle_val": "Angle: {{val}}°",
+        "distance_val": "Distance: {{val}}",
+        "info_a": "The angle of light incidence affects how much energy is concentrated on a surface.",
+        "info_b": "As the distance from the light source increases, the intensity of heat decreases.",
+        "astronaut_feedback": "Great work, explorer! Once you are done exploring and reflecting according to your teacher's instructions, we can move onto the \"Tilt & Orbit\" area of the app.",
+        "angle_direct": "90° (Direct)",
+        "angle_glancing": "0° (Glancing)",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+        "small": "Small",
+        "large": "Large"
+      },
+      "tilt_orbit": {
+        "title": "Tilt & Orbit",
+        "desc": "Exploring the reason behind seasons on Earth",
+        "mission_task": "Mission Task",
+        "optional_task": "Optional Task",
+        "start_mission": "Start Exploration Mission",
+        "finland_pinpoint": "Finland Pinpoint",
+        "move_to_see_poles": "Move to see poles",
+        "collapse_sidebar": "Collapse Sidebar",
+        "expand_sidebar": "Expand Sidebar",
+        "south": "SOUTH",
+        "north": "NORTH",
+        "select_date": "Select Date",
+        "finland_data": "Finland Data",
+        "million_km": "million km",
+        "data_values": {
+          "summer_daylight": "19h - 24h",
+          "summer_temp": "15°C to 25°C",
+          "winter_daylight": "0h - 6h",
+          "winter_temp": "-5°C to -20°C",
+          "spring_daylight": "12h - 18h",
+          "spring_temp": "0°C to 10°C",
+          "autumn_daylight": "12h - 8h",
+          "autumn_temp": "5°C to 12°C"
+        },
+        "phases": {
+          "discussion": "Discussion",
+          "day_night": "Part 1: Day & Night",
+          "tilt_seasons": "Part 2: Tilt & Seasons",
+          "orbit_simulator": "Part 3: Orbit Simulator",
+          "phase1": "Part 1: Day & Night",
+          "phase2": "Part 2: Tilt & Seasons",
+          "phase3": "Part 3: Tilt & Seasons (Advanced)",
+          "phase4": "Part 4: Orbit Simulator",
+          "finished": "Mission Accomplished!"
+        },
+        "discussion": {
+          "intro": "Hello explorer! Before we dive into the 3D world, let's discuss some important concepts with your group.",
+          "tasks": [
+            "Discuss: Why do we have seasons?",
+            "Discuss: What makes days longer in summer?",
+            "Discuss: How does the Earth's tilt affect sunlight?",
+            "Discuss: What is the difference between rotation and revolution?",
+            "Discuss: How does the Moon affect the Earth?"
+          ],
+          "optional_desc": "Watch this video to learn more about Earth's tilt and seasons.",
+          "video_title": "Earth's Tilt and Seasons"
+        },
+        "phase1": {
+          "task": "Alright, now that you saw how the heating flashlight influenced the temperature on the surface and on the ball, let's replace the flashlight by the Sun and the ball by the Earth. Reflect with your peers, with the teacher, or alone based on our cool astronaut questions. Then choose what to do next!",
+          "error": "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.",
+          "success": "Good job! Rotation is the key for us to have nights and days everywhere!",
+          "choices": [
+            "Move Sun side to side",
+            "Move Earth up and down",
+            "Spin the Earth around itself"
+          ]
+        },
+        "phase2": {
+          "task": "Wohoo! Days are back for everyone, baby! But... I wish it was Summer in Finland with those very long and bright days... Talk to your peers and teacher, or reflect by yourself again to see if you can help me out on this one. Please!",
+          "error": "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland",
+          "success": "Yes! Tilting teh Earth is the key for us to have more light in Finland!",
+          "choices": [
+            "Move the Sun over to the North Pole",
+            "Lean the North Pole towards the Sun",
+            "Spin the Earth faster to have sunlight more times"
+          ]
+        },
+        "phase3": {
+          "task": "Get your sunglasses because Summer arrived to Finland! Thank you for solving this! Take a look at both poles and compare them while you reflect on the questions by yourself or with yur teacher and peers.",
+          "error0": "not quite, but it would be interesting to be able to move the Sun in real life... try again and choose the option that will evenly share Summer for both poles",
+          "error1": "I wish it was that simple, but Earth has a fixed tilt... try again and choose the option that will evenly share Summer for both poles",
+          "success": "Great choice! Revolution is the key for both poles to have the chance for a nice Summer!",
+          "choices": [
+            "Move the Sun over to the South Pole",
+            "Lean the South Pole towards the Sun",
+            "Revolve the Earth around the Sun"
+          ]
+        },
+        "phase4": {
+          "astronaut_hint": "Move the slider to see the Earth travel around the Sun!"
+        },
+        "seasons": {
+          "summer": "Summer",
+          "winter": "Winter",
+          "spring": "Spring",
+          "autumn": "Autumn"
+        },
+        "nature": {
+          "summer": "Lush green forests, long days, midnight sun in Lapland.",
+          "winter": "Snow-covered landscapes, polar night, northern lights.",
+          "spring": "Melting snow, first flowers, returning birds.",
+          "autumn": "Colorful leaves (Ruska), cooling temperatures, migrating birds."
+        },
+        "mission_tasks": {
+          "discussion": "Discuss with your group: Why do we have seasons? What makes days longer in summer?",
+          "day_night": "Rotate the Earth to see how day and night are created. Can you find where you are right now?",
+          "tilt_seasons": "Change the Earth's tilt. How does it affect the sunlight reaching the North Pole?",
+          "orbit_simulator": "Move the Earth around the Sun. Observe how the seasons change in Finland and Brazil."
+        },
+        "controls": {
+          "rotate_earth": "Rotate Earth",
+          "tilt_earth": "Tilt Earth",
+          "orbit_progress": "Orbit Progress",
+          "horizontal_pole": "Horizontal Pole",
+          "reset_view": "Reset View"
+        },
+        "feedback": {
+          "day": "It's daytime here!",
+          "night": "It's nighttime here!",
+          "summer": "Summer Solstice",
+          "winter": "Winter Solstice",
+          "spring": "Spring Equinox",
+          "autumn": "Autumn Equinox"
+        },
+        "data_labels": {
+          "season": "Season",
+          "daylight": "Daylight",
+          "avg_temp": "Avg Temp",
+          "nature": "Nature",
+          "dist_to_sun": "Dist. to Sun"
+        },
+        "view_modes": {
+          "earth_free": "Free Earth View",
+          "system_top": "Top-Down View"
+        },
+        "hints": {
+          "orbit": "Move the slider to see the Earth travel around the Sun!"
+        },
+        "finished": {
+          "title": "Mission Accomplished!",
+          "summary": "You have now",
+          "tasks": [
+            "Used rotation to create day and night.",
+            "Used tilt to create longer and shorter days in different places.",
+            "Used revolution to see how seasons change around the year."
+          ],
+          "next_steps": "Now you’re ready to see all of this happening in real space, with more planets!",
+          "astronaut_message": "Great job, space explorer! Now let’s see all this happening in the whole solar system, with all the planets. Are you ready to become a cool astronaut like me?"
+        },
+        "go_to_solar_system": "Go to Solar System View",
+        "spring_equinox": "Spring Equinox (Mar 21)",
+        "summer_solstice": "Summer Solstice (Jun 21)",
+        "autumn_equinox": "Autumn Equinox (Sep 21)",
+        "winter_solstice": "Winter Solstice (Dec 21)",
+        "perihelion": "Perihelion (Jan 3)",
+        "aphelion": "Aphelion (Jul 4)",
+        "north_pole": "North Pole",
+        "earth": "EARTH",
+        "sun": "SUN",
+        "day": "Day of Year: {{val}}",
+        "tilt": "Axial Tilt: {{val}}°",
+        "orbit": "Orbit Progress: {{val}}%",
+        "info_tilt": "The tilt of Earth's axis is the primary reason for the seasons.",
+        "info_orbit": "Earth's orbit around the Sun is elliptical, not a perfect circle."
+      },
+      "solar_system": {
+        "title": "Solar System View",
+        "desc": "Exploring all planets and their movements",
+        "initializing": "INITIALIZING SYSTEM...",
+        "planetary_focus": "Planetary Focus",
+        "overview": "Overview",
+        "speed": "Speed",
+        "north_pole": "North Pole",
+        "view_modes": {
+          "free_earth": "Free Earth View",
+          "solar_system": "Solar System Overview",
+          "top_down": "Top-Down View",
+          "cinematic": "Cinematic View",
+          "day": "Day View",
+          "night": "Night View"
+        },
+        "planets": {
+          "sun": "Sun",
+          "mercury": "Mercury",
+          "venus": "Venus",
+          "earth": "Earth",
+          "mars": "Mars",
+          "jupiter": "Jupiter",
+          "saturn": "Saturn",
+          "uranus": "Uranus",
+          "neptune": "Neptune"
+        },
+        "activities": {
+          "intro_1": "Hello explorer!\n\nYou made it far! Let's just review what you've learned regarding Earth, Moon, and Sun movements (in this app and in your classroom).\n\nFor this you will play a fun game in groups of 4 people.",
+          "start_activity_1": "Start Activity 1: The Astros Dance",
+          "activity_1": {
+            "title": "The Astros Dance",
+            "subtitle": "Work in groups of 4. Complete each step and check it off!",
+            "steps": [
+              "1 - Open any AI of your choice and ask it to randomly assign the roles of Commander, Sun, Earth, and Moon to each one of your group members (do not enter your full name, just first name to protect your privacy).",
+              "2 - Commander, prompt AI to suggest random combinations of location and its season, and moon phase (e.g. Summer in Finland with full moon, Spring in Brazil with new moon...). Don't show the others the result yet.",
+              "3 - Now the Commander must tell the combination that was generated and the other players must dance into the right places!",
+              "4- Repeat the process again to switch roles as many times as you wish!"
+            ],
+            "next": "Go to Activity 2"
+          },
+          "intro_2": "You guys rocked astro-dancing!\n\nNow let's keep the art alive and create something a bit crazy that will warm you up for this Exploration Mission of the Solar System View.",
+          "start_activity_2": "Start Activity 2",
+          "activity_2": {
+            "title": "Activity 2",
+            "instruction": "In pairs, groups, or working alone at home, choose a writing style (song, rap, poem, little story, etc) to express the correct order of all the planets of the Solar System!\n\nFollow your teacher's instructions on how and when to present your masterpiece.\n\nThen once you are ready, dive into the Solar System to see all planets and its features in the Exploration Mission."
+          },
+          "start_mission": "Start Exploration Mission"
+        }
+      },
+      "sizes_distances": {
+        "title": "Real Sizes and Distances",
+        "desc": "Discovering how vast space truly is",
+        "intro_title": "Real Sizes and Distances",
+        "intro_text": "Welcome to the Real Sizes and Distances tile!\nIn class, you’ve already talked about how far the Moon is from the Earth and tried to imagine where the Sun would be at that same scale.\nNow, this digital explorer will help you:\n\nZoom through different size scales\nCompare everything to Earth\nSee how long it would take to travel in space at different speeds\n\nReady to play with huge and tiny numbers at the same time?",
+        "start_button": "Start Digital Explorer",
+        "step_1_title": "Step 1 – Scale Zoomer: From Moon to Sun",
+        "step_1_desc": "In this step, you will use a zoom control to travel through different size scales.\nYou will start with Earth and the Moon, then zoom out to see inner planets, gas giants, and finally the Sun.\nWatch carefully how Earth’s size changes compared to everything else.",
+        "step_2_title": "Step 2 – Compare Everything to Earth",
+        "step_2_desc": "In this step, Earth becomes your reference size. Choose any other object and see it side by side with Earth at the same scale.",
+        "step_3_title": "Step 3 – Travel Time: How Long Would It Take?",
+        "step_3_desc": "Distances in space are not only big in kilometers. They are also huge in time, when you think about how fast we can travel.\nExplore how long it would take to reach different destinations at various speeds!",
+        "zoom_levels": {
+          "level_1": {
+            "label": "Scale level: Earth & Moon",
+            "text": "Here you see Earth and the Moon to scale in size.\n\nNotice:\n• The Moon is much smaller than Earth.\n• You can imagine the real distance between them from your hands-on classroom model.\n• Try to imagine: if these circles were your balls in class, where would the Sun be?"
+          },
+          "level_2": {
+            "label": "Scale level: Inner planets",
+            "text": "Now you see Mercury, Venus, Earth, and Mars side by side. All are drawn to the same size scale.\n\nLook at:\n• Which planet is smallest?\n• Which one is closest in size to Earth?\n• Where does Mars sit in this group?"
+          },
+          "level_3": {
+            "label": "Scale level: Gas giants added",
+            "text": "Now we add the gas giants: Jupiter and Saturn.\nEarth and the inner planets are still here, but look how small they seem now!\n\nThink:\n• How many Earths might fit across Jupiter’s diameter?\n• Do the inner planets feel more like ‘big rocks’ compared to these giants?"
+          },
+          "level_4": {
+            "label": "Scale level: Sun vs all planets",
+            "text": "Now the Sun joins the scene.\nAll the planets, even Jupiter and Saturn, start to look tiny compared to the Sun.\n\nNotice:\n• Earth is now almost just a dot.\n• The Sun is so huge that it dominates the whole picture."
+          }
+        },
+        "zoom_controls": {
+          "level_1": "Moon & Earth",
+          "level_2": "Inner Planets",
+          "level_3": "Gas Giants",
+          "level_4": "Sun vs All"
+        },
+        "zoom_level_indicator": "Zoom Level: {{val}}",
+        "select_object": "Select Object",
+        "choose_object_hint": "Choose an object to compare with Earth.",
+        "compare_label": "Earth and {{target}} at the same scale.",
+        "journey_title": "Choose Journey",
+        "speed_title": "Choose Speed",
+        "travel_log": "Travel Log",
+        "destination": "Destination",
+        "velocity": "Velocity",
+        "distance": "Distance",
+        "estimated_arrival": "Estimated Arrival Time",
+        "system_active": "SYSTEM_ACTIVE",
+        "next_step_2": "Go to Step 2 – Compare to Earth",
+        "next_step_3": "Go to Step 3 – Travel Time",
+        "back_to_dashboard": "Back to Dashboard",
+        "time_units": {
+          "seconds": "{{val}} seconds",
+          "minutes": "{{val}} minutes",
+          "hours": "{{val}} hours",
+          "days": "{{val}} days",
+          "months": "{{val}} months",
+          "years": "{{val}} years"
+        },
+        "travel_hints": {
+          "light_moon": "That’s faster than you can say ‘astronomy’!",
+          "light_general": "Space is really big, even at the universe’s speed limit!",
+          "walking": "At walking speed, this trip would take an absurd amount of time – longer than a human lifetime.",
+          "plane_sun": "At the speed of a normal passenger plane, it would take many years to get from Earth to the Sun.",
+          "general": "This shows how even the closest objects in space are unimaginably far for humans."
+        },
+        "planets": {
+          "Moon": "Moon",
+          "Mercury": "Mercury",
+          "Venus": "Venus",
+          "Earth": "Earth",
+          "Mars": "Mars",
+          "Jupiter": "Jupiter",
+          "Saturn": "Saturn",
+          "Uranus": "Uranus",
+          "Neptune": "Neptune",
+          "Sun": "Sun"
+        },
+        "planet_descriptions": {
+          "Moon": "The Moon is much smaller than Earth.",
+          "Mercury": "Mercury is the smallest planet in our solar system.",
+          "Venus": "Venus is almost the same size as Earth!",
+          "Earth": "Our home planet.",
+          "Mars": "Mars is about half the size of Earth.",
+          "Jupiter": "Jupiter is huge compared to Earth. About 11 Earths could fit across its diameter!",
+          "Saturn": "Saturn is the second largest planet, famous for its rings.",
+          "Uranus": "Uranus is an ice giant, about 4 times wider than Earth.",
+          "Neptune": "Neptune is very similar in size to Uranus.",
+          "Sun": "The Sun is so large that it dominates the whole picture."
+        },
+        "journeys": {
+          "earth-moon": "Earth → Moon",
+          "earth-sun": "Earth → Sun",
+          "earth-mars": "Earth → Mars",
+          "sun-neptune": "Sun → Neptune"
+        },
+        "speeds": {
+          "light": "Light speed",
+          "plane": "Commuter plane",
+          "car": "Car",
+          "walking": "Walking"
+        }
+      }
+    }
+  }
+}

@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import { AppView, ActivityId, GameMode } from './types';
 import Dashboard from './components/Dashboard';
-import OrbitCommand from './components/activities/OrbitCommand';
 import LightIncidence from './components/activities/LightIncidence';
 import TiltOrbitExplorer from './components/activities/TiltOrbitExplorer';
 import Earth3D from './components/activities/Earth3D';
 import SizesDistances from './components/activities/SizesDistances';
-import QuizModule from './components/QuizModule';
-import { ArrowLeft, Users, User, Info, Globe } from 'lucide-react';
+import { LanguageSelector } from './src/components/LanguageSelector';
+import { ArrowLeft, Globe, Users, User } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import './src/i18n';
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<AppView>(AppView.DASHBOARD);
+  const { t } = useTranslation();
+  const [currentView, setCurrentView] = useState<AppView>(AppView.LANGUAGE_SELECT);
   const [activeActivityId, setActiveActivityId] = useState<ActivityId | null>(null);
   const [gameMode, setGameMode] = useState<GameMode | null>(null);
   const [currentStage, setCurrentStage] = useState<string>('');
@@ -20,13 +22,13 @@ const App: React.FC = () => {
     setActiveActivityId(id);
     if (id === ActivityId.LIGHT_INCIDENCE) {
       setGameMode(GameMode.SOLO);
-      setCurrentStage('Light Incidence and Heating');
+      setCurrentStage(t('activities.light_incidence.title'));
     } else if (id === ActivityId.SIZES_DISTANCES) {
       setGameMode(GameMode.SOLO);
-      setCurrentStage('Real Sizes and Distances');
+      setCurrentStage(t('activities.sizes_distances.title'));
     } else {
       setGameMode(null);
-      setCurrentStage('Select Path');
+      setCurrentStage(t('dashboard.select_path'));
     }
     setCurrentView(AppView.ACTIVITY);
   };
@@ -45,7 +47,7 @@ const App: React.FC = () => {
     }
     if (gameMode && activeActivityId !== ActivityId.LIGHT_INCIDENCE && activeActivityId !== ActivityId.SIZES_DISTANCES) {
       setGameMode(null);
-      setCurrentStage('Select Path');
+      setCurrentStage(t('dashboard.select_path'));
     } else {
       setCurrentView(AppView.DASHBOARD);
       setActiveActivityId(null);
@@ -57,10 +59,10 @@ const App: React.FC = () => {
   const getActiveActivityTitle = () => {
     if (!activeActivityId) return '';
     const activities = [
-      { id: ActivityId.LIGHT_INCIDENCE, title: "Light & Heat" },
-      { id: ActivityId.SEASONS, title: "Tilt and Orbit Consequences" },
-      { id: ActivityId.ORBIT_REVOLUTION, title: "Solar System View" },
-      { id: ActivityId.SIZES_DISTANCES, title: "Real Sizes and Distances" }
+      { id: ActivityId.LIGHT_INCIDENCE, title: t('activities.light_incidence.title') },
+      { id: ActivityId.SEASONS, title: t('activities.tilt_orbit.title') },
+      { id: ActivityId.ORBIT_REVOLUTION, title: t('activities.solar_system.title') },
+      { id: ActivityId.SIZES_DISTANCES, title: t('activities.sizes_distances.title') }
     ];
     return activities.find(a => a.id === activeActivityId)?.title || '';
   };
@@ -70,7 +72,7 @@ const App: React.FC = () => {
       return (
         <div className="flex flex-col items-center justify-center h-full min-h-[50vh] space-y-8 animate-fade-in relative">
           <div className="relative">
-            <h2 className="text-2xl font-bold text-white">Select Path</h2>
+            <h2 className="text-2xl font-bold text-white">{t('dashboard.select_path')}</h2>
             {/* Floating Astronaut */}
             <div className="absolute -top-16 -right-16 animate-bounce-slow">
               <img 
@@ -85,24 +87,24 @@ const App: React.FC = () => {
             <button
               onClick={() => {
                 setGameMode(GameMode.GROUP);
-                setCurrentStage('Path 1: Warm-up');
+                setCurrentStage(t('dashboard.path1_title'));
               }}
               className="glass-panel hover:bg-white/5 transition-all flex flex-col items-center border-neon-pink/30 hover:border-neon-pink group"
             >
               <Users size={64} className="text-neon-pink mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-bold text-white text-center">Path 1: Warm-up with reflective and creative thinking</h3>
-              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">In class, before the simulation.</p>
+              <h3 className="text-2xl font-bold text-white text-center">{t('dashboard.path1_title')}</h3>
+              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">{t('dashboard.path1_desc')}</p>
             </button>
             <button
               onClick={() => {
                 setGameMode(GameMode.SOLO);
-                setCurrentStage('Path 2: Exploration');
+                setCurrentStage(t('dashboard.path2_title'));
               }}
               className="glass-panel hover:bg-white/5 transition-all flex flex-col items-center border-neon-blue/30 hover:border-neon-blue group"
             >
               <User size={64} className="text-neon-blue mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-2xl font-bold text-white text-center">Path 2: Exploration Mission</h3>
-              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">Interactive digital simulations.</p>
+              <h3 className="text-2xl font-bold text-white text-center">{t('dashboard.path2_title')}</h3>
+              <p className="text-center text-gray-400 mt-2 text-base leading-relaxed">{t('dashboard.path2_desc')}</p>
             </button>
           </div>
         </div>
@@ -150,40 +152,52 @@ const App: React.FC = () => {
       <div className="fixed inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-30 pointer-events-none -z-10 animate-pulse-slow"></div>
       
       {/* Header - Fixed Height */}
-      <header className="flex-none p-4 md:p-6 flex items-center justify-between glass-panel z-50 rounded-b-xl mx-2 md:mx-6 mb-2 shrink-0">
-        <div className="flex items-center">
-          {currentView === AppView.ACTIVITY && (
-            <button 
-              onClick={handleBack} 
-              className="mr-4 p-2 rounded-full hover:bg-white/10 transition-colors text-neon-blue"
-              title="Back"
-            >
-              <ArrowLeft size={24} />
-            </button>
-          )}
-          <div className="flex flex-col">
-            <span className="font-bold text-xl tracking-widest text-white leading-none">ASTROFINN</span>
+      {currentView !== AppView.LANGUAGE_SELECT && (
+        <header className="flex-none p-4 md:p-6 flex items-center justify-between glass-panel z-50 rounded-b-xl mx-2 md:mx-6 mb-2 shrink-0">
+          <div className="flex items-center">
             {currentView === AppView.ACTIVITY && (
-              <div className="flex items-center text-[10px] text-gray-400 mt-1 uppercase tracking-tighter">
-                <span className="text-neon-blue font-bold mr-1">{getActiveActivityTitle()}</span>
-                <span className="mx-1 opacity-50">|</span>
-                <span className="text-white/70">{currentStage}</span>
-              </div>
+              <button 
+                onClick={handleBack} 
+                className="mr-4 p-2 rounded-full hover:bg-white/10 transition-colors text-neon-blue"
+                title={t('common.back')}
+              >
+                <ArrowLeft size={24} />
+              </button>
             )}
+            <div className="flex flex-col">
+              <span className="font-bold text-xl tracking-widest text-white leading-none">ASTROFINN</span>
+              {currentView === AppView.ACTIVITY && (
+                <div className="flex items-center text-[10px] text-gray-400 mt-1 uppercase tracking-tighter">
+                  <span className="text-neon-blue font-bold mr-1">{getActiveActivityTitle()}</span>
+                  <span className="mx-1 opacity-50">|</span>
+                  <span className="text-white/70">{currentStage}</span>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-4">
-          <div className="hidden md:flex items-center text-xs font-mono text-gray-400">
-            <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-            SYSTEM ONLINE
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setCurrentView(AppView.LANGUAGE_SELECT)}
+              className="p-2 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white flex items-center gap-2"
+              title={t('common.change_language')}
+            >
+              <Globe size={20} />
+              <span className="hidden sm:inline text-xs font-mono uppercase tracking-widest">{t('common.language')}</span>
+            </button>
+            <div className="hidden md:flex items-center text-xs font-mono text-gray-400">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+              {t('common.system_online')}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Main Content Area - Scrollable */}
       <main className={`flex-1 overflow-y-auto overflow-x-hidden ${currentView === AppView.DASHBOARD ? 'p-4 md:px-6' : 'p-2 md:px-4 lg:px-4'} pb-6 w-full scrollbar-thin scrollbar-track-transparent scrollbar-thumb-space-700 hover:scrollbar-thumb-neon-blue`}>
          <div className="w-full h-full">
-            {currentView === AppView.DASHBOARD ? (
+            {currentView === AppView.LANGUAGE_SELECT ? (
+              <LanguageSelector onSelect={() => setCurrentView(AppView.DASHBOARD)} />
+            ) : currentView === AppView.DASHBOARD ? (
               <Dashboard onSelectActivity={handleSelectActivity} />
             ) : (
               <div className="animate-fade-in-up w-full h-full">

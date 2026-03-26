@@ -5,6 +5,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { Users, User, Info, ArrowRight, RotateCw, Move, Globe, Calendar, CheckCircle2, AlertCircle, Layout, ChevronLeft, ChevronRight } from 'lucide-react';
 import { GameMode } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 const TEXTURE_BASE_URL = 'https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/texture/';
 
@@ -601,18 +602,19 @@ const CameraController = ({ viewMode, earthTarget, orbitCenter }: {
 };
 
 const OrbitLabels = () => {
+  const { t } = useTranslation();
   // NASA data: Perihelion is ~Jan 3 (Day 3). Aphelion is ~July 4 (Day 185).
   // The angle formula used for Earth's position is:
   // angle = ((dayOfYear - 185) / 365) * 2 * Math.PI + Math.PI;
   const getAngle = (dayOfYear: number) => ((dayOfYear - 185) / 365) * 2 * Math.PI + Math.PI;
 
   const labels = [
-    { text: "Spring Equinox (Mar 21)", angle: getAngle(80) },
-    { text: "Summer Solstice (Jun 21)", angle: getAngle(172) },
-    { text: "Autumn Equinox (Sep 21)", angle: getAngle(264) },
-    { text: "Winter Solstice (Dec 21)", angle: getAngle(355) },
-    { text: "Perihelion (Jan 3)", angle: getAngle(3) },
-    { text: "Aphelion (Jul 4)", angle: getAngle(185) }
+    { text: t('activities.tilt_orbit.spring_equinox'), angle: getAngle(80) },
+    { text: t('activities.tilt_orbit.summer_solstice'), angle: getAngle(172) },
+    { text: t('activities.tilt_orbit.autumn_equinox'), angle: getAngle(264) },
+    { text: t('activities.tilt_orbit.winter_solstice'), angle: getAngle(355) },
+    { text: t('activities.tilt_orbit.perihelion'), angle: getAngle(3) },
+    { text: t('activities.tilt_orbit.aphelion'), angle: getAngle(185) }
   ];
 
   return (
@@ -708,6 +710,8 @@ const Earth = ({
     ? [labelOffsetX, 0, labelOffsetZ] 
     : [0, EARTH_RADIUS + 2.5, 0];
 
+  const { t } = useTranslation();
+
   return (
     <group position={position}>
       <group rotation={[poleRotation, 0, 0]}>
@@ -780,7 +784,7 @@ const Earth = ({
             >
               <div className="flex flex-col items-center transform -translate-x-1/2 -translate-y-full">
                  <div className="bg-black/60 border border-neon-pink px-2 py-1 rounded text-base font-bold text-neon-pink whitespace-nowrap backdrop-blur-sm shadow-[0_0_10px_rgba(255,0,127,0.3)]">
-                   North Pole
+                   {t('activities.tilt_orbit.north_pole')}
                  </div>
                  <div className="w-px h-2 bg-neon-pink"></div>
               </div>
@@ -793,7 +797,7 @@ const Earth = ({
         {isTopDownView && (
           <Html distanceFactor={350} position={labelPosition} center style={{ pointerEvents: 'none' }}>
             <div className="text-yellow-400 text-[14px] font-mono font-bold whitespace-nowrap drop-shadow-[0_0_4px_rgba(0,0,0,0.9)]">
-              EARTH
+              {t('activities.tilt_orbit.earth')}
             </div>
           </Html>
         )}
@@ -837,6 +841,7 @@ interface TiltOrbitExplorerProps {
 }
 
 const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateToSolarSystem, onHome, setStage, setBackIntercept }) => {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<Phase>(mode === GameMode.SOLO ? Phase.PHASE1 : Phase.DISCUSSION);
   const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.EARTH_FREE);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -848,14 +853,14 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
 
   useEffect(() => {
     switch (phase) {
-      case Phase.DISCUSSION: setStage('Discussion'); break;
-      case Phase.PHASE1: setStage('Part 1: Day & Night'); break;
-      case Phase.PHASE2: setStage('Part 2: Summer in Finland'); break;
-      case Phase.PHASE3: setStage('Part 3: Revolution'); break;
-      case Phase.PHASE4: setStage('Orbit Simulator'); break;
-      case Phase.FINISHED: setStage('Mission Complete'); break;
+      case Phase.DISCUSSION: setStage(t('activities.tilt_orbit.phases.discussion')); break;
+      case Phase.PHASE1: setStage(t('activities.tilt_orbit.phases.phase1')); break;
+      case Phase.PHASE2: setStage(t('activities.tilt_orbit.phases.phase2')); break;
+      case Phase.PHASE3: setStage(t('activities.tilt_orbit.phases.phase3')); break;
+      case Phase.PHASE4: setStage(t('activities.tilt_orbit.phases.phase4')); break;
+      case Phase.FINISHED: setStage(t('activities.tilt_orbit.phases.finished')); break;
     }
-  }, [phase, setStage]);
+  }, [phase, setStage, t]);
 
   useEffect(() => {
     if (setBackIntercept) {
@@ -893,40 +898,40 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
     const day = date.getDate();
     
     const distStr = realDist 
-      ? `${realDist.toFixed(1)} million km`
-      : "149.6 million km";
+      ? `${realDist.toFixed(1)} ${t('activities.tilt_orbit.million_km')}`
+      : `149.6 ${t('activities.tilt_orbit.million_km')}`;
 
     // Approximate data for Finland (Oulu/Helsinki average)
     if ((month === 6 && day >= 20) || month === 7 || month === 8 || (month === 9 && day < 20)) {
       return {
-        season: "Summer",
-        daylight: "19h - 24h",
-        temp: "15°C to 25°C",
-        nature: "Green trees, flowers, bright days",
-        dist: realDist ? distStr : "152 million km (Aphelion)"
+        season: t('activities.tilt_orbit.seasons.summer'),
+        daylight: t('activities.tilt_orbit.data_values.summer_daylight'),
+        temp: t('activities.tilt_orbit.data_values.summer_temp'),
+        nature: t('activities.tilt_orbit.nature.summer'),
+        dist: realDist ? distStr : `152 ${t('activities.tilt_orbit.million_km')} (${t('activities.tilt_orbit.aphelion')})`
       };
     } else if ((month === 12 && day >= 20) || month === 1 || month === 2 || (month === 3 && day < 20)) {
       return {
-        season: "Winter",
-        daylight: "0h - 6h",
-        temp: "-5°C to -20°C",
-        nature: "Snowy, dark, Kaamos (Polar Night)",
-        dist: realDist ? distStr : "147 million km (Perihelion)"
+        season: t('activities.tilt_orbit.seasons.winter'),
+        daylight: t('activities.tilt_orbit.data_values.winter_daylight'),
+        temp: t('activities.tilt_orbit.data_values.winter_temp'),
+        nature: t('activities.tilt_orbit.nature.winter'),
+        dist: realDist ? distStr : `147 ${t('activities.tilt_orbit.million_km')} (${t('activities.tilt_orbit.perihelion')})`
       };
     } else if ((month === 3 && day >= 20) || month === 4 || month === 5 || (month === 6 && day < 20)) {
       return {
-        season: "Spring",
-        daylight: "12h - 18h",
-        temp: "0°C to 10°C",
-        nature: "Snow melting, flowers coming soon",
+        season: t('activities.tilt_orbit.seasons.spring'),
+        daylight: t('activities.tilt_orbit.data_values.spring_daylight'),
+        temp: t('activities.tilt_orbit.data_values.spring_temp'),
+        nature: t('activities.tilt_orbit.nature.spring'),
         dist: distStr
       };
     } else {
       return {
-        season: "Autumn",
-        daylight: "12h - 8h",
-        temp: "5°C to 12°C",
-        nature: "Leaves falling, colorful nature",
+        season: t('activities.tilt_orbit.seasons.autumn'),
+        daylight: t('activities.tilt_orbit.data_values.autumn_daylight'),
+        temp: t('activities.tilt_orbit.data_values.autumn_temp'),
+        nature: t('activities.tilt_orbit.nature.autumn'),
         dist: distStr
       };
     }
@@ -984,22 +989,22 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 referrerPolicy="no-referrer"
               />
               <p className="text-base leading-relaxed text-gray-200 italic">
-                Hey explorers! You have seen how the angle of light can change heating effects. Now, we will explore the angle of the Earth and its consequences while orbiting the Sun. But... why is Earth angled (tilted) to begin with? Let's complete this creative mission task to find out!
+                {t('activities.tilt_orbit.discussion.intro')}
               </p>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="glass-panel border-neon-pink/30 flex flex-col h-full">
                 <h3 className="text-2xl font-bold text-neon-pink mb-6 flex items-center">
-                  <Users className="mr-2" /> Mission Task
+                  <Users className="mr-2" /> {t('activities.tilt_orbit.mission_task')}
                 </h3>
                 <div className="space-y-6">
                   {[
-                    "1- In 5 minutes, create the craziest story to explain why Earth became tilted as it is today.",
-                    "2- Share your story with everyone and listen to other stories as well.",
-                    "3- Search online the possible reasons why the Earth is tilted and any fun facts about it.",
-                    "4- Compare with your peers who got closer to the accepted theories.",
-                    "5- Discuss with your peers how the tilt may impact seasons on Earth. (Hint: remember the flashlight? More tilting = More light spread)."
+                    t('activities.tilt_orbit.discussion.tasks.0'),
+                    t('activities.tilt_orbit.discussion.tasks.1'),
+                    t('activities.tilt_orbit.discussion.tasks.2'),
+                    t('activities.tilt_orbit.discussion.tasks.3'),
+                    t('activities.tilt_orbit.discussion.tasks.4')
                   ].map((taskText, index) => (
                     <label key={index} className="flex items-start space-x-4 cursor-pointer group">
                       <div className="relative flex items-center justify-center mt-1 shrink-0">
@@ -1027,17 +1032,17 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
 
               <div className="glass-panel border-neon-blue/30 flex flex-col h-full">
                 <h3 className="text-2xl font-bold text-neon-blue mb-4 flex items-center">
-                  <Info className="mr-2" /> Optional Task
+                  <Info className="mr-2" /> {t('activities.tilt_orbit.optional_task')}
                 </h3>
                 <p className="text-gray-300 text-base leading-relaxed mb-6">
-                  Have you ever thought why orbits even exist? Explore online to see if you find the explanation! Here is a video to help you visualize how the Sun bends space to attract the planets.
+                  {t('activities.tilt_orbit.discussion.optional_desc')}
                 </p>
                 <div className="flex-1 min-h-[300px] rounded-xl overflow-hidden border border-white/10">
                   <iframe 
                     width="100%" 
                     height="100%" 
                     src="https://www.youtube.com/embed/Am5pWWlFmyc" 
-                    title="Why Orbits Happen" 
+                    title={t('activities.tilt_orbit.discussion.video_title')}
                     frameBorder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                     allowFullScreen
@@ -1053,7 +1058,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 disabled={!allTasksCompleted}
                 className={`btn-primary px-8 py-4 text-2xl font-bold ${!allTasksCompleted ? 'opacity-50 grayscale' : ''}`}
               >
-                Start Exploration Mission
+                {t('activities.tilt_orbit.start_mission')}
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
@@ -1066,9 +1071,9 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             <div className="flex flex-col space-y-6">
               {/* Mission Task Box */}
               <div className="glass-panel border-l-4 border-neon-blue">
-                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">Mission Task</h3>
+                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">{t('activities.tilt_orbit.mission_task')}</h3>
                 <p className="text-white text-base leading-relaxed">
-                  Let's play with tilt and orbit! Reflect with your teacher and peers, then choose what to do next. You can always zoom in and use the control bar to see more details.
+                  {t('activities.tilt_orbit.phase1.task')}
                 </p>
               </div>
 
@@ -1077,22 +1082,22 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
               <div className="space-y-4">
                 <div className="grid gap-3">
                   <button 
-                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase1.error'), Phase.PHASE1)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Move Sun side to side
+                    {t('activities.tilt_orbit.phase1.choices.0')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase1.error'), Phase.PHASE1)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Move Earth up and down
+                    {t('activities.tilt_orbit.phase1.choices.1')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(true, "Good job! Rotation is the key for us to have nights and days everywhere!", "", Phase.PHASE2)}
+                    onClick={() => handleChoice(true, t('activities.tilt_orbit.phase1.success'), "", Phase.PHASE2)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Spin the Earth around itself
+                    {t('activities.tilt_orbit.phase1.choices.2')}
                   </button>
                 </div>
               </div>
@@ -1105,14 +1110,14 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             </div>
             <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
               <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
-                The green pinpoint is Finland.
+                {t('activities.tilt_orbit.finland_pinpoint')}
               </div>
               
               {/* Horizontal Pole Control */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
-                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">{t('activities.tilt_orbit.move_to_see_poles')}</span>
                 <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
-                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+                  <span className="text-[8px] font-bold text-neon-pink">{t('activities.tilt_orbit.south')}</span>
                   <input 
                     type="range" 
                     min={-Math.PI/2} 
@@ -1122,7 +1127,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                     onChange={(e) => setPoleRotation(parseFloat(e.target.value))}
                     className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
                   />
-                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+                  <span className="text-[8px] font-bold text-neon-blue">{t('activities.tilt_orbit.north')}</span>
                 </div>
               </div>
 
@@ -1155,9 +1160,9 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             <div className="flex flex-col space-y-6">
               {/* Mission Task Box */}
               <div className="glass-panel border-l-4 border-neon-blue">
-                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">Mission Task</h3>
+                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">{t('activities.tilt_orbit.mission_task')}</h3>
                 <p className="text-white text-base leading-relaxed">
-                  Wohoo! Days are back for everyone, baby! But... I wish it was Summer in Finland with those very long and bright days... Talk to your peers and teacher, to see what you can do to help me!
+                  {t('activities.tilt_orbit.phase2.task')}
                 </p>
               </div>
 
@@ -1166,22 +1171,22 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
               <div className="space-y-4">
                 <div className="grid gap-3">
                   <button 
-                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase2.error'), Phase.PHASE2)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Move the Sun over to the North Pole
+                    {t('activities.tilt_orbit.phase2.choices.0')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(true, "Yes! Tilting teh Earth is the key for us to have more light in Finland!", "", Phase.PHASE3)}
+                    onClick={() => handleChoice(true, t('activities.tilt_orbit.phase2.success'), "", Phase.PHASE3)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Lean the North Pole towards the Sun
+                    {t('activities.tilt_orbit.phase2.choices.1')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase2.error'), Phase.PHASE2)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Spin the Earth faster to have sunlight more times
+                    {t('activities.tilt_orbit.phase2.choices.2')}
                   </button>
                 </div>
               </div>
@@ -1194,14 +1199,14 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             </div>
             <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
               <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
-                The green pinpoint is Finland.
+                {t('activities.tilt_orbit.finland_pinpoint')}
               </div>
 
               {/* Horizontal Pole Control */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
-                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">{t('activities.tilt_orbit.move_to_see_poles')}</span>
                 <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
-                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+                  <span className="text-[8px] font-bold text-neon-pink">{t('activities.tilt_orbit.south')}</span>
                   <input 
                     type="range" 
                     min={-Math.PI/2} 
@@ -1211,7 +1216,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                     onChange={(e) => setPoleRotation(parseFloat(e.target.value))}
                     className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
                   />
-                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+                  <span className="text-[8px] font-bold text-neon-blue">{t('activities.tilt_orbit.north')}</span>
                 </div>
               </div>
 
@@ -1244,9 +1249,9 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             <div className="flex flex-col space-y-6">
               {/* Mission Task Box */}
               <div className="glass-panel border-l-4 border-neon-blue">
-                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">Mission Task</h3>
+                <h3 className="font-bold text-neon-blue text-2xl mb-2 uppercase tracking-wider">{t('activities.tilt_orbit.mission_task')}</h3>
                 <p className="text-white text-base leading-relaxed">
-                  Get your sunglasses because Summer arrived to Finland! Reflect with your teacher and peers to restore the balance of seasons.
+                  {t('activities.tilt_orbit.phase3.task')}
                 </p>
               </div>
 
@@ -1255,22 +1260,22 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
               <div className="space-y-4">
                 <div className="grid gap-3">
                   <button 
-                    onClick={() => handleChoice(false, "", "not quite, but it would be interesting to be able to move the Sun in real life... try again and choose the option that will evenly share Summer for both poles")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase3.error0'), Phase.PHASE3)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Move the Sun over to the South Pole
+                    {t('activities.tilt_orbit.phase3.choices.0')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(false, "", "I wish it was that simple, but Earth has a fixed tilt... try again and choose the option that will evenly share Summer for both poles")}
+                    onClick={() => handleChoice(false, "", t('activities.tilt_orbit.phase3.error1'), Phase.PHASE3)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Lean the South Pole towards the Sun
+                    {t('activities.tilt_orbit.phase3.choices.1')}
                   </button>
                   <button 
-                    onClick={() => handleChoice(true, "Great choice! Revolution is the key for both poles to have the chance for a nice Summer!", "", Phase.PHASE4)}
+                    onClick={() => handleChoice(true, t('activities.tilt_orbit.phase3.success'), "", Phase.PHASE4)}
                     className="p-4 rounded-xl border border-white/10 hover:bg-white/5 text-left transition-all text-base leading-relaxed"
                   >
-                    Revolve the Earth around the Sun
+                    {t('activities.tilt_orbit.phase3.choices.2')}
                   </button>
                 </div>
               </div>
@@ -1283,14 +1288,14 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             </div>
             <div className="relative h-[400px] lg:h-full bg-black/40 rounded-2xl overflow-hidden border border-white/5">
               <div className="absolute top-4 right-4 z-10 bg-black/60 px-3 py-1 rounded-full text-[10px] font-bold text-[#39FF14] border border-[#39FF14]/30">
-                The green pinpoint is Finland.
+                {t('activities.tilt_orbit.finland_pinpoint')}
               </div>
 
               {/* Horizontal Pole Control */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 w-full max-w-xs">
-                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">Move here to see the poles</span>
+                <span className="text-[10px] font-bold text-white/50 uppercase mb-1">{t('activities.tilt_orbit.move_to_see_poles')}</span>
                 <div className="flex items-center bg-white/5 rounded-full p-4 border border-white/10 w-full justify-between">
-                  <span className="text-[8px] font-bold text-neon-pink">SOUTH</span>
+                  <span className="text-[8px] font-bold text-neon-pink">{t('activities.tilt_orbit.south')}</span>
                   <input 
                     type="range" 
                     min={-Math.PI/2} 
@@ -1300,7 +1305,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                     onChange={(e) => setPoleRotation(parseFloat(e.target.value))}
                     className="flex-1 mx-4 h-1 appearance-none bg-white/10 rounded-full cursor-pointer accent-neon-blue"
                   />
-                  <span className="text-[8px] font-bold text-neon-blue">NORTH</span>
+                  <span className="text-[8px] font-bold text-neon-blue">{t('activities.tilt_orbit.north')}</span>
                 </div>
               </div>
 
@@ -1338,7 +1343,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 className={`absolute top-4 z-50 p-2 bg-black/40 backdrop-blur-md border border-white/20 rounded-full text-white hover:bg-white/20 transition-all duration-500 shadow-[0_0_15px_rgba(0,0,0,0.5)] ${
                   isSidebarOpen ? 'left-[268px]' : 'left-4'
                 }`}
-                title={isSidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
+                title={isSidebarOpen ? t('activities.tilt_orbit.collapse_sidebar') : t('activities.tilt_orbit.expand_sidebar')}
               >
                 {isSidebarOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
               </button>
@@ -1353,21 +1358,21 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                     className={`p-2 rounded-xl flex items-center gap-2 transition-all border ${viewMode === ViewMode.EARTH_FREE ? 'bg-neon-blue border-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]' : 'bg-black/40 border-white/10 text-white/70 hover:bg-white/10'}`}
                   >
                     <Globe size={16} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Free Earth View</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider">{t('activities.tilt_orbit.view_modes.earth_free')}</span>
                   </button>
                   <button 
                     onClick={() => setViewMode(ViewMode.SYSTEM_TOP)}
                     className={`p-2 rounded-xl flex items-center gap-2 transition-all border ${viewMode === ViewMode.SYSTEM_TOP ? 'bg-neon-blue border-neon-blue text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]' : 'bg-black/40 border-white/10 text-white/70 hover:bg-white/10'}`}
                   >
                     <Layout size={16} />
-                    <span className="text-[10px] font-bold uppercase tracking-wider">Top-Down View</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider">{t('activities.tilt_orbit.view_modes.system_top')}</span>
                   </button>
                 </div>
 
                 {/* Date Selection */}
                 <div className="glass-panel border-l-2 border-neon-purple p-3 bg-black/40 shadow-lg">
                   <h3 className="font-bold text-neon-purple text-[10px] mb-2 uppercase tracking-widest flex items-center gap-1">
-                    <Calendar size={12} /> Select Date
+                    <Calendar size={12} /> {t('activities.tilt_orbit.select_date')}
                   </h3>
                   <div className="flex gap-2">
                     <select 
@@ -1381,18 +1386,18 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                       }}
                       className="flex-1 bg-space-900/80 border border-white/10 rounded p-1.5 text-[10px] text-white focus:border-neon-blue outline-none cursor-pointer hover:bg-space-800 transition-colors"
                     >
-                      <option value="01">January</option>
-                      <option value="02">February</option>
-                      <option value="03">March</option>
-                      <option value="04">April</option>
-                      <option value="05">May</option>
-                      <option value="06">June</option>
-                      <option value="07">July</option>
-                      <option value="08">August</option>
-                      <option value="09">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
+                      <option value="01">{t('months.january')}</option>
+                      <option value="02">{t('months.february')}</option>
+                      <option value="03">{t('months.march')}</option>
+                      <option value="04">{t('months.april')}</option>
+                      <option value="05">{t('months.may')}</option>
+                      <option value="06">{t('months.june')}</option>
+                      <option value="07">{t('months.july')}</option>
+                      <option value="08">{t('months.august')}</option>
+                      <option value="09">{t('months.september')}</option>
+                      <option value="10">{t('months.october')}</option>
+                      <option value="11">{t('months.november')}</option>
+                      <option value="12">{t('months.december')}</option>
                     </select>
                     <select 
                       value={orbitDate.split('-')[2]}
@@ -1411,26 +1416,26 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
 
                 {/* Finland Data */}
                 <div className="glass-panel border-l-2 border-neon-pink p-3 bg-black/40 shadow-lg">
-                  <h3 className="font-bold text-neon-pink text-[10px] mb-2 uppercase tracking-widest">Finland Data</h3>
+                  <h3 className="font-bold text-neon-pink text-[10px] mb-2 uppercase tracking-widest">{t('activities.tilt_orbit.finland_data')}</h3>
                   <div className="grid grid-cols-1 gap-1.5 text-[10px] leading-relaxed">
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-gray-400">Season:</span>
+                      <span className="text-gray-400">{t('activities.tilt_orbit.data_labels.season')}:</span>
                       <span className="text-white font-bold">{finlandData.season}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-gray-400">Daylight:</span>
+                      <span className="text-gray-400">{t('activities.tilt_orbit.data_labels.daylight')}:</span>
                       <span className="text-white font-mono">{finlandData.daylight}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-gray-400">Avg Temp:</span>
+                      <span className="text-gray-400">{t('activities.tilt_orbit.data_labels.avg_temp')}:</span>
                       <span className="text-white font-mono">{finlandData.temp}</span>
                     </div>
                     <div className="flex justify-between border-b border-white/5 pb-1">
-                      <span className="text-gray-400">Nature:</span>
+                      <span className="text-gray-400">{t('activities.tilt_orbit.data_labels.nature')}:</span>
                       <span className="text-white text-right">{finlandData.nature}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-400">Dist. to Sun:</span>
+                      <span className="text-gray-400">{t('activities.tilt_orbit.data_labels.dist_to_sun')}:</span>
                       <span className="text-white font-mono">{finlandData.dist}</span>
                     </div>
                   </div>
@@ -1445,7 +1450,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                       className="w-10 h-10 shrink-0 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]"
                     />
                     <p className="text-xs leading-snug text-gray-200 text-left m-0 italic font-medium">
-                      Once you're done here, you can explore the full Solar System from the dashboard.
+                      {t('activities.tilt_orbit.phase4.astronaut_hint')}
                     </p>
                   </div>
                   
@@ -1453,7 +1458,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                     onClick={onHome} 
                     className="btn-primary w-full py-3 text-xs uppercase font-bold tracking-widest shadow-lg"
                   >
-                    Back to Dashboard
+                    {t('common.back_to_dashboard')}
                   </button>
                 </div>
 
@@ -1536,36 +1541,36 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
             <div className="inline-flex p-4 bg-neon-green/10 rounded-full mb-4">
               <CheckCircle2 size={64} className="text-neon-green" />
             </div>
-            <h2 className="text-2xl font-bold text-white">Mission Accomplished!</h2>
+            <h2 className="text-2xl font-bold text-white">{t('activities.tilt_orbit.finished.title')}</h2>
             <div className="glass-panel space-y-4 text-left">
-              <p className="text-base leading-relaxed text-gray-300">You have now:</p>
+              <p className="text-base leading-relaxed text-gray-300">{t('activities.tilt_orbit.finished.summary')}:</p>
               <ul className="space-y-3">
                 <li className="flex items-center text-neon-blue">
-                  <RotateCw className="mr-3" size={20} /> Used rotation to create day and night.
+                  <RotateCw className="mr-3" size={20} /> {t('activities.tilt_orbit.finished.tasks.0')}
                 </li>
                 <li className="flex items-center text-neon-pink">
-                  <Move className="mr-3" size={20} /> Used tilt to create longer and shorter days in different places.
+                  <Move className="mr-3" size={20} /> {t('activities.tilt_orbit.finished.tasks.1')}
                 </li>
                 <li className="flex items-center text-neon-green">
-                  <Globe className="mr-3" size={20} /> Used revolution to see how seasons change around the year.
+                  <Globe className="mr-3" size={20} /> {t('activities.tilt_orbit.finished.tasks.2')}
                 </li>
               </ul>
-              <p className="text-base leading-relaxed text-white mt-6 font-bold">Now you’re ready to see all of this happening in real space, with more planets!</p>
+              <p className="text-base leading-relaxed text-white mt-6 font-bold">{t('activities.tilt_orbit.finished.next_steps')}</p>
             </div>
-            {renderGuruBubble("Great job, space explorer! Now let’s see all this happening in the whole solar system, with all the planets. Are you ready to become a cool astronaut like me?")}
+            {renderGuruBubble(t('activities.tilt_orbit.finished.astronaut_message'))}
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button 
                 onClick={onHome} 
                 className="btn-secondary px-8 py-3"
               >
-                Back to Dashboard
+                {t('common.back_to_dashboard')}
               </button>
               {onNavigateToSolarSystem && (
                 <button 
                   onClick={onNavigateToSolarSystem}
                   className="btn-primary px-8 py-3"
                 >
-                  <Globe className="mr-2" size={20} /> Go to Solar System View
+                  <Globe className="mr-2" size={20} /> {t('activities.tilt_orbit.go_to_solar_system')}
                 </button>
               )}
             </div>

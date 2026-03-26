@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GameMode } from '../../types';
 import { Sun, ArrowRight, ArrowLeft, Rocket } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface LightIncidenceProps {
   mode: GameMode;
@@ -10,6 +11,7 @@ interface LightIncidenceProps {
 }
 
 const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBackIntercept }) => {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<'A' | 'B'>('A');
   const [angle, setAngle] = useState(90);
   const [ballY, setBallY] = useState(0);
@@ -32,8 +34,8 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
   }, [phase, setBackIntercept]);
 
   React.useEffect(() => {
-    setStage('Light Incidence and Heating');
-  }, [setStage]);
+    setStage(t('activities.light_incidence.title'));
+  }, [setStage, t]);
 
   // Derived values for Phase A
   const spread = angle > 60 ? 'small' : angle > 30 ? 'medium' : 'large';
@@ -47,7 +49,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
     <div className="max-w-7xl mx-auto space-y-8 pb-12">
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300">
-          Light Incidence and Heating
+          {t('activities.light_incidence.title')}
         </h1>
       </div>
 
@@ -57,13 +59,13 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
             onClick={() => setPhase('A')}
             className={`px-6 py-2 rounded-md font-medium transition-colors ${phase === 'A' ? 'bg-orange-500 text-white' : 'text-gray-400 hover:text-white'}`}
           >
-            Phase A: Moving Flashlight
+            {t('activities.light_incidence.phase_a')}
           </button>
           <button
             onClick={() => setPhase('B')}
             className={`px-6 py-2 rounded-md font-medium transition-colors ${phase === 'B' ? 'bg-blue-500 text-white' : 'text-gray-400 hover:text-white'}`}
           >
-            Phase B: Moving Ball
+            {t('activities.light_incidence.phase_b')}
           </button>
         </div>
       </div>
@@ -71,9 +73,9 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
       {phase === 'A' ? (
         <div className="w-full">
           <div className="glass-panel flex flex-col w-full">
-            <h2 className="text-2xl font-bold text-white mb-2">Magic Heating Flashlight</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('activities.light_incidence.title')}</h2>
             <p className="text-gray-400 text-base leading-relaxed mb-6 italic">
-              This is a magic heating flashlight. It always sends the same light, but the heating changes with the angle.
+              {t('activities.light_incidence.info_a')}
             </p>
 
             {/* Simulation Area */}
@@ -267,7 +269,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm text-gray-300 mb-2">
-                  <span>Angle of light</span>
+                  <span>{t('activities.light_incidence.angle')}</span>
                   <span className="font-mono text-orange-400">{angle}°</span>
                 </div>
                 <input
@@ -279,20 +281,20 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
                   className="w-full accent-orange-500"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>0° (Glancing)</span>
-                  <span>90° (Direct)</span>
+                  <span>{t('activities.light_incidence.angle_glancing')}</span>
+                  <span>{t('activities.light_incidence.angle_direct')}</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-4">
                 <div className="bg-space-800 p-3 rounded-lg border border-white/5">
-                  <div className="text-xs text-gray-500 uppercase">Light Spread</div>
-                  <div className="text-lg font-bold text-white capitalize">{spread}</div>
+                  <div className="text-xs text-gray-500 uppercase">{t('activities.light_incidence.spread')}</div>
+                  <div className="text-lg font-bold text-white capitalize">{t(`activities.light_incidence.${spread}`)}</div>
                 </div>
                 <div className="bg-space-800 p-3 rounded-lg border border-white/5">
-                  <div className="text-xs text-gray-500 uppercase">Heating</div>
+                  <div className="text-xs text-gray-500 uppercase">{t('activities.light_incidence.heat')}</div>
                   <div className={`text-lg font-bold capitalize ${heat === 'high' ? 'text-red-400' : heat === 'medium' ? 'text-orange-400' : 'text-yellow-200'}`}>
-                    {heat}
+                    {t(`activities.light_incidence.${heat}`)}
                   </div>
                 </div>
               </div>
@@ -302,7 +304,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
       ) : (
         <div className="w-full animate-fade-in space-y-8">
           <div className="glass-panel flex flex-col w-full">
-            <h2 className="text-2xl font-bold text-white mb-6">Moving the Ball</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('activities.light_incidence.phase_b')}</h2>
 
             {/* Simulation Area */}
             <div className="relative flex-1 min-h-[350px] bg-gradient-to-b from-space-900 to-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center mb-6 shadow-2xl">
@@ -438,7 +440,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm text-gray-300 mb-2">
-                  <span>Move the ball up/down</span>
+                  <span>{t('activities.light_incidence.info_b')}</span>
                 </div>
                 <input
                   type="range"
@@ -451,9 +453,9 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
               </div>
 
               <div className="bg-space-800 p-3 rounded-lg border border-white/5 mt-4 text-center">
-                <div className="text-xs text-gray-500 uppercase">Heating Intensity</div>
+                <div className="text-xs text-gray-500 uppercase">{t('activities.light_incidence.heating')}</div>
                 <div className={`text-xl font-bold capitalize ${phaseBHeat === 'high' ? 'text-red-400' : phaseBHeat === 'medium' ? 'text-orange-400' : 'text-blue-300'}`}>
-                  {phaseBHeat}
+                  {t(`activities.light_incidence.${phaseBHeat}`)}
                 </div>
               </div>
             </div>
@@ -467,7 +469,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
               referrerPolicy="no-referrer"
             />
             <p className="text-green-200 italic text-base leading-relaxed">
-              Great work, explorer! Once you are done exploring and reflecting according to your teacher's instructions, we can move onto the "Tilt and Orbit Consequences" area of the app.
+              {t('activities.light_incidence.astronaut_feedback')}
             </p>
           </div>
 
@@ -477,7 +479,7 @@ const LightIncidence: React.FC<LightIncidenceProps> = ({ setStage, onHome, setBa
                 onClick={onHome}
                 className="btn-primary px-8 py-3 text-2xl font-bold"
               >
-                Return to Dashboard
+                {t('back_to_dashboard')}
               </button>
             </div>
           )}

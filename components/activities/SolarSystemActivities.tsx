@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CheckCircle2, Circle, ArrowRight, Play, Users, PenTool, Rocket } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 
 interface SolarSystemActivitiesProps {
   onComplete: () => void;
@@ -15,6 +16,7 @@ enum ActivityPhase {
 }
 
 export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ onComplete, setBackIntercept }) => {
+  const { t } = useTranslation();
   const [phase, setPhase] = useState<ActivityPhase>(ActivityPhase.INTRO_1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
@@ -77,13 +79,13 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             animate={{ opacity: 1, y: 0 }}
             className="space-y-8 flex flex-col items-center"
           >
-            {renderAstronautBubble("Hello explorer!\n\nYou made it far! Let's just review what you've learned regarding Earth, Moon, and Sun movements (in this app and in your classroom).\n\nFor this you will play a fun game in groups of 4 people.")}
+            {renderAstronautBubble(t('activities.solar_system.activities.intro_1'))}
             
             <button 
               onClick={() => setPhase(ActivityPhase.ACTIVITY_1)}
               className="mt-8 btn-primary px-8 py-3 text-xl font-bold"
             >
-              <Play className="mr-3" /> Start Activity 1: The Astros Dance
+              <Play className="mr-3" /> {t('activities.solar_system.activities.start_activity_1')}
             </button>
           </motion.div>
         )}
@@ -95,7 +97,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             className="glass-panel w-full"
           >
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
-              <Users className="mr-3 text-neon-blue" /> The Astros Dance
+              <Users className="mr-3 text-neon-blue" /> {t('activities.solar_system.activities.activity_1.title')}
               <img 
                 src="https://raw.githubusercontent.com/LauraGoretti/Astrofinn/main/icons/astronaut.png" 
                 alt="Astronaut" 
@@ -103,15 +105,10 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                 referrerPolicy="no-referrer"
               />
             </h2>
-            <p className="text-gray-300 mb-6 text-center text-base leading-relaxed">Work in groups of 4. Complete each step and check it off!</p>
+            <p className="text-gray-300 mb-6 text-center text-base leading-relaxed">{t('activities.solar_system.activities.activity_1.subtitle')}</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-              {[
-                "1 - Open any AI of your choice and ask it to randomly assign the roles of Commander, Sun, Earth, and Moon to each one of your group members (do not enter your full name, just first name to protect your privacy).",
-                "2 - Commander, prompt AI to suggest random combinations of location and its season, and moon phase (e.g. Summer in Finland with full moon, Spring in Brazil with new moon...). Don't show the others the result yet.",
-                "3 - Now the Commander must tell the combination that was generated and the other players must dance into the right places!",
-                "4- Repeat the process again to switch roles as many times as you wish!"
-              ].map((step, index) => (
+              {(t('activities.solar_system.activities.activity_1.steps', { returnObjects: true }) as string[]).map((step, index) => (
                 <div 
                   key={index}
                   onClick={() => toggleStep(index)}
@@ -146,7 +143,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                     : 'bg-gray-700 text-gray-400 cursor-not-allowed rounded-full'
                 }`}
               >
-                Go to Activity 2 <ArrowRight className="ml-2" />
+                {t('activities.solar_system.activities.activity_1.next')} <ArrowRight className="ml-2" />
               </button>
             </div>
           </motion.div>
@@ -158,13 +155,13 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             animate={{ opacity: 1, y: 0 }}
             className="space-y-8 flex flex-col items-center"
           >
-            {renderAstronautBubble("You guys rocked astro-dancing!\n\nNow let's keep the art alive and create something a bit crazy that will warm you up for this Exploration Mission of the Solar System View.")}
+            {renderAstronautBubble(t('activities.solar_system.activities.intro_2'))}
             
             <button 
               onClick={() => setPhase(ActivityPhase.ACTIVITY_2)}
               className="mt-8 btn-primary px-8 py-3 text-xl font-bold"
             >
-              <PenTool className="mr-3" /> Start Activity 2
+              <PenTool className="mr-3" /> {t('activities.solar_system.activities.start_activity_2')}
             </button>
           </motion.div>
         )}
@@ -176,12 +173,12 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
             className="glass-panel w-full"
           >
             <h2 className="text-2xl font-bold text-white mb-4 flex items-center justify-center">
-              <PenTool className="mr-3 text-neon-pink" /> Activity 2
+              <PenTool className="mr-3 text-neon-pink" /> {t('activities.solar_system.activities.activity_2.title')}
             </h2>
             
             <div className="bg-white/5 p-6 rounded-xl border border-white/10 mb-6">
               <p className="text-base leading-relaxed text-gray-200 text-center whitespace-pre-wrap">
-                {"In pairs, groups, or working alone at home, choose a writing style (song, rap, poem, little story, etc) to express the correct order of all the planets of the Solar System!\n\nFollow your teacher's instructions on how and when to present your masterpiece.\n\nThen once you are ready, dive into the Solar System to see all planets and its features in the Exploration Mission."}
+                {t('activities.solar_system.activities.activity_2.instruction')}
               </p>
             </div>
 
@@ -190,7 +187,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                 onClick={onComplete}
                 className="btn-primary px-8 py-3 text-xl font-bold"
               >
-                <Rocket className="mr-3" /> Start Exploration Mission
+                <Rocket className="mr-3" /> {t('activities.solar_system.activities.start_mission')}
               </button>
             </div>
           </motion.div>
