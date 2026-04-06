@@ -9,7 +9,8 @@
       "back": "Tillbaka",
       "system_online": "SYSTEM ONLINE",
       "language": "SPRÅK",
-      "change_language": "Ändra språk"
+      "change_language": "Ändra språk",
+      "home": "HEM"
     },
     "dashboard": {
       "select_path": "Välj väg",
@@ -37,7 +38,7 @@
         "title": "Ljusinfall och värme",
         "desc": "Utforska ljus, skuggor och värme",
         "phase_a": "Fas A: Ljusvinkel",
-        "phase_b": "Fas B: Avstånd",
+        "phase_b": "Fas B: Ljus på runda ytor",
         "angle": "Ljusvinkel",
         "heating": "Uppvärmningsintensitet",
         "spread": "Ljusspridning",
@@ -49,8 +50,8 @@
         "cooling_status": "Kyler...",
         "angle_val": "Vinkel: {{val}}°",
         "distance_val": "Avstånd: {{val}}",
-        "info_a": "Ljusets infallsvinkel påverkar hur mycket energi som koncentreras på en yta.",
-        "info_b": "När avståndet från ljuskällan ökar, minskar värmens intensitet.",
+        "info_a": "Flytta denna magiska värmande ficklampa för att se hur ljusets infallsvinkel påverkar hur mycket värme som koncentreras på en yta.",
+        "info_b": "Flytta bollen upp och ner för att se hur ljus värmer upp olika beroende på varje del av den runda ytan.",
         "astronaut_feedback": "Bra jobbat, utforskare! När du är klar med att utforska och reflektera enligt din lärares instruktioner kan vi gå vidare till området \"Lutning och omloppsbana\" i appen.",
         "angle_direct": "90° (Direkt)",
         "angle_glancing": "0° (Sned)",
@@ -97,19 +98,19 @@
           "finished": "Uppdraget slutfört!"
         },
         "discussion": {
-          "intro": "Hej utforskare! Innan vi dyker in i 3D-världen, låt oss diskutera några viktiga koncept med din grupp.",
+          "intro": "Hej utforskare! Ni har sett hur ljusets vinkel kan förändra uppvärmningseffekter. Nu ska vi utforska jordens vinkel och dess konsekvenser när vi kretsar kring solen. Men... varför är jorden vinklad (lutad) från början? Låt oss slutföra denna kreativa uppdragsuppgift för att ta reda på det!",
           "tasks": [
-            "Diskutera: Varför har vi årstider?",
-            "Diskutera: Vad gör dagarna längre på sommaren?",
-            "Diskutera: Hur påverkar jordens lutning solljuset?",
-            "Diskutera: Vad är skillnaden mellan rotation och revolution?",
-            "Diskutera: Hur påverkar månen jorden?"
+            "Skapa på 5 minuter den galnaste historien för att förklara varför jorden blev lutad som den är idag.",
+            "Dela din historia med alla och lyssna på andras historier också.",
+            "Sök på nätet efter de möjliga orsakerna till varför jorden är lutad och några roliga fakta om det.",
+            "Jämför med dina kamrater vem som kom närmast de accepterade teorierna.",
+            "Diskutera med dina kamrater hur lutningen kan påverka årstiderna på jorden. (Tips: kommer du ihåg ficklampan? Mer lutning = Mer ljusspridning)."
           ],
-          "optional_desc": "Se den här videon för att lära dig mer om jordens lutning och årstider.",
-          "video_title": "Jordens lutning och årstider"
+          "optional_desc": "Har du någonsin tänkt på varför omloppsbanor ens existerar? Utforska på nätet för att se om du hittar förklaringen! Här är en video som hjälper dig att visualisera hur solen böjer rymden för att attrahera planeterna.",
+          "video_title": "Varför existerar omloppsbanor?"
         },
         "phase1": {
-          "task": "Okej, nu när du har sett hur den uppvärmda ficklampan påverkade temperaturen på ytan och på bollen, låt oss byta ut ficklampan mot solen och bollen mot jorden. Reflektera med dina kamrater, med läraren eller ensam baserat på våra coola astronautfrågor. Välj sedan vad du ska göra härnäst!",
+          "task": "Låt oss leka med lutning och omloppsbana! Reflektera med din lärare och kamrater, välj sedan vad du ska göra härnäst. Du kan alltid zooma in och använda kontrollfältet för att se fler detaljer.",
           "error": "inte riktigt, men det vore intressant att se resultaten av dessa rörelser i verkligheten... försök igen och välj det alternativ som ger dagarna tillbaka till alla delar av jorden.",
           "success": "Bra jobbat! Rotation är nyckeln till att vi har nätter och dagar överallt!",
           "choices": [
@@ -119,9 +120,9 @@
           ]
         },
         "phase2": {
-          "task": "Tjoho! Dagarna är tillbaka för alla! Men... jag önskar att det var sommar i Finland med de där riktigt långa och ljusa dagarna... Prata med dina kamrater och lärare, eller fundera själv igen för att se om du kan hjälpa mig med detta. Snälla!",
+          "task": "Tjoho! Dagarna är tillbaka för alla, baby! Men... jag önskar att det var sommar i Finland med de där riktigt långa och ljusa dagarna... Prata med dina kamrater och lärare för att se vad du kan göra för att hjälpa mig!",
           "error": "inte riktigt, men det vore intressant att se resultaten av dessa rörelser i verkligheten... försök igen och välj det alternativ som ger sommar i Finland",
-          "success": "Ja! Att luta jorden är nyckeln till att vi får mer ljus i Finland!",
+          "success": "Ja! Att luta jorden \"teh\" är nyckeln till att vi får mer ljus i Finland!",
           "choices": [
             "Flytta solen över till nordpolen",
             "Luta nordpolen mot solen",
@@ -129,9 +130,9 @@
           ]
         },
         "phase3": {
-          "task": "Ta fram solglasögonen för nu har sommaren kommit till Finland! Tack för att du löste detta! Ta en titt på båda polerna och jämför dem medan du funderar på frågorna själv eller med din lärare och kamrater.",
+          "task": "Ta fram solglasögonen för nu har sommaren kommit till Finland! Reflektera med din lärare och kamrater för att återställa balansen mellan årstiderna.",
           "error0": "inte riktigt, men det vore intressant att kunna flytta solen i verkligheten... försök igen och välj det alternativ som delar sommaren jämnt mellan båda polerna",
-          "error1": "Jag önskar att det vore så enkelt, men jorden har en fast lutning... försök igen och välj det alternativ som delar sommaren jämnt mellan båda polerna",
+          "error1": "Jag önskar att det vore så enkelt, mas jorden har en fast lutning... försök igen och välj det alternativ som delar sommaren jämnt mellan båda polerna",
           "success": "Bra val! Revolution är nyckeln till att båda polerna ska få chansen till en härlig sommar!",
           "choices": [
             "Flytta solen över till sydpolen",

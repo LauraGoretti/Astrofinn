@@ -9,7 +9,8 @@
       "back": "Back",
       "system_online": "SYSTEM ONLINE",
       "language": "LANGUAGE",
-      "change_language": "Change Language"
+      "change_language": "Change Language",
+      "home": "HOME"
     },
     "dashboard": {
       "select_path": "Select Path",
@@ -37,7 +38,7 @@
         "title": "Light Incidence and Heat",
         "desc": "Exploring Light, Shadows, and Warmth",
         "phase_a": "Phase A: Light Angle",
-        "phase_b": "Phase B: Distance",
+        "phase_b": "Phase B: Light on round surfaces",
         "angle": "Light Angle",
         "heating": "Heating Intensity",
         "spread": "Light Spread",
@@ -49,8 +50,8 @@
         "cooling_status": "Cooling...",
         "angle_val": "Angle: {{val}}°",
         "distance_val": "Distance: {{val}}",
-        "info_a": "The angle of light incidence affects how much energy is concentrated on a surface.",
-        "info_b": "As the distance from the light source increases, the intensity of heat decreases.",
+        "info_a": "Move this magic heating flashlight to see how the angle of light incidence affects how much heat is concentrated on a surface.",
+        "info_b": "Move the ball up and down to see how light heats up differently acording to each part of the round surface.",
         "astronaut_feedback": "Great work, explorer! Once you are done exploring and reflecting according to your teacher's instructions, we can move onto the \"Tilt & Orbit\" area of the app.",
         "angle_direct": "90° (Direct)",
         "angle_glancing": "0° (Glancing)",
@@ -61,7 +62,7 @@
         "large": "Large"
       },
       "tilt_orbit": {
-        "title": "Tilt & Orbit",
+        "title": "Tilt and Orbit Consequences",
         "desc": "Exploring the reason behind seasons on Earth",
         "mission_task": "Mission Task",
         "optional_task": "Optional Task",
@@ -74,6 +75,7 @@
         "north": "NORTH",
         "select_date": "Select Date",
         "finland_data": "Finland Data",
+        "brazil_data": "Brazil Data",
         "million_km": "million km",
         "data_values": {
           "summer_daylight": "19h - 24h",
@@ -86,7 +88,7 @@
           "autumn_temp": "5°C to 12°C"
         },
         "phases": {
-          "discussion": "Discussion",
+          "discussion": "Step 1 – Talk about seasons, light, and darkness",
           "day_night": "Part 1: Day & Night",
           "tilt_seasons": "Part 2: Tilt & Seasons",
           "orbit_simulator": "Part 3: Orbit Simulator",
@@ -94,22 +96,24 @@
           "phase2": "Part 2: Tilt & Seasons",
           "phase3": "Part 3: Tilt & Seasons (Advanced)",
           "phase4": "Part 4: Orbit Simulator",
-          "finished": "Mission Accomplished!"
+          "finished": "Mission Accomplished!",
+          "mission_task": "Mission Task",
+          "optional_task": "Optional: Deep Dive"
         },
         "discussion": {
-          "intro": "Hello explorer! Before we dive into the 3D world, let's discuss some important concepts with your group.",
+          "intro": "Hey explorers! You have seen how the angle of light can change heating effects. Now, we will explore the angle of the Earth and its consequences while orbiting the Sun. But... why is Earth angled (tilted) to begin with? Let's complete this creative mission task to find out!",
           "tasks": [
-            "Discuss: Why do we have seasons?",
-            "Discuss: What makes days longer in summer?",
-            "Discuss: How does the Earth's tilt affect sunlight?",
-            "Discuss: What is the difference between rotation and revolution?",
-            "Discuss: How does the Moon affect the Earth?"
+            "In 5 minutes, create the craziest story to explain why Earth became tilted as it is today.",
+            "Share your story with everyone and listen to other stories as well.",
+            "Search online the possible reasons why the Earth is tilted and any fun facts about it.",
+            "Compare with your peers who got closer to the accepted theories.",
+            "Discuss with your peers how the tilt may impact seasons on Earth. (Hint: remember the flashlight? More tilting = More light spread)."
           ],
-          "optional_desc": "Watch this video to learn more about Earth's tilt and seasons.",
-          "video_title": "Earth's Tilt and Seasons"
+          "optional_desc": "Have you ever thought why orbits even exist? Explore online to see if you find the explanation! Here is a video to help you visualize how the Sun bends space to attract the planets.",
+          "video_title": "Why do orbits exist?"
         },
         "phase1": {
-          "task": "Alright, now that you saw how the heating flashlight influenced the temperature on the surface and on the ball, let's replace the flashlight by the Sun and the ball by the Earth. Reflect with your peers, with the teacher, or alone based on our cool astronaut questions. Then choose what to do next!",
+          "task": "Let's play with tilt and orbit! Reflect with your teacher and peers, then choose what to do next. You can always zoom in and use the control bar to see more details.",
           "error": "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will bring the days back to all parts of Earth.",
           "success": "Good job! Rotation is the key for us to have nights and days everywhere!",
           "choices": [
@@ -119,9 +123,9 @@
           ]
         },
         "phase2": {
-          "task": "Wohoo! Days are back for everyone, baby! But... I wish it was Summer in Finland with those very long and bright days... Talk to your peers and teacher, or reflect by yourself again to see if you can help me out on this one. Please!",
+          "task": "Wohoo! Days are back for everyone, baby! But... I wish it was Summer in Finland with those very long and bright days... Talk to your peers and teacher, to see what you can do to help me!",
           "error": "not quite, but it would be interesting to see the results of those movements in real life... try again and choose the option that will cause Summer in Finland",
-          "success": "Yes! Tilting teh Earth is the key for us to have more light in Finland!",
+          "success": "Yes! Tilting \"teh\" Earth is the key for us to have more light in Finland!",
           "choices": [
             "Move the Sun over to the North Pole",
             "Lean the North Pole towards the Sun",
@@ -129,7 +133,7 @@
           ]
         },
         "phase3": {
-          "task": "Get your sunglasses because Summer arrived to Finland! Thank you for solving this! Take a look at both poles and compare them while you reflect on the questions by yourself or with yur teacher and peers.",
+          "task": "Get your sunglasses because Summer arrived to Finland! Reflect with your teacher and peers to restore the balance of seasons.",
           "error0": "not quite, but it would be interesting to be able to move the Sun in real life... try again and choose the option that will evenly share Summer for both poles",
           "error1": "I wish it was that simple, but Earth has a fixed tilt... try again and choose the option that will evenly share Summer for both poles",
           "success": "Great choice! Revolution is the key for both poles to have the chance for a nice Summer!",
@@ -149,10 +153,14 @@
           "autumn": "Autumn"
         },
         "nature": {
-          "summer": "Lush green forests, long days, midnight sun in Lapland.",
-          "winter": "Snow-covered landscapes, polar night, northern lights.",
-          "spring": "Melting snow, first flowers, returning birds.",
-          "autumn": "Colorful leaves (Ruska), cooling temperatures, migrating birds."
+          "summer": "Green trees, flowers, bright days",
+          "winter": "Snowy, dark, Kaamos (Polar Night)",
+          "spring": "Snow melting, flowers coming soon",
+          "autumn": "Leaves falling, colorful nature",
+          "brazil_summer": "Hot, rainy, very green",
+          "brazil_winter": "Dry, mild temperatures",
+          "brazil_spring": "Flowers blooming, warming up",
+          "brazil_autumn": "Mild, less rain"
         },
         "mission_tasks": {
           "discussion": "Discuss with your group: Why do we have seasons? What makes days longer in summer?",

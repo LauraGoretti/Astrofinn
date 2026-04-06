@@ -6,7 +6,7 @@ import TiltOrbitExplorer from './components/activities/TiltOrbitExplorer';
 import Earth3D from './components/activities/Earth3D';
 import SizesDistances from './components/activities/SizesDistances';
 import { LanguageSelector } from './src/components/LanguageSelector';
-import { ArrowLeft, Globe, Users, User } from 'lucide-react';
+import { ArrowLeft, Globe, Users, User, Home } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './src/i18n';
 
@@ -184,10 +184,14 @@ const App: React.FC = () => {
               <Globe size={20} />
               <span className="hidden sm:inline text-xs font-mono uppercase tracking-widest">{t('common.language')}</span>
             </button>
-            <div className="hidden md:flex items-center text-xs font-mono text-gray-400">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
-              {t('common.system_online')}
-            </div>
+            <button
+              onClick={goToDashboard}
+              className="p-2 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white flex items-center gap-2"
+              title={t('common.back_to_dashboard')}
+            >
+              <Home size={20} />
+              <span className="hidden sm:inline text-xs font-mono uppercase tracking-widest">{t('common.home')}</span>
+            </button>
           </div>
         </header>
       )}

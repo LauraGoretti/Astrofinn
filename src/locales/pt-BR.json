@@ -9,7 +9,8 @@
       "back": "Voltar",
       "system_online": "SISTEMA ONLINE",
       "language": "IDIOMA",
-      "change_language": "Alterar Idioma"
+      "change_language": "Alterar Idioma",
+      "home": "INÍCIO"
     },
     "dashboard": {
       "select_path": "Selecionar Caminho",
@@ -37,7 +38,7 @@
         "title": "Incidência de Luz e Calor",
         "desc": "Explorando luz, sombras e calor",
         "phase_a": "Fase A: Ângulo de Luz",
-        "phase_b": "Fase B: Distância",
+        "phase_b": "Fase B: Luz em superfícies redondas",
         "angle": "Ângulo de Luz",
         "heating": "Intensidade de Aquecimento",
         "spread": "Dispersão da Luz",
@@ -49,8 +50,8 @@
         "cooling_status": "Esfriando...",
         "angle_val": "Ângulo: {{val}}°",
         "distance_val": "Distância: {{val}}",
-        "info_a": "O ângulo de incidência da luz afeta quanta energia é concentrada em uma superfície.",
-        "info_b": "À medida que a distância da fonte de luz aumenta, a intensidade do calor diminui.",
+        "info_a": "Mova esta lanterna de aquecimento mágica para ver como o ângulo de incidência da luz afeta quanto calor é concentrado em uma superfície.",
+        "info_b": "Mova a bola para cima e para baixo para ver como a luz aquece de forma diferente de acordo com cada parte da superfície redonda.",
         "astronaut_feedback": "Ótimo trabalho, explorador! Quando terminar de explorar e refletir de acordo com as instruções do seu professor, podemos seguir para a área \"Inclinação e Órbita\" do aplicativo.",
         "angle_direct": "90° (Direto)",
         "angle_glancing": "0° (Oblíquo)",
@@ -97,19 +98,19 @@
           "finished": "Missão Cumprida!"
         },
         "discussion": {
-          "intro": "Olá explorador! Antes de mergulharmos no mundo 3D, vamos discutir alguns conceitos importantes com seu grupo.",
+          "intro": "Olá exploradores! Vocês viram como o ângulo da luz pode mudar os efeitos de aquecimento. Agora, vamos explorar o ângulo da Terra e suas consequências ao orbitar o Sol. Mas... por que a Terra é inclinada para começar? Vamos completar esta tarefa de missão criativa para descobrir!",
           "tasks": [
-            "Discuta: Por que temos estações?",
-            "Discuta: O que torna os dias mais longos no verão?",
-            "Discuta: Como a inclinação da Terra afeta a luz solar?",
-            "Discuta: Qual a diferença entre rotação e revolução?",
-            "Discuta: Como a Lua afeta a Terra?"
+            "Em 5 minutos, crie a história mais maluca para explicar por que a Terra se tornou inclinada como é hoje.",
+            "Compartilhe sua história com todos e ouça as outras histórias também.",
+            "Pesquise online as possíveis razões pelas quais a Terra é inclinada e quaisquer fatos divertidos sobre isso.",
+            "Compare com seus colegas quem chegou mais perto das teorias aceitas.",
+            "Discuta com seus colegas como a inclinação pode impactar as estações na Terra. (Dica: lembra da lanterna? Mais inclinação = Mais dispersão de luz)."
           ],
-          "optional_desc": "Assista a este vídeo para saber mais sobre a inclinação da Terra e as estações do ano.",
-          "video_title": "Inclinação da Terra e Estações"
+          "optional_desc": "Você já pensou por que as órbitas existem? Explore online para ver se encontra a explicação! Aqui está um vídeo para ajudá-lo a visualizar como o Sol curva o espaço para atrair os planetas.",
+          "video_title": "Por que as órbitas existem?"
         },
         "phase1": {
-          "task": "Tudo bem, agora que você viu como a lanterna de aquecimento influenciou a temperatura na superfície e na bola, vamos substituir a lanterna pelo Sol e a bola pela Terra. Reflita com seus colegas, com o professor ou sozinho com base em nossas perguntas legais de astronauta. Então escolha o que fazer a seguir!",
+          "task": "Vamos brincar com a inclinação e a órbita! Reflita com seu professor e colegas, depois escolha o que fazer a seguir. Você sempre pode dar zoom e usar a barra de controle para ver mais detalhes.",
           "error": "não exatamente, mas seria interessante ver os resultados desses movimentos na vida real... tente novamente e escolha a opção que trará os dias de volta a todas as partes da Terra.",
           "success": "Bom trabalho! A rotação é a chave para termos noites e dias em todos os lugares!",
           "choices": [
@@ -119,9 +120,9 @@
           ]
         },
         "phase2": {
-          "task": "Uhuu! Os dias voltaram para todos! Mas... eu gostaria que fosse verão na Finlândia, com aqueles dias bem longos e claros... Converse com seus colegas e professor, ou reflita sozinho novamente para ver se você pode me ajudar com esta. Por favor!",
+          "task": "Uhuu! Os dias voltaram para todos, baby! Mas... eu gostaria que fosse verão na Finlândia com aqueles dias bem longos e claros... Converse com seus colegas e professor para ver o que você pode fazer para me ajudar!",
           "error": "não exatamente, mas seria interessante ver os resultados desses movimentos na vida real... tente novamente e escolha a opção que causará o verão na Finlândia",
-          "success": "Sim! Inclinar a Terra é a chave para termos mais luz na Finlândia!",
+          "success": "Sim! Inclinar a Terra \"teh\" é a chave para termos mais luz na Finlândia!",
           "choices": [
             "Mover o Sol para cima do Polo Norte",
             "Inclinar o Polo Norte em direção ao Sol",
@@ -129,7 +130,7 @@
           ]
         },
         "phase3": {
-          "task": "Pegue seus óculos de sol porque o verão chegou na Finlândia! Obrigado por resolver isso! Dê uma olhada em ambos os polos e compare-os enquanto reflete sobre as perguntas sozinho ou com seu professor e colegas.",
+          "task": "Pegue seus óculos de sol porque o verão chegou na Finlândia! Reflita com seu professor e colegas para restaurar o equilíbrio das estações.",
           "error0": "não exatamente, mas seria interessante poder mover o Sol na vida real... tente novamente e escolha a opção que compartilhará o verão uniformemente para ambos os polos",
           "error1": "Eu gostaria que fosse tão simples, mas a Terra tem uma inclinação fixa... tente novamente e escolha a opção que compartilhará o verão uniformemente para ambos os polos",
           "success": "Ótima escolha! A revolução é a chave para que ambos os polos tenham a chance de um belo verão!",

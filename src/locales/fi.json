@@ -9,7 +9,8 @@
       "back": "Takaisin",
       "system_online": "JÄRJESTELMÄ ONLINE",
       "language": "KIELI",
-      "change_language": "Vaihda kieli"
+      "change_language": "Vaihda kieli",
+      "home": "KOTI"
     },
     "dashboard": {
       "select_path": "Valitse polku",
@@ -37,7 +38,7 @@
         "title": "Valon tulokulma ja lämpö",
         "desc": "Valon, varjojen ja lämmön tutkiminen",
         "phase_a": "Vaihe A: Valon kulma",
-        "phase_b": "Vaihe B: Etäisyys",
+        "phase_b": "Vaihe B: Valo pyöreillä pinnoilla",
         "angle": "Valon kulma",
         "heating": "Lämmitysteho",
         "spread": "Valon leviäminen",
@@ -49,8 +50,8 @@
         "cooling_status": "Jäähdytetään...",
         "angle_val": "Kulma: {{val}}°",
         "distance_val": "Etäisyys: {{val}}",
-        "info_a": "Valon tulokulma vaikuttaa siihen, kuinka paljon energiaa keskittyy pinnalle.",
-        "info_b": "Kun etäisyys valonlähteestä kasvaa, lämmön voimakkuus vähenee.",
+        "info_a": "Liikuta tätä taianomaista lämmittävää taskulamppua nähdäksesi, kuinka valon tulokulma vaikuttaa siihen, kuinka paljon lämpöä keskittyy pinnalle.",
+        "info_b": "Liikuta palloa ylös ja alas nähdäksesi, kuinka valo lämmittää eri tavalla kunkin pyöreän pinnan osan mukaan.",
         "astronaut_feedback": "Hienoa työtä, tutkija! Kun olet valmis tutkimisen ja pohdinnan kanssa opettajasi ohjeiden mukaan, voimme siirtyä sovelluksen \"Kallistus ja kiertorata\" -alueelle.",
         "angle_direct": "90° (Suora)",
         "angle_glancing": "0° (Viisto)",
@@ -97,19 +98,19 @@
           "finished": "Tehtävä suoritettu!"
         },
         "discussion": {
-          "intro": "Hei tutkija! Ennen kuin sukellamme 3D-maailmaan, keskustellaan ryhmäsi kanssa joistakin tärkeistä käsitteistä.",
+          "intro": "Hei tutkijat! Olette nähneet, kuinka valon kulma voi muuttaa lämmitysvaikutuksia. Nyt tutkimme Maan kulmaa ja sen seurauksia kiertäessämme Aurinkoa. Mutta... miksi Maa on vinossa (kallistunut) alun alkaenkaan? Suoritetaan tämä luova tehtävä saadaksemme selville!",
           "tasks": [
-            "Keskustele: Miksi meillä on vuodenajat?",
-            "Keskustele: Mikä tekee päivistä pidempiä kesällä?",
-            "Keskustele: Miten Maan kallistus vaikuttaa auringonvaloon?",
-            "Keskustele: Mitä eroa on pyörimisellä ja kiertämisellä?",
-            "Keskustele: Miten Kuu vaikuttaa Maahan?"
+            "Luo 5 minuutissa hulluin tarina selittääksesi, miksi Maasta tuli kallistunut sellaisena kuin se on nykyään.",
+            "Jaa tarinasi kaikkien kanssa ja kuuntele myös muiden tarinoita.",
+            "Etsi verkosta mahdollisia syitä sille, miksi Maa on kallistunut, ja mielenkiintoisia faktoja siitä.",
+            "Vertaa vertaistesi kanssa, kuka pääsi lähimmäs hyväksyttyjä teorioita.",
+            "Keskustele vertaistesi kanssa siitä, miten kallistus voi vaikuttaa vuodenaikoihin Maassa. (Vihje: muistatko taskulampun? Enemmän kallistusta = enemmän valon hajoamista)."
           ],
-          "optional_desc": "Katso tämä video oppiaksesi lisää Maan kallistuksesta ja vuodenajoista.",
-          "video_title": "Maan kallistus ja vuodenajat"
+          "optional_desc": "Oletko koskaan miettinyt, miksi kiertoratoja on edes olemassa? Tutki verkossa, löydätkö selityksen! Tässä on video, joka auttaa sinua visualisoimaan, kuinka Aurinko taivuttaa avaruutta houkutellakseen planeettoja.",
+          "video_title": "Miksi kiertoratoja on olemassa?"
         },
         "phase1": {
-          "task": "Hienoa, nyt kun näit, miten lämmittävä taskulamppu vaikutti pinnan ja pallon lämpötilaan, vaihdetaan taskulamppu Aurinkoon ja pallo Maahan. Pohdi muiden oppilaiden ja opettajan kanssa tai itseksesi astronauttikysymystemme pohjalta. Valitse sitten, mitä tehdään seuraavaksi!",
+          "task": "Leikitään kallistuksella ja kiertoradalla! Pohdi opettajasi ja luokkatovereidesi kanssa ja valitse sitten, mitä teet seuraavaksi. Voit aina lähentää ja käyttää ohjauspalkkia nähdäksesi enemmän yksityiskohtia.",
           "error": "ei aivan, mutta olisi mielenkiintoista nähdä näiden liikkeiden tulokset tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka palauttaa päivät kaikkialle Maahan.",
           "success": "Hienoa työtä! Pyörimisliike on avain siihen, että meillä on päiviä ja öitä kaikkialla!",
           "choices": [
@@ -119,9 +120,9 @@
           ]
         },
         "phase2": {
-          "task": "Jee! Päivät ovat palanneet kaikille! Mutta... toivoisin, että Suomessa olisi kesä ja ne todella pitkät ja valoisat päivät... Keskustele muiden oppilaiden ja opettajan kanssa tai pohdi itseksesi, voisitko auttaa minua tässä. Ole kiltti!",
+          "task": "Jee! Päivät ovat palanneet kaikille! Mutta... toivoisin, että Suomessa olisi kesä ja ne todella pitkät ja valoisat päivät... Keskustele muiden oppilaiden ja opettajan kanssa nähdäksesi, mitä voit tehdä auttaaksesi minua!",
           "error": "ei aivan, mutta olisi mielenkiintoista nähdä näiden liikkeiden tulokset tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka aiheuttaa kesän Suomeen",
-          "success": "Kyllä! Maan kallistaminen on avain siihen, että saamme enemmän valoa Suomeen!",
+          "success": "Kyllä! Maan kallistaminen \"teh\" on avain siihen, että saamme enemmän valoa Suomeen!",
           "choices": [
             "Siirrä Aurinko pohjoisnavan yläpuolelle",
             "Kallista pohjoisnapaa Aurinkoa kohti",
@@ -129,7 +130,7 @@
           ]
         },
         "phase3": {
-          "task": "Ota aurinkolasit esiin, sillä kesä on saapunut Suomeen! Kiitos, että ratkaisit tämän! Tarkastele molempia napoja ja vertaa niitä samalla kun pohdit kysymyksiä itseksesi tai opettajan ja muiden oppilaiden kanssa.",
+          "task": "Ota aurinkolasit esiin, sillä kesä on saapunut Suomeen! Pohdi opettajasi ja luokkatovereidesi kanssa vuodenaikojen tasapainon palauttamista.",
           "error0": "ei aivan, mutta olisi mielenkiintoista pystyä liikuttamaan Aurinkoa tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka jakaa kesän tasaisesti molemmille navoille",
           "error1": "Toivon, että se olisi niin yksinkertaista, mutta Maalla on kiinteä kallistus... yritä uudelleen ja valitse vaihtoehto, joka jakaa kesän tasaisesti molemmille navoille",
           "success": "Loistava valinta! Kiertoliike on avain siihen, että molemmilla navoilla on mahdollisuus hienoon kesään!",
