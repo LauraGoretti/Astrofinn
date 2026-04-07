@@ -288,8 +288,8 @@ const SizesDistances: React.FC<SizesDistancesProps> = ({ mode, setStage, onHome,
 
         <div className="w-full glass-panel p-0 flex relative overflow-hidden bg-space-950/50">
           {/* Vertical Selection Sidebar */}
-          <div className="w-40 shrink-0 border-r border-white/10 p-4 flex flex-col gap-2 z-10 bg-black/20">
-            <h3 className="text-2xl font-bold text-gray-500 uppercase tracking-widest mb-2">{t('activities.sizes_distances.select_object')}</h3>
+          <div className="w-56 shrink-0 border-r border-white/10 p-4 flex flex-col gap-2 z-10 bg-black/20">
+            <h3 className="text-[18px] font-bold text-gray-500 uppercase tracking-widest mb-4 leading-tight">{t('activities.sizes_distances.select_object')}</h3>
             <div className="flex flex-col gap-1.5 overflow-y-auto pr-1 scrollbar-hide">
               {Object.keys(PLANET_DATA).filter(p => p !== 'Earth').map(p => (
                 <button

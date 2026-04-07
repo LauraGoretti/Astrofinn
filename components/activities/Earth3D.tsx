@@ -267,9 +267,9 @@ const ParallaxStars = () => {
     
     for(let i=0; i<count; i++) {
         // Distribute stars in a spherical volume
-        // We put stars between 800 and 3800 units away. 
-        // Since camera moves 0-300 units, this provides subtle but realistic parallax.
-        const r = 800 + Math.random() * 3700; 
+        // We put stars between 5000 and 12000 units away. 
+        // This ensures they are well outside the planetary orbits (Neptune is at 800).
+        const r = 5000 + Math.random() * 7000; 
         const theta = 2 * Math.PI * Math.random();
         const phi = Math.acos(2 * Math.random() - 1);
         
@@ -307,7 +307,8 @@ const ParallaxStars = () => {
             vColor = color; // Used default attribute injected by Three.js when vertexColors: true
             vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
             // Size attenuation: Scale size based on distance to camera
-            gl_PointSize = size * pixelRatio * (150.0 / -mvPosition.z);
+            // Adjusted factor (800.0) for greater distances (5000-12000)
+            gl_PointSize = size * pixelRatio * (800.0 / -mvPosition.z);
             gl_Position = projectionMatrix * mvPosition;
         }
     `,
@@ -351,9 +352,9 @@ const StarBackground = () => {
   return (
     <group>
         {/* Deep Background: Milky Way Texture */}
-        {/* Pushed further back and dimmed to act as a canvas for the 3D stars */}
+        {/* Pushed much further back to act as a distant canvas */}
         <mesh renderOrder={-1}>
-          <sphereGeometry args={[4800, 64, 64]} />
+          <sphereGeometry args={[15000, 64, 64]} />
           <meshBasicMaterial 
             map={texture} 
             side={THREE.BackSide} 
@@ -1151,7 +1152,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
               makeDefault 
               fov={50} 
               near={0.1}
-              far={10000} // Increased far plane for new distances
+              far={30000} // Increased far plane for new star distances
            />
            <OrbitControls 
               ref={controlsRef}
@@ -1172,7 +1173,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
             position={[0, 50, 100]} // Default start pos for other modes
             fov={45} 
             near={0.1} 
-            far={10000} 
+            far={30000} 
          />
       )}
     </group>
