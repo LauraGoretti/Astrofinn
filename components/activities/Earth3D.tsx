@@ -403,7 +403,7 @@ void main() {
 }
 `;
 
-const SunMesh = () => {
+const SunMesh: React.FC<{ simSpeed: number }> = ({ simSpeed }) => {
   const sunTexture = useLoader(THREE.TextureLoader, `${TEXTURE_BASE_URL}sun.jpg`);
   
   useEffect(() => {
@@ -429,7 +429,8 @@ const SunMesh = () => {
   }), []);
 
   useFrame((state, delta) => {
-    timeRef.current += delta * EARTH_ROTATION_SPEED;
+    const safeDelta = Math.min(delta, 0.05) * simSpeed;
+    timeRef.current += safeDelta * EARTH_ROTATION_SPEED;
     if (materialRef.current) {
       materialRef.current.uniforms.time.value = timeRef.current;
     }
@@ -805,23 +806,34 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
   const cameraRef = useRef<THREE.PerspectiveCamera>(null);
   
   // State Refs
-  const orbitAngle = useRef(0);
-  const planetAngles = useRef<Record<string, number>>({});
+  const initialAngles = useMemo(() => {
+    if (!simDate) return { earth: 0, planets: {} as Record<string, number> };
+    const date = new Date(simDate);
+    const dayOfYear = Math.floor((date.getTime() - new Date(date.getFullYear(), 0, 0).getTime()) / 86400000);
+    const earth = -((dayOfYear - 80) / 365) * 2 * Math.PI;
+    const planets: Record<string, number> = {};
+    PLANETS.forEach(p => {
+      planets[p.name] = p.startAngle - (dayOfYear / 365) * 2 * Math.PI * (p.speed / EARTH_YEAR_SPEED);
+    });
+    return { earth, planets };
+  }, [simDate]);
+
+  const orbitAngle = useRef(initialAngles.earth);
+  const planetAngles = useRef<Record<string, number>>(initialAngles.planets);
 
   // Initialize orbit angle based on date if provided
   useEffect(() => {
-    if (simDate) {
-      const dayOfYear = Math.floor((simDate.getTime() - new Date(simDate.getFullYear(), 0, 0).getTime()) / 86400000);
-      // 80 is roughly the spring equinox where angle should be 0 in this model
-      orbitAngle.current = -((dayOfYear - 80) / 365) * 2 * Math.PI;
+    orbitAngle.current = initialAngles.earth;
+    planetAngles.current = { ...initialAngles.planets };
+  }, [initialAngles]);
 
-      // Initialize other planets
-      PLANETS.forEach(p => {
-        planetAngles.current[p.name] = p.startAngle - (dayOfYear / 365) * 2 * Math.PI * (p.speed / EARTH_YEAR_SPEED);
-      });
-    }
-  }, [simDate]);
-  const prevEarthPos = useRef(new THREE.Vector3(SEMI_MAJOR_AXIS - FOCAL_OFFSET, 0, 0));
+  const initialEarthPos = useMemo(() => {
+    const x = -FOCAL_OFFSET + SEMI_MAJOR_AXIS * Math.cos(initialAngles.earth);
+    const z = SEMI_MINOR_AXIS * Math.sin(initialAngles.earth);
+    return new THREE.Vector3(x, 0, z);
+  }, [initialAngles]);
+
+  const prevEarthPos = useRef(initialEarthPos.clone());
   const isTransitioning = useRef(false);
 
   const earthUniforms = useMemo(() => ({
@@ -926,7 +938,7 @@ const HeliocentricSystem: React.FC<HeliocentricSystemProps> = ({ viewMode, focus
              }
         }
     } 
-    else if (viewMode === 'SOLAR_SYSTEM' && focusedPlanet) {
+    else if (viewMode === 'SOLAR_SYSTEM' && focusedPlanet && !isTransitioning.current) {
         // AUTOMATIC PLANET TRACKING
         let targetPos: THREE.Vector3 | null = null;
         let targetRadius = 5; // Default
@@ -1211,7 +1223,7 @@ const Earth3D: React.FC<{ className?: string; setStage?: (stage: string) => void
            <StarBackground />
            <ambientLight intensity={0.15} />
            
-           <SunMesh />
+           <SunMesh simSpeed={simSpeed} />
            <HeliocentricSystem viewMode={viewMode} focusedPlanet={focusedPlanet} simSpeed={simSpeed} simDate={simDate} setStage={setStage} />
 
            <EffectComposer>
