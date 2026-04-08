@@ -122,7 +122,7 @@
         "phase2": {
           "task": "Tjoho! Dagarna är tillbaka för alla, baby! Men... jag önskar att det var sommar i Finland med de där riktigt långa och ljusa dagarna... Prata med dina kamrater och lärare för att se vad du kan göra för att hjälpa mig!",
           "error": "inte riktigt, men det vore intressant att se resultaten av dessa rörelser i verkligheten... försök igen och välj det alternativ som ger sommar i Finland",
-          "success": "Ja! Att luta jorden \"teh\" är nyckeln till att vi får mer ljus i Finland!",
+          "success": "Ja! Att luta jorden är nyckeln till att vi får mer ljus i Finland!",
           "choices": [
             "Flytta solen över till nordpolen",
             "Luta nordpolen mot solen",

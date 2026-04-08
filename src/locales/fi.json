@@ -122,7 +122,7 @@
         "phase2": {
           "task": "Jee! Päivät ovat palanneet kaikille! Mutta... toivoisin, että Suomessa olisi kesä ja ne todella pitkät ja valoisat päivät... Keskustele muiden oppilaiden ja opettajan kanssa nähdäksesi, mitä voit tehdä auttaaksesi minua!",
           "error": "ei aivan, mutta olisi mielenkiintoista nähdä näiden liikkeiden tulokset tosielämässä... yritä uudelleen ja valitse vaihtoehto, joka aiheuttaa kesän Suomeen",
-          "success": "Kyllä! Maan kallistaminen \"teh\" on avain siihen, että saamme enemmän valoa Suomeen!",
+          "success": "Kyllä! Maan kallistaminen on avain siihen, että saamme enemmän valoa Suomeen!",
           "choices": [
             "Siirrä Aurinko pohjoisnavan yläpuolelle",
             "Kallista pohjoisnapaa Aurinkoa kohti",
