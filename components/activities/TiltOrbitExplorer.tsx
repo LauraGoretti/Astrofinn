@@ -868,18 +868,22 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
         handler: () => {
           if (phase === Phase.PHASE4) {
             setPhase(Phase.PHASE3);
+            setPoleRotation(0);
             return true;
           }
           if (phase === Phase.PHASE3) {
             setPhase(Phase.PHASE2);
+            setPoleRotation(0);
             return true;
           }
           if (phase === Phase.PHASE2) {
             setPhase(Phase.PHASE1);
+            setPoleRotation(0);
             return true;
           }
           if (phase === Phase.PHASE1 && mode === GameMode.GROUP) {
             setPhase(Phase.DISCUSSION);
+            setPoleRotation(0);
             return true;
           }
           return false;
@@ -956,6 +960,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
       if (nextPhase) {
         setTimeout(() => {
           setPhase(nextPhase);
+          setPoleRotation(0); // Reset pole rotation for the next phase to prevent slider/view desync
           setFeedback(null);
         }, 5000);
       }
@@ -1144,7 +1149,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 <OrbitControls 
                   enableZoom={true} 
                   enablePan={true}
-                  enableRotate={true}
+                  enableRotate={false}
                   minAzimuthAngle={0}
                   maxAzimuthAngle={0}
                   target={[0, 0, 0]}
@@ -1233,7 +1238,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 <OrbitControls 
                   enableZoom={true} 
                   enablePan={true}
-                  enableRotate={true}
+                  enableRotate={false}
                   minAzimuthAngle={0}
                   maxAzimuthAngle={0}
                   target={[0, 0, 0]}
@@ -1322,7 +1327,7 @@ const TiltOrbitExplorer: React.FC<TiltOrbitExplorerProps> = ({ mode, onNavigateT
                 <OrbitControls 
                   enableZoom={true} 
                   enablePan={true}
-                  enableRotate={true}
+                  enableRotate={false}
                   minAzimuthAngle={0}
                   maxAzimuthAngle={0}
                   target={[0, 0, 0]}
