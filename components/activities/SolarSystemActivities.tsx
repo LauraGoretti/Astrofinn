@@ -137,11 +137,7 @@ export const SolarSystemActivities: React.FC<SolarSystemActivitiesProps> = ({ on
                   setCompletedSteps([]);
                 }}
                 disabled={completedSteps.length < 4}
-                className={`px-8 py-3 text-xl font-bold ${
-                  completedSteps.length >= 4 
-                    ? 'btn-primary' 
-                    : 'bg-gray-700 text-gray-400 cursor-not-allowed rounded-full'
-                }`}
+                className="btn-primary px-8 py-3 text-xl font-bold"
               >
                 {t('activities.solar_system.activities.activity_1.next')} <ArrowRight className="ml-2" />
               </button>
